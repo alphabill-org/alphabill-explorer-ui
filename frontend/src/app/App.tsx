@@ -1,8 +1,11 @@
+import { IconWarning  } from "../shared/ui/icons";
+
 function App() {
   return (
     <div>
-      <h1 >Hello world!</h1>
-      <h2 >Hello world!</h2>
+      <IconWarning  className="" />
+      <h1>Hello world!</h1>
+      <h2>Hello world!</h2>
     </div>
   );
 }
