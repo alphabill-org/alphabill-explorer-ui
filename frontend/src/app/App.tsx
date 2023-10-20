@@ -1,9 +1,9 @@
-import { IconWarning  } from "../shared/ui/icons";
+import { IconNotificationNew  } from "../shared/ui/icons";
 
 function App() {
   return (
     <div>
-      <IconWarning  className="" />
+      <IconNotificationNew  className="" />
       <h1>Hello world!</h1>
       <h2>Hello world!</h2>
     </div>

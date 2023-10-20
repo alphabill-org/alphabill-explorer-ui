@@ -21,7 +21,7 @@ export const IconNotificationNew = ({ circleFill = "#EF476F", className }: Props
         stroke-linecap="round"
         stroke-linejoin="round"
       />
-      <circle cx="18" cy="6" r="4" fill={circleFill} />
+      <circle cx="18" cy="6" r="4" stroke={circleFill} fill={circleFill} />
     </svg>
   );
 };
