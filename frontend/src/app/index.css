@@ -1,0 +1,77 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-primary-blue: #08E8DE;
+    --color-primary-dark-blue: #0C0A3E;
+    --color-primary-violet: #4E3EB6;
+
+    --color-neutral-white: #FFFFFF;
+    --color-neutral-light: #EEEDFC;
+    --color-neutral-light-gray: #F6F4F5;
+
+    --color-inactive-dark-01: #1C194E;
+    --color-inactive-dark-02: #7C76A9;
+    --color-inactive-button-violet: #ACA4E0;
+    --color-inactive-button-blue: #0A8F9E;
+
+    --color-error-red: #EF476F;
+
+    --color-graphics-dark-blue-01: #0C0A3E;
+    --color-graphics-dark-blue-02: #050A6D;
+    --color-graphics-dark-blue-03: #0E08A3;
+    --color-graphics-dark-blue-04: #2F13D9;
+    --color-graphics-dark-blue-05: #5D6CF0;
+    --color-graphics-dark-blue-06: #909CFF;
+    --color-graphics-dark-blue-07: #B8BFFF;
+    --color-graphics-dark-blue-08: #D8DEFF;
+
+    --color-graphics-purple-01: #2D1540;
+    --color-graphics-purple-02: #371E60;
+    --color-graphics-purple-03: #432B8A;
+    --color-graphics-purple-04: #5534B5;
+    --color-graphics-purple-05: #7F59D0;
+    --color-graphics-purple-06: #947BDC;
+    --color-graphics-purple-07: #BFADF2;
+    --color-graphics-purple-08: #DFD8F5;
+
+    --color-graphics-orange-01: #3F1B01;
+    --color-graphics-orange-02: #6C2E01;
+    --color-graphics-orange-03: #A04800;
+    --color-graphics-orange-04: #D25C00;
+    --color-graphics-orange-05: #F46A00;
+    --color-graphics-orange-06: #FF8838;
+    --color-graphics-orange-07: #FFAC70;
+    --color-graphics-orange-08: #FFD3B2;
+
+    --color-graphics-turquoise-01: #012726;
+    --color-graphics-turquoise-02: #034E4B;
+    --color-graphics-turquoise-03: #047670;
+    --color-graphics-turquoise-04: #058A83;
+    --color-graphics-turquoise-05: #06B1A9;
+    --color-graphics-turquoise-06: #07C5BB;
+    --color-graphics-turquoise-07: #08E8DE;
+    --color-graphics-turquoise-08: #90F4F0;
+  }
+  body {
+    @apply font-space;
+  }
+
+  h1 {
+    @apply text-6xl font-bold;
+  }
+
+  h2 {
+    @apply text-5xl font-bold;
+  }
+  h3 {
+    @apply text-4xl font-bold;
+  }
+  h4 {
+    @apply text-2xl font-bold;
+  }
+}
