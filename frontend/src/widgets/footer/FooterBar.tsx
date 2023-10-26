@@ -17,7 +17,7 @@ const menu: Menu[] = [
 
 const FooterBar = () => {
   return (
-    <footer className=" bg-slate-900 h-56 text-white">
+    <footer className=" bg-[#0c0a3e] h-56 text-white">
       <div className="container max-w-6xl m-auto flex flex-wrap flex-col sm:flex-row justify-center sm:justify-between items-center h-full sm:px-4">
         <div className="my-3 sm:my-0">
           <img src={logoImg} alt="Logo" className="" />
