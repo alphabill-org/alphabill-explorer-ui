@@ -1,5 +1,5 @@
 import { Button } from "../../shared/ui/button/Button";
-import { IconNotificationNew } from "../../shared/ui/icons";
+import { IconNotificationNew} from "../../shared/ui/icons";
 
 const HomePage = () => {
   return (
