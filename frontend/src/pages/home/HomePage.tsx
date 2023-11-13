@@ -1,5 +1,6 @@
 import { Button } from "../../shared/ui/button/Button";
-import { IconNotificationNew} from "../../shared/ui/icons";
+import { IconNotificationNew } from "../../shared/ui/icons";
+import { TableBlocks } from "../../widgets";
 
 const HomePage = () => {
   return (
@@ -10,12 +11,7 @@ const HomePage = () => {
       <IconNotificationNew className="" />
       <h1>Hello world!</h1>
       <h2>Hello world!</h2>
-      <h1>Hello world!</h1>
-      <h1>Hello world!</h1>
-      <h1>Hello world!</h1>
-      <h1>Hello world!</h1>
-      <h1>Hello world!</h1>
-      <h1>Hello world!</h1>
+      <TableBlocks></TableBlocks>
     </>
   );
 };
