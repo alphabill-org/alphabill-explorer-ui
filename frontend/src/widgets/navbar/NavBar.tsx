@@ -15,9 +15,10 @@ const subMenu: Menu[] = [
 ];
 
 const menu: Menu[] = [
-  { title: "Home", link: "/" },
-  { title: "About", link: "/about" },
-  { title: "Use Cases", link: "/use_cases" },
+  { title: "Blocks", link: "/" },
+  { title: "Bills", link: "/bills" },
+  { title: "Tokens", link: "/tokens" },
+  { title: "NFTs", link: "/nft" },
 ];
 
 const NavBar = () => {
