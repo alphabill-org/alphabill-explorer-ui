@@ -24,7 +24,7 @@ const FooterBar = () => {
         </div>
         <div className=" flex my-3 sm:my-0 text-center">
           {menu.map((item, index) => (
-            <>
+            <div key={index}>
               <Link
                 className=" text-xs sm:text-sm text-white px-3 py-2"
                 to={item.link}
@@ -34,7 +34,7 @@ const FooterBar = () => {
               {index < menu.length - 1 && (
                 <span className="border-r border-gray-300 h-4 my-auto"></span>
               )}
-            </>
+            </div>
           ))}
         </div>
         <div className="flex my-3 sm:my-0">

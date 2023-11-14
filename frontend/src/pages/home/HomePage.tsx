@@ -1,6 +1,6 @@
 import { Button } from "../../shared/ui/button/Button";
 import { IconNotificationNew } from "../../shared/ui/icons";
-import { TableBlocks } from "../../widgets";
+import { TableBlocksMini, TableTxsMini } from "../../widgets";
 
 const HomePage = () => {
   return (
@@ -11,7 +11,10 @@ const HomePage = () => {
       <IconNotificationNew className="" />
       <h1>Hello world!</h1>
       <h2>Hello world!</h2>
-      <TableBlocks></TableBlocks>
+      <div className=" flex justify-between">
+        <TableBlocksMini />
+        <TableTxsMini />
+      </div>
     </>
   );
 };
