@@ -1,4 +1,4 @@
-import { createColumnHelper } from "@tanstack/react-table";
+import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 
 import { Table } from "../../features";
 import { useEffect } from "react";
@@ -37,7 +37,8 @@ const tx3: TxTableElement = {
 const txs: TxTableElement[] = [tx1, tx2, tx2, tx1, tx3, tx3, tx1];
 
 const columnHelper = createColumnHelper<TxTableElement>();
-const columns = [
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const columns : ColumnDef<TxTableElement, any>[] = [
   columnHelper.accessor("id", { header: "Txn Hash" }),
   columnHelper.accessor("time", { header: "Time" }),
   columnHelper.accessor("from", { header: "From" }),

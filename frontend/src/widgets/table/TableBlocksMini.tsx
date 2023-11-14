@@ -1,5 +1,5 @@
 import { block as testBlock } from "./../../shared/api/test";
-import { createColumnHelper } from "@tanstack/react-table";
+import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 
 import { Table } from "../../features";
 import { useEffect } from "react";
@@ -39,7 +39,8 @@ const blocks: BlockTableElement[] = [
 ];
 
 const columnHelper = createColumnHelper<BlockTableElement>();
-const columns = [
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const columns : ColumnDef<BlockTableElement, any>[] = [
   columnHelper.accessor("blockNumber", { header: "Block Number" }),
   columnHelper.accessor("txCount", { header: "txCount" }),
   columnHelper.accessor("shardId", { header: "Shard" }),
@@ -62,6 +63,7 @@ const TableBlocksMini = () => {
   return (
     <div className="w-1/2 text-center text-white">
       <Table
+        queryKey="blocksMini"
         data={blocks}
         columns={columns}
         className=" w-full"

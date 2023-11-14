@@ -49,7 +49,7 @@ const Table = <TData extends object>({
     pageIndex,
     pageSize,
   };
-  const defaultData = React.useMemo(() => data, []);
+  const defaultData = React.useMemo(() => data, [data]);
 
   const dataQuery = useQuery({
     queryKey: [queryKey, fetchDataOptions],
