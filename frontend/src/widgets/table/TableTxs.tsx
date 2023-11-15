@@ -2,7 +2,6 @@ import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 
 import { Table } from "../../features";
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
 import { TableElementTx } from "./types";
 
 const tx1: TableElementTx = {
@@ -12,14 +11,14 @@ const tx1: TableElementTx = {
   to: "0xsdfdsfsfsd",
   amount: 230,
 };
-const tx2: TableElementTx = {
+const tx2: TableElementTx= {
   id: "0xksdzxczczxcz",
   time: "2134",
   from: "0xsdfdsfsfsd",
   to: "0xsdsadasdasda",
   amount: 56000,
 };
-const tx3: TableElementTx = {
+const tx3: TableElementTx= {
   id: "0xksdzxasdad",
   time: "221334",
   from: "0xsdxcvxcv",
@@ -47,24 +46,22 @@ async function fetchData() {
   };
 }
 
-const TableTxsMini = () => {
+const TableTxs = () => {
   useEffect(() => {
     fetchData();
   });
 
   return (
-    <div className="w-1/2 text-center text-white">
+    <div className="">
       <Table
-        queryKey="txMini"
+        queryKey="transactions"
         data={txs}
         columns={columns}
-        className=" w-full"
+        className=" w-full m-auto text-center text-white"
         fetchDataFn={fetchData}
+        isPaginate={true}
       />
-      <Link className="block w-3/4 mx-auto bg-green-400" to={"/bills"}>
-        View all
-      </Link>
     </div>
   );
 };
-export default TableTxsMini;
+export default TableTxs;

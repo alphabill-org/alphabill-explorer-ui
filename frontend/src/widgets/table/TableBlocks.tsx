@@ -2,18 +2,9 @@ import { block as testBlock } from "./../../shared/api/test";
 import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 
 import { Table } from "../../features";
+import { TableElementBlock } from "./types";
 
-type BlockTableElement = {
-  id: number;
-  blockNumber: number;
-  txCount: number;
-  shardId: string;
-  earnedFees: number;
-  summaryValue: string;
-  timestamp: number;
-};
-
-const block: BlockTableElement = {
+const block: TableElementBlock = {
   id: testBlock.UnicityCertificate.InputRecord.RoundNumber,
   blockNumber: testBlock.UnicityCertificate.InputRecord.RoundNumber,
   txCount: testBlock.Transactions.length,
@@ -22,7 +13,7 @@ const block: BlockTableElement = {
   summaryValue: testBlock.UnicityCertificate.InputRecord.SummaryValue,
   timestamp: testBlock.UnicityCertificate.UnicitySeal.Timestamp,
 };
-const block2: BlockTableElement = {
+const block2: TableElementBlock = {
   id: testBlock.UnicityCertificate.InputRecord.RoundNumber,
   blockNumber: 22,
   txCount: testBlock.Transactions.length,
@@ -32,7 +23,7 @@ const block2: BlockTableElement = {
   timestamp: testBlock.UnicityCertificate.UnicitySeal.Timestamp,
 };
 
-const blocks: BlockTableElement[] = [
+const blocks: TableElementBlock[] = [
   block,
   block,
   block,
@@ -83,9 +74,9 @@ const blocks: BlockTableElement[] = [
   block2,
 ];
 
-const columnHelper = createColumnHelper<BlockTableElement>();
+const columnHelper = createColumnHelper<TableElementBlock>();
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const columns : ColumnDef<BlockTableElement, any>[]  = [
+const columns: ColumnDef<TableElementBlock, any>[] = [
   columnHelper.accessor("blockNumber", { header: "Block Number" }),
   columnHelper.accessor("timestamp", { header: "Time" }),
   columnHelper.accessor("txCount", { header: "txCount" }),
