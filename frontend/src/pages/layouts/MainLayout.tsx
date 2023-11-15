@@ -7,7 +7,7 @@ export const MainLayout = () => {
 
       <NavBar />
 
-      <div className="relative h-screen w-full bg-[#0c0a3e] z-0" style={{ overflow: 'hidden' }}>
+      <div className="relative min-h-screen w-full bg-[#0c0a3e] z-0" style={{ overflow: 'hidden' }}>
         <div className="container mx-auto max-w-6xl z-30">
           <Outlet />
         </div>

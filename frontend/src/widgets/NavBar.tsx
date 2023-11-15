@@ -1,8 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
-
-import logoImg from "../../shared/ui/assets/logo/logo.png";
-import { IconSocialDiscord } from "../../shared/ui/icons";
+import { IconSocialDiscord } from "../shared/ui/icons";
+import { AlphExplorerLogo } from "../shared/ui/assets/logo/alphExplorerLogo";
 
 type Menu = {
   title: string;
@@ -16,8 +15,10 @@ const subMenu: Menu[] = [
 
 const menu: Menu[] = [
   { title: "Home", link: "/" },
-  { title: "About", link: "/about" },
-  { title: "Use Cases", link: "/use_cases" },
+  { title: "Blocks", link: "/blocks" },
+  { title: "Transactions", link: "/transactions" },
+  { title: "Bills", link: "/bills" },
+  { title: "NFT", link: "/nft" },
 ];
 
 const NavBar = () => {
@@ -65,9 +66,9 @@ const NavBar = () => {
   return (
     <div className={overlayClass}>
       <nav className=" bg-[#4e3fb6]">
-        <div className=" container max-w-6xl mx-auto justify-end items-center hidden sm:flex space-x-4 px-4 py-1">
-          {subMenu.map((item) => (
-            <NavLink className={({ isActive }) => isActive ? "text-[#08e8de] font-medium" : "text-white hover:text-[#08e8de] transition-colors duration-300"} to={item.link}>
+        <div className=" container max-w-6xl w- mx-auto justify-end items-center hidden sm:flex space-x-4 px-4 py-1">
+          {subMenu.map((item, index) => (
+            <NavLink key={index} className={({ isActive }) => isActive ? "text-[#08e8de] font-medium" : "text-white hover:text-[#08e8de] transition-colors duration-300"} to={item.link}>
               {item.title}
             </NavLink>
           ))}
@@ -78,13 +79,13 @@ const NavBar = () => {
         <div className="container max-w-6xl mx-auto flex justify-between items-center p-4">
           <div className="flex items-center">
             <div className="text-white text-xl font-semibold">
-              <img src={logoImg} alt="Logo" className="" />
+              <AlphExplorerLogo className="w-[157px]"/>
             </div>
           </div>
 
           <div className="hidden sm:flex space-x-4">
-            {menu.map((item) => (
-              <NavLink className={({ isActive }) => isActive ? "text-[#08e8de] font-medium" : "text-white hover:text-[#08e8de] transition-colors duration-300"} to={item.link}>
+            {menu.map((item, index) => (
+              <NavLink key={index} className={({ isActive }) => isActive ? "text-[#08e8de] font-medium" : "text-white hover:text-[#08e8de] transition-colors duration-300"} to={item.link}>
                 {item.title}
               </NavLink>
             ))}
@@ -103,14 +104,14 @@ const NavBar = () => {
         {isOpen && (
           <div className="sm:hidden flex flex-col">
             <div className="flex flex-col">
-              {menu.map((item) => (
-                <NavLink onClick={toggleMenu} className={({ isActive }) => isActive ? "text-[#08e8de] px-4 py-2" : "px-4 py-2 text-white hover:bg-indigo-800"} to={item.link}>
+              {menu.map((item, index) => (
+                <NavLink key={index} onClick={toggleMenu} className={({ isActive }) => isActive ? "text-[#08e8de] px-4 py-2" : "px-4 py-2 text-white hover:bg-indigo-800"} to={item.link}>
                   {item.title}
                 </NavLink>
               ))}
 
-              {subMenu.map((item) => (
-                <NavLink onClick={toggleMenu} className={({ isActive }) => isActive ? "text-[#08e8de] px-4 py-2" : "px-4 py-2 text-white hover:bg-indigo-800"} to={item.link}>
+              {subMenu.map((item, index) => (
+                <NavLink key={index} onClick={toggleMenu} className={({ isActive }) => isActive ? "text-[#08e8de] px-4 py-2" : "px-4 py-2 text-white hover:bg-indigo-800"} to={item.link}>
                   {item.title}
                 </NavLink>
               ))}

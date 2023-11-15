@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
-
-import logoImg from "../../shared/ui/assets/logo/logo.png";
-import IconDiscord from "../../shared/ui/assets/icons/Ico_Discord.png";
+import { AlphExplorerLogo } from "../shared/ui/assets/logo/alphExplorerLogo";
+import IconDiscord from "../shared/ui/assets/icons/Ico_Discord.png";
 
 type Menu = {
   title: string;
@@ -20,7 +19,7 @@ const FooterBar = () => {
     <footer className=" bg-[#0c0a3e] h-56 text-white">
       <div className="container max-w-6xl m-auto flex flex-wrap flex-col sm:flex-row justify-center sm:justify-between items-center h-full sm:px-4">
         <div className="my-3 sm:my-0">
-          <img src={logoImg} alt="Logo" className="" />
+          <AlphExplorerLogo className="w-[157px]"/>
         </div>
         <div className=" flex my-3 sm:my-0 text-center">
           {menu.map((item, index) => (
