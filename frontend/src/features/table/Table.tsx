@@ -76,7 +76,7 @@ const Table = <TData extends object>({
   return (
     <div>
       <table className={className}>
-        <thead>
+        <thead className=" text-sm font-light">
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
@@ -92,6 +92,7 @@ const Table = <TData extends object>({
             </tr>
           ))}
         </thead>
+        
         <tbody>
           {table.getRowModel().rows.map((row) => (
             <tr key={row.id}>

@@ -61,7 +61,7 @@ const TableBlocksMini = () => {
   });
 
   return (
-    <div className="w-1/2 text-center text-white">
+    <div className="text-center text-white bg-black bg-opacity-50 p-5">
       <Table
         queryKey="blocksMini"
         data={blocks}

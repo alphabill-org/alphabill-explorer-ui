@@ -13,24 +13,24 @@ type TxTableElement = {
 };
 
 const tx1: TxTableElement = {
-  id: "0xksdfwerwerwerwerwersdfsfdsdf",
+  id: "0xHash",
   time: "1321354",
   from: "John",
-  to: "0xsdfdsfsfsd",
+  to: "Mike",
   amount: 230,
 };
 const tx2: TxTableElement = {
-  id: "0xksdzxczczxcz",
+  id: "0xHash",
   time: "2134",
-  from: "0xsdfdsfsfsd",
-  to: "0xsdsadasdasda",
+  from: "Mike",
+  to: "John",
   amount: 56000,
 };
 const tx3: TxTableElement = {
-  id: "0xksdzxasdad",
+  id: "0xHash",
   time: "221334",
-  from: "0xsdxcvxcv",
-  to: "0xsdsdvsdv",
+  from: "Mike",
+  to: "John",
   amount: 52,
 };
 
@@ -60,7 +60,7 @@ const TableTxsMini = () => {
   });
 
   return (
-    <div className="w-1/2 text-center text-white">
+    <div className="text-center text-white bg-black bg-opacity-50 p-5">
       <Table
         queryKey="txMini"
         data={txs}
