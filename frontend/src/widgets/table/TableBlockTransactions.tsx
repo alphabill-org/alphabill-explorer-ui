@@ -2,9 +2,8 @@ import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 
 import { Table } from "../../features";
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
 import { TableElementTx } from "./types";
-import { IconRight } from './../../shared/ui/icons/IconRight';
+import { useParams } from "react-router-dom";
 
 const tx1: TableElementTx = {
   id: "0xksdfwerwerwerwerwersdfsfdsdf",
@@ -35,15 +34,7 @@ const columnHelper = createColumnHelper<TableElementTx>();
 const columns: ColumnDef<TableElementTx, any>[] = [
   columnHelper.accessor("id", { header: "Txn Hash" }),
   columnHelper.accessor("time", { header: "Time" }),
-  columnHelper.accessor("from", {
-    header: "From",
-    cell: (i) => (
-      <div className="flex flex-row justify-between items-center">
-        {i.getValue()}
-        <IconRight/>
-      </div>
-    ),
-  }),
+  columnHelper.accessor("from", { header: "From" }),
   columnHelper.accessor("to", { header: "To" }),
   columnHelper.accessor("amount", { header: "Amount" }),
 ];
@@ -56,24 +47,24 @@ async function fetchData() {
   };
 }
 
-const TableTxsMini = () => {
+const TableBlockTransactions = () => {
+  const { id } = useParams();
   useEffect(() => {
     fetchData();
   });
 
   return (
-    <div className="w-1/2 text-center text-white">
+    <div className="">
+      Block no :{id}
       <Table
-        queryKey="txMini"
+        queryKey="transactions"
         data={txs}
         columns={columns}
-        className=" w-full"
+        className=" w-full m-auto text-center text-white"
         fetchDataFn={fetchData}
+        isPaginate={true}
       />
-      <Link className="block w-3/4 mx-auto bg-green-400" to={"/bills"}>
-        View all
-      </Link>
     </div>
   );
 };
-export default TableTxsMini;
+export default TableBlockTransactions;

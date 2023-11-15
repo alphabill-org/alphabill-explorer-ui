@@ -1,11 +1,17 @@
 type TableElementBlock = {
   id: number;
   blockNumber?: number;
+  timestamp?: number;
+  proposerID?: string;
   txCount?: number;
+  
   shardId?: string;
   earnedFees?: number;
   summaryValue?: string;
-  timestamp?: number;
+
+  hash?: string;
+  previousBlockHash?: string;
+
 };
 type TableElementTx = {
   id: string;

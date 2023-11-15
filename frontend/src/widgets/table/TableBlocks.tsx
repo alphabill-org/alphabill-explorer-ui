@@ -3,6 +3,7 @@ import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 
 import { Table } from "../../features";
 import { TableElementBlock } from "./types";
+import { Link } from "react-router-dom";
 
 const block: TableElementBlock = {
   id: testBlock.UnicityCertificate.InputRecord.RoundNumber,
@@ -77,9 +78,21 @@ const blocks: TableElementBlock[] = [
 const columnHelper = createColumnHelper<TableElementBlock>();
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const columns: ColumnDef<TableElementBlock, any>[] = [
-  columnHelper.accessor("blockNumber", { header: "Block Number" }),
+  columnHelper.accessor("blockNumber", {
+    header: "Block Number",
+    cell: (info) => (
+      <Link className="text-[#08e8de]" to={`/blocks/${info.getValue()}`}>{info.getValue()}</Link>
+    ),
+  }),
   columnHelper.accessor("timestamp", { header: "Time" }),
-  columnHelper.accessor("txCount", { header: "txCount" }),
+  columnHelper.accessor("txCount", {
+    header: "txCount",
+    cell: (info) => (
+      <Link className="text-[#08e8de]" to={`/blocks/${info.row.original.blockNumber}/transactions`}>
+        {info.getValue()}
+      </Link>
+    ),
+  }),
   columnHelper.accessor("shardId", { header: "Shard" }),
   columnHelper.accessor("earnedFees", { header: "Earned Fees" }),
   columnHelper.accessor("summaryValue", { header: "Summary Value" }),
