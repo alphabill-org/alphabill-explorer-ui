@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import { IconSocialDiscord } from "../shared/ui/icons";
-import { AlphExplorerLogo } from "../shared/ui/assets/logo/alphExplorerLogo";
+import { AlphExplorerLogo } from "../shared/ui/assets/logo/AlphExplorerLogo";
 
 type Menu = {
   title: string;
