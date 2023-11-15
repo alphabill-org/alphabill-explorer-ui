@@ -2,37 +2,28 @@ import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 
 import { Table } from "../../features";
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
 import { TableElementTx } from "./types";
-import { IconRight } from './../../shared/ui/icons/IconRight';
+import { useParams } from "react-router-dom";
 
-type TxTableElement = {
-  id: string;
-  time: string;
-  from: string;
-  to: string;
-  amount: number;
-};
-
-const tx1: TxTableElement = {
-  id: "0xHash",
+const tx1: TableElementTx = {
+  id: "0xksdfwerwerwerwerwersdfsfdsdf",
   time: "1321354",
   from: "John",
-  to: "Mike",
+  to: "0xsdfdsfsfsd",
   amount: 230,
 };
-const tx2: TxTableElement = {
-  id: "0xHash",
+const tx2: TableElementTx = {
+  id: "0xksdzxczczxcz",
   time: "2134",
-  from: "Mike",
-  to: "John",
+  from: "0xsdfdsfsfsd",
+  to: "0xsdsadasdasda",
   amount: 56000,
 };
-const tx3: TxTableElement = {
-  id: "0xHash",
+const tx3: TableElementTx = {
+  id: "0xksdzxasdad",
   time: "221334",
-  from: "Mike",
-  to: "John",
+  from: "0xsdxcvxcv",
+  to: "0xsdsdvsdv",
   amount: 52,
 };
 
@@ -43,15 +34,7 @@ const columnHelper = createColumnHelper<TableElementTx>();
 const columns: ColumnDef<TableElementTx, any>[] = [
   columnHelper.accessor("id", { header: "Txn Hash" }),
   columnHelper.accessor("time", { header: "Time" }),
-  columnHelper.accessor("from", {
-    header: "From",
-    cell: (i) => (
-      <div className="flex flex-row justify-between items-center">
-        {i.getValue()}
-        <IconRight/>
-      </div>
-    ),
-  }),
+  columnHelper.accessor("from", { header: "From" }),
   columnHelper.accessor("to", { header: "To" }),
   columnHelper.accessor("amount", { header: "Amount" }),
 ];
@@ -64,24 +47,24 @@ async function fetchData() {
   };
 }
 
-const TableTxsMini = () => {
+const TableBlockTransactions = () => {
+  const { id } = useParams();
   useEffect(() => {
     fetchData();
   });
 
   return (
-    <div className="text-center text-white bg-black bg-opacity-50 p-5">
+    <div className="">
+      Block no :{id}
       <Table
-        queryKey="txMini"
+        queryKey="transactions"
         data={txs}
         columns={columns}
-        className=" w-full"
+        className=" w-full m-auto text-center text-white"
         fetchDataFn={fetchData}
+        isPaginate={true}
       />
-      <Link className="block w-3/4 mx-auto bg-green-400" to={"/bills"}>
-        View all
-      </Link>
     </div>
   );
 };
-export default TableTxsMini;
+export default TableBlockTransactions;
