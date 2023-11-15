@@ -3,6 +3,7 @@ import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 import { Table } from "../../features";
 import { useEffect } from "react";
 import { TableElementTx } from "./types";
+import { IconRight } from "../../shared/ui/icons";
 
 const tx1: TableElementTx = {
   id: "0xksdfwerwerwerwerwersdfsfdsdf",
@@ -33,7 +34,15 @@ const columnHelper = createColumnHelper<TableElementTx>();
 const columns : ColumnDef<TableElementTx, any>[] = [
   columnHelper.accessor("id", { header: "Txn Hash" }),
   columnHelper.accessor("time", { header: "Time" }),
-  columnHelper.accessor("from", { header: "From" }),
+  columnHelper.accessor("from", {
+    header: "From",
+    cell: (i) => (
+      <div className="flex flex-row justify-between items-center">
+        {i.getValue()}
+        <IconRight/>
+      </div>
+    ),
+  }),
   columnHelper.accessor("to", { header: "To" }),
   columnHelper.accessor("amount", { header: "Amount" }),
 ];

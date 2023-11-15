@@ -8,6 +8,7 @@ import {
   TransactionDetailsPage,
   TransactionsPage,
 } from "../../pages";
+import { DetailsBlock, TableBlockTransactions } from "../../widgets";
 
 export function Router() {
   return (
@@ -16,7 +17,10 @@ export function Router() {
         <Route index element={<HomePage />} />
 
         <Route path="blocks" element={<BlocksPage />} />
-        <Route path="blocks/:id" element={<BlockDetailsPage />} />
+        <Route path="blocks/:id" element={<BlockDetailsPage />}>
+          <Route index element={<DetailsBlock />} />
+          <Route path="transactions" element={<TableBlockTransactions />} />
+        </Route>
 
         <Route path="transactions" element={<TransactionsPage />} />
         <Route path="transactions/:id" element={<TransactionDetailsPage />} />
