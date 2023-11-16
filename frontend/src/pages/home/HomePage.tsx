@@ -4,7 +4,7 @@ import { TableBlocksMini, TableTxsMini } from "../../widgets";
 const HomePage = () => {
   return (
     <>
-      <div className="w-full flex justify-center py-4 lg:py-10">
+      <div className="w-full flex justify-center py-4 lg:pt-10 lg:pb-20">
         <h1 className="text-[#08e8de] text-[5vw] sm:text-[4.5vw] lg:text-[3.4vw]">The Alphabill Blockchain Explorer ...</h1>
       </div>
 

@@ -5,7 +5,7 @@ const TransactionDetailsPage = () => {
   const { id } = useParams();
   return (
     <div>
-      <h1>Transaction Details Page id:{id}</h1>
+      <h4 className="text-white font-normal px-5">Transaction {id}</h4>
       <DetailsTransaction/>
     </div>
   );

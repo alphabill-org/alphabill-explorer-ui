@@ -3,7 +3,7 @@ import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 import { Table } from "../../features";
 import { useEffect } from "react";
 import { TableElementTx } from "./types";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const tx1: TableElementTx = {
   id: "0xksdfwerwerwerwerwersdfsfdsdf",
@@ -55,14 +55,12 @@ async function fetchData() {
 }
 
 const TableBlockTransactions = () => {
-  const { id } = useParams();
   useEffect(() => {
     fetchData();
   });
 
   return (
     <div className="">
-      Block no :{id}
       <Table
         queryKey="block transactions"
         data={txs}

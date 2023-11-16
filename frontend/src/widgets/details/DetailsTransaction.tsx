@@ -59,8 +59,8 @@ const options={
 
   return (
     <div>
-      <section className="text-gray-400 body-font overflow-hidden">
-        <div className="container px-5 py-24 mx-auto">
+      <section className="text-gray-400 body-font overflow-hidden bg-black bg-opacity-50 mt-5">
+        <div className="container px-5 mx-auto">
           <div className="py-8 flex flex-wrap md:flex-nowrap">
             <div className="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col">
               <span className="font-semibold title-font text-white">
@@ -81,7 +81,7 @@ const options={
               <p className="">{dataQuery.data?.data.time}</p>
             </div>
           </div>
-          <div className="py-8 flex border-t-2 border-gray-800 flex-wrap md:flex-nowrap">
+          <div className="py-8 flex border-t-2 border-[#4e3fb6] border-opacity-50 flex-wrap md:flex-nowrap">
             <div className="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col">
               <span className="font-semibold title-font text-white">
                 From:
@@ -101,7 +101,7 @@ const options={
               <p className="">{dataQuery.data?.data.to}</p>
             </div>
           </div>
-          <div className="py-8 flex border-t-2 border-gray-800 flex-wrap md:flex-nowrap">
+          <div className="py-8 flex border-t-2 border-[#4e3fb6] border-opacity-50  flex-wrap md:flex-nowrap">
             <div className="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col">
               <span className="font-semibold title-font text-white">
                 Amount:
