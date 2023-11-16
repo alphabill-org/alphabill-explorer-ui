@@ -2,9 +2,7 @@ import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 
 import { Table } from "../../features";
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
 import { TableElementTx } from "./types";
-import { IconRight } from './../../shared/ui/icons/IconRight';
 
 type TxTableElement = {
   id: string;
@@ -41,18 +39,31 @@ const txs: TableElementTx[] = [tx1, tx2, tx2, tx1, tx3, tx3, tx1];
 const columnHelper = createColumnHelper<TableElementTx>();
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const columns: ColumnDef<TableElementTx, any>[] = [
-  columnHelper.accessor("id", { header: "Txn Hash" }),
+  columnHelper.accessor("id", {
+    header: "Txn Hash",
+    cell: (i) => (
+      <div className="text-[#08e8de]">
+        {i.getValue()}
+      </div>
+    )
+  }),
   columnHelper.accessor("time", { header: "Time" }),
   columnHelper.accessor("from", {
     header: "From",
     cell: (i) => (
-      <div className="flex flex-row justify-between items-center">
-        {i.getValue()}
-        <IconRight/>
-      </div>
+        <div className=" text-[#08e8de]">
+          {i.getValue()}
+        </div>
     ),
   }),
-  columnHelper.accessor("to", { header: "To" }),
+  columnHelper.accessor("to", {
+    header: "To",
+    cell: (i) => (
+      <div className="text-[#08e8de]">
+        {i.getValue()}
+      </div>
+    )
+  }),
   columnHelper.accessor("amount", { header: "Amount" }),
 ];
 async function fetchData() {
@@ -70,17 +81,15 @@ const TableTxsMini = () => {
   });
 
   return (
-    <div className="text-center text-white bg-black bg-opacity-50 p-5">
+    <div className="text-center text-white">
       <Table
         queryKey="txMini"
         data={txs}
         columns={columns}
         className=" w-full"
+        linkTo="/transactions"
         fetchDataFn={fetchData}
       />
-      <Link className="block w-3/4 mx-auto bg-green-400" to={"/bills"}>
-        View all
-      </Link>
     </div>
   );
 };

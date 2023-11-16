@@ -4,7 +4,7 @@ import { TableBlocksMini, TableTxsMini } from "../../widgets";
 const HomePage = () => {
   return (
     <>
-      <div className="w-full flex justify-center py-14 lg:py-20">
+      <div className="w-full flex justify-center py-4 lg:py-10">
         <h1 className="text-[#08e8de] text-[5vw] sm:text-[4.5vw] lg:text-[3.4vw]">The Alphabill Blockchain Explorer ...</h1>
       </div>
 
@@ -55,11 +55,13 @@ const HomePage = () => {
         </div>
       </div>
 
-      <div className="grid grid-rows-1 grid-cols-2 gap-1 px-14">
+      <div className="grid grid-cols-1 grid-rows-2 gap-2 lg:grid-rows-1 lg:grid-cols-2 lg:gap-1 px-14 py-5">
         <div>
+          <h4 className="text-white px-5 text-lg font-normal">LATEST BLOCKS</h4>
           <TableBlocksMini />
         </div>
         <div>
+          <h4 className="text-white px-5 text-lg font-normal">LATEST TRANSACTIONS</h4>
           <TableTxsMini />
         </div>
       </div>

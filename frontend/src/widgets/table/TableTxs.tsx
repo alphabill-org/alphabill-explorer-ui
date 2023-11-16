@@ -3,7 +3,6 @@ import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 import { Table } from "../../features";
 import { useEffect } from "react";
 import { TableElementTx } from "./types";
-import { IconRight } from "../../shared/ui/icons";
 
 const tx1: TableElementTx = {
   id: "0xksdfwerwerwerwerwersdfsfdsdf",
@@ -37,9 +36,8 @@ const columns : ColumnDef<TableElementTx, any>[] = [
   columnHelper.accessor("from", {
     header: "From",
     cell: (i) => (
-      <div className="flex flex-row justify-between items-center">
+      <div >
         {i.getValue()}
-        <IconRight/>
       </div>
     ),
   }),

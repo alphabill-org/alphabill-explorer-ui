@@ -3,7 +3,6 @@ import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 
 import { Table } from "../../features";
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
 import { TableElementBlock } from "./types";
 
 const block: TableElementBlock = {
@@ -34,9 +33,32 @@ const blocks: TableElementBlock[] = [
 const columnHelper = createColumnHelper<TableElementBlock>();
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const columns: ColumnDef<TableElementBlock, any>[] = [
-  columnHelper.accessor("blockNumber", { header: "Block Number" }),
-  columnHelper.accessor("txCount", { header: "txCount" }),
-  columnHelper.accessor("shardId", { header: "Shard" }),
+  columnHelper.accessor("blockNumber", {
+    header: "Block Number", 
+    cell: (i) => (
+      <div className="text-[#08e8de]">
+        {i.getValue()}
+      </div>
+    )
+  }),
+  columnHelper.accessor("txCount", {
+    header: "txCount", 
+    cell: (i) => (
+      <div className="text-[#08e8de]">
+        {i.getValue()}
+      </div>
+    )
+  }),
+  columnHelper.accessor("shardId",
+    {
+      header: "Shard",
+      cell: (i) => (
+        <div className="text-[#08e8de]">
+          {i.getValue()}
+        </div>
+      )
+    },
+  ),
   columnHelper.accessor("earnedFees", { header: "Earned Fees" }),
 ];
 async function fetchData() {
@@ -54,17 +76,15 @@ const TableBlocksMini = () => {
   });
 
   return (
-    <div className="text-center text-white bg-black bg-opacity-50 p-5">
+    <div className="text-center text-white">
       <Table
         queryKey="blocksMini"
         data={blocks}
         columns={columns}
-        className=" w-full"
+        className="w-full"
+        linkTo="/blocks"
         fetchDataFn={fetchData}
       />
-      <Link className="block w-3/4 mx-auto bg-green-400" to={"/blocks"}>
-        View all
-      </Link>
     </div>
   );
 };
