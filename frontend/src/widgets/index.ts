@@ -6,6 +6,7 @@ import TableTxsMini from "./table/TableTxsMini";
 import TableTxs from "./table/TableTxs";
 import DetailsBlock from "./details/DetailsBlock";
 import TableBlockTransactions from "./table/TableBlockTransactions";
+import DetailsTransaction from './details/DetailsTransaction';
 
 export { NavBar, FooterBar };
 
@@ -17,4 +18,4 @@ export {
   TableBlockTransactions,
 };
 
-export { DetailsBlock };
+export { DetailsBlock, DetailsTransaction };
