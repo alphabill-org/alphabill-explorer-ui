@@ -4,6 +4,7 @@ import { Table } from "../../features";
 import { useEffect } from "react";
 import { TableElementTx } from "./types";
 import { IconRight } from "../../shared/ui/icons";
+import { Link } from "react-router-dom";
 
 const tx1: TableElementTx = {
   id: "0xksdfwerwerwerwerwersdfsfdsdf",
@@ -12,14 +13,14 @@ const tx1: TableElementTx = {
   to: "0xsdfdsfsfsd",
   amount: 230,
 };
-const tx2: TableElementTx= {
+const tx2: TableElementTx = {
   id: "0xksdzxczczxcz",
   time: "2134",
   from: "0xsdfdsfsfsd",
   to: "0xsdsadasdasda",
   amount: 56000,
 };
-const tx3: TableElementTx= {
+const tx3: TableElementTx = {
   id: "0xksdzxasdad",
   time: "221334",
   from: "0xsdxcvxcv",
@@ -31,15 +32,22 @@ const txs: TableElementTx[] = [tx1, tx2, tx2, tx1, tx3, tx3, tx1];
 
 const columnHelper = createColumnHelper<TableElementTx>();
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const columns : ColumnDef<TableElementTx, any>[] = [
-  columnHelper.accessor("id", { header: "Txn Hash" }),
+const columns: ColumnDef<TableElementTx, any>[] = [
+  columnHelper.accessor("id", {
+    header: "Txn Hash",
+    cell: (info) => (
+      <Link className="text-[#08e8de]" to={`/transactions/${info.getValue()}`}>
+        {info.getValue()}
+      </Link>
+    ),
+  }),
   columnHelper.accessor("time", { header: "Time" }),
   columnHelper.accessor("from", {
     header: "From",
     cell: (i) => (
       <div className="flex flex-row justify-between items-center">
         {i.getValue()}
-        <IconRight/>
+        <IconRight />
       </div>
     ),
   }),

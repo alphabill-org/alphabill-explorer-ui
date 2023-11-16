@@ -3,7 +3,7 @@ import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 import { Table } from "../../features";
 import { useEffect } from "react";
 import { TableElementTx } from "./types";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const tx1: TableElementTx = {
   id: "0xksdfwerwerwerwerwersdfsfdsdf",
@@ -32,7 +32,14 @@ const txs: TableElementTx[] = [tx1, tx2, tx2, tx1, tx3, tx3, tx1];
 const columnHelper = createColumnHelper<TableElementTx>();
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const columns: ColumnDef<TableElementTx, any>[] = [
-  columnHelper.accessor("id", { header: "Txn Hash" }),
+  columnHelper.accessor("id", {
+    header: "Txn Hash",
+    cell: (info) => (
+      <Link className="text-[#08e8de]" to={`/transactions/${info.getValue()}`}>
+        {info.getValue()}
+      </Link>
+    ),
+  }),
   columnHelper.accessor("time", { header: "Time" }),
   columnHelper.accessor("from", { header: "From" }),
   columnHelper.accessor("to", { header: "To" }),
@@ -57,7 +64,7 @@ const TableBlockTransactions = () => {
     <div className="">
       Block no :{id}
       <Table
-        queryKey="transactions"
+        queryKey="block transactions"
         data={txs}
         columns={columns}
         className=" w-full m-auto text-center text-white"
