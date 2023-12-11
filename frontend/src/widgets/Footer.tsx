@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { AlphExplorerLogo } from "../shared/ui/assets/logo/AlphExplorerLogo";
 import IconDiscord from "../shared/ui/assets/icons/Ico_Discord.png";
 
@@ -24,12 +24,11 @@ const FooterBar = () => {
         <div className=" flex my-3 sm:my-0 text-center">
           {menu.map((item, index) => (
             <div key={index}>
-              <Link
-                className=" text-xs sm:text-sm text-white px-3 py-2"
+              <NavLink key={index} className={({ isActive }) => isActive ? "link-active text-xs sm:text-sm px-3 py-2" : "link text-xs sm:text-sm px-3 py-2"}
                 to={item.link}
               >
                 {item.title}
-              </Link>
+              </NavLink>
               {index < menu.length - 1 && (
                 <span className="border-r border-gray-300 h-4 my-auto"></span>
               )}

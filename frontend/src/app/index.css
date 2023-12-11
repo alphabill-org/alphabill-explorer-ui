@@ -6,65 +6,69 @@
 
 @layer base {
   :root {
-    --color-primary-blue: #08E8DE;
-    --color-primary-dark-blue: #0C0A3E;
-    --color-primary-violet: #4E3EB6;
+    --menu-primary-bg: #4e3fb6;
+    --menu-secondary-bg: #0c0a3e;
+    --menu-mobile-hover: #4e3fb6;
+    --menu-link-text: #ffffff;
+    --menu-link-text-hover: #08e8de;
+    --menu-link-text-active: #08e8de;
+    --menu-link-mobile-hover:  #3730A3;
 
-    --color-neutral-white: #FFFFFF;
-    --color-neutral-light: #EEEDFC;
-    --color-neutral-light-gray: #F6F4F5;
+    --button-v1-bg: #08e8de;
+    --button-v1-bg-hover: #4e3fb6;
+    --button-v1-text: #0c0a3e;
+    --button-v1-text-hover: #ffffff;
 
-    --color-inactive-dark-01: #1C194E;
-    --color-inactive-dark-02: #7C76A9;
-    --color-inactive-button-violet: #ACA4E0;
-    --color-inactive-button-blue: #0A8F9E;
+    --button-v2-bg: #4e3fb6;
+    --button-v2-bg-hover: #08e8de;
+    --button-v2-text: #ffffff;
+    --button-v2-text-hover: #0c0a3e;
 
-    --color-error-red: #EF476F;
+  }
+  .theme-light{
+    --menu-primary-bg: #847fa8;
+    --menu-secondary-bg: #1b1b29;
+    --menu-mobile-hover: #27243f;
+    --menu-link-text: #ffffff;
+    --menu-link-text-hover: #005752;
+    --menu-link-text-active: #004d49;
+    --menu-link-mobile-hover:  #626170;
 
-    --color-graphics-dark-blue-01: #0C0A3E;
-    --color-graphics-dark-blue-02: #050A6D;
-    --color-graphics-dark-blue-03: #0E08A3;
-    --color-graphics-dark-blue-04: #2F13D9;
-    --color-graphics-dark-blue-05: #5D6CF0;
-    --color-graphics-dark-blue-06: #909CFF;
-    --color-graphics-dark-blue-07: #B8BFFF;
-    --color-graphics-dark-blue-08: #D8DEFF;
+    --button-v1-bg: #630606;
+    --button-v1-bg-hover: #6e62b9;
+    --button-v1-text: #0c0a3e;
+    --button-v1-text-hover: #ffffff;
 
-    --color-graphics-purple-01: #2D1540;
-    --color-graphics-purple-02: #371E60;
-    --color-graphics-purple-03: #432B8A;
-    --color-graphics-purple-04: #5534B5;
-    --color-graphics-purple-05: #7F59D0;
-    --color-graphics-purple-06: #947BDC;
-    --color-graphics-purple-07: #BFADF2;
-    --color-graphics-purple-08: #DFD8F5;
+    --button-v2-bg: #0a0641;
+    --button-v2-bg-hover: #6fc7c2;
+    --button-v2-text: #ffffff;
+    --button-v2-text-hover: #0c0a3e;
+  }
+  .theme-yellow{
+    --menu-primary-bg: #e29024;
+    --menu-secondary-bg: #bed14f;
+    --menu-mobile-hover: #27243f;
+    --menu-link-text: #ffffff;
+    --menu-link-text-hover: #005752;
+    --menu-link-text-active: #004d49;
+    --menu-link-mobile-hover:  #626170;
 
-    --color-graphics-orange-01: #3F1B01;
-    --color-graphics-orange-02: #6C2E01;
-    --color-graphics-orange-03: #A04800;
-    --color-graphics-orange-04: #D25C00;
-    --color-graphics-orange-05: #F46A00;
-    --color-graphics-orange-06: #FF8838;
-    --color-graphics-orange-07: #FFAC70;
-    --color-graphics-orange-08: #FFD3B2;
+    --button-v1-bg: #aaa70c;
+    --button-v1-bg-hover: #832d2d;
+    --button-v1-text: #0c0a3e;
+    --button-v1-text-hover: #ffffff;
 
-    --color-graphics-turquoise-01: #012726;
-    --color-graphics-turquoise-02: #034E4B;
-    --color-graphics-turquoise-03: #047670;
-    --color-graphics-turquoise-04: #058A83;
-    --color-graphics-turquoise-05: #06B1A9;
-    --color-graphics-turquoise-06: #07C5BB;
-    --color-graphics-turquoise-07: #08E8DE;
-    --color-graphics-turquoise-08: #90F4F0;
+    --button-v2-bg: #c23927;
+    --button-v2-bg-hover: #e6c740;
+    --button-v2-text: #ffffff;
+    --button-v2-text-hover: #494bd8;
   }
   body {
     @apply font-space;
   }
-
   h1 {
     @apply text-6xl font-bold;
   }
-
   h2 {
     @apply text-5xl font-bold;
   }
@@ -73,5 +77,30 @@
   }
   h4 {
     @apply text-2xl font-bold;
+  }
+
+  .button {
+    @apply font-bold items-center transition duration-300;
+  }
+  .button-v1 {
+    @apply button bg-[--button-v1-bg] hover:bg-[--button-v1-bg-hover] text-[--button-v1-text] hover:text-[--button-v1-text-hover];
+  }
+  .button-v2 {
+    @apply button bg-[--button-v2-bg] hover:bg-[--button-v2-bg-hover] text-[--button-v2-text] hover:text-[--button-v2-text-hover];
+  }
+  .link {
+    @apply text-[--menu-link-text] hover:text-[--menu-link-text-hover] transition-colors duration-300;
+  }
+  .link-active {
+    @apply text-[--menu-link-text-active] font-medium;
+  }
+  .link-mobile{
+    @apply hover:bg-[--menu-link-mobile-hover];
+  }
+  .menu-primary{
+    @apply bg-[--menu-primary-bg];
+  }
+  .menu-secondary{
+    @apply bg-[--menu-secondary-bg];
   }
 }

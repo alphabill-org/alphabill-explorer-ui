@@ -7,6 +7,10 @@ import TableTxs from "./table/TableTxs";
 import DetailsBlock from "./details/DetailsBlock";
 import TableBlockTransactions from "./table/TableBlockTransactions";
 import DetailsTransaction from './details/DetailsTransaction';
+import { ThemeSwitcher } from './ThemeSwitcher';
+
+
+export { ThemeSwitcher };
 
 export { NavBar, FooterBar };
 
