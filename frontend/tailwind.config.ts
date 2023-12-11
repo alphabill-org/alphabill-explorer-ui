@@ -21,7 +21,7 @@ export default {
       },
       animation:{
         pulsing: 'pulsing 12s linear infinite',
-      }
+      },
     },
   },
   plugins: [],

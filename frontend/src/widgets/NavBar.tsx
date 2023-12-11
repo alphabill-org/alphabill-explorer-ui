@@ -65,17 +65,17 @@ const NavBar = () => {
 
   return (
     <div className={overlayClass}>
-      <nav className=" bg-[#4e3fb6]">
+      <nav className=" menu-primary">
         <div className=" container max-w-6xl w- mx-auto justify-end items-center hidden sm:flex space-x-4 px-4 py-1">
           {subMenu.map((item, index) => (
-            <NavLink key={index} className={({ isActive }) => isActive ? "text-[#08e8de] font-medium" : "text-white hover:text-[#08e8de] transition-colors duration-300"} to={item.link}>
+            <NavLink key={index} className={({ isActive }) => isActive ? "link-active" : "link"} to={item.link}>
               {item.title}
             </NavLink>
           ))}
           <IconSocialDiscord className="fill-white hover:fill-[#08e8de] transition-colors duration-300"/>
         </div>
       </nav>
-      <nav ref={mobileMenuRef} className={`${isOpen ? "bg-[#4e3fb6]" : "bg-[#0c0a3e]"} transition-all duration-100`}>
+      <nav ref={mobileMenuRef} className={`${isOpen ? "menu-primary" : "menu-secondary"} transition-all duration-100`}>
         <div className="container max-w-6xl mx-auto flex justify-between items-center p-4">
           <div className="flex items-center">
             <div className="text-white text-xl font-semibold">
@@ -85,7 +85,7 @@ const NavBar = () => {
 
           <div className="hidden sm:flex space-x-4">
             {menu.map((item, index) => (
-              <NavLink key={index} className={({ isActive }) => isActive ? "text-[#08e8de] font-medium" : "text-white hover:text-[#08e8de] transition-colors duration-300"} to={item.link}>
+              <NavLink key={index} className={({ isActive }) => isActive ? "link-active" : "link"} to={item.link}>
                 {item.title}
               </NavLink>
             ))}
@@ -105,13 +105,13 @@ const NavBar = () => {
           <div className="sm:hidden flex flex-col">
             <div className="flex flex-col">
               {menu.map((item, index) => (
-                <NavLink key={index} onClick={toggleMenu} className={({ isActive }) => isActive ? "text-[#08e8de] px-4 py-2" : "px-4 py-2 text-white hover:bg-indigo-800"} to={item.link}>
+                <NavLink key={index} onClick={toggleMenu} className={({ isActive }) => isActive ? "link-active px-4 py-2" : "px-4 py-2 link link-mobile"} to={item.link}>
                   {item.title}
                 </NavLink>
               ))}
 
               {subMenu.map((item, index) => (
-                <NavLink key={index} onClick={toggleMenu} className={({ isActive }) => isActive ? "text-[#08e8de] px-4 py-2" : "px-4 py-2 text-white hover:bg-indigo-800"} to={item.link}>
+                <NavLink key={index} onClick={toggleMenu} className={({ isActive }) => isActive ? "link-active px-4 py-2" : "px-4 py-2 link link-mobile"} to={item.link}>
                   {item.title}
                 </NavLink>
               ))}
