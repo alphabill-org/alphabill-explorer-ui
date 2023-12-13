@@ -94,13 +94,13 @@ const Table = <TData extends object>({
   }
 
   return (
-    <div className="bg-black bg-opacity-50 p-5">
+    <div className="table">
       <table className={className}>
-        <thead className=" text-sm font-light border-b-2 border-b-[#4e3fb6]">
+        <thead className="table-column-header">
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
-                <th key={header.id} className=" pb-5">
+                <th key={header.id} className="pb-5">
                   {header.isPlaceholder
                     ? null
                     : flexRender(
@@ -118,8 +118,8 @@ const Table = <TData extends object>({
               key={row.id}
               className={
                 index < table.getRowModel().rows.length - 1
-                  ? "border-b-2 border-b-[#4e3fb6] border-opacity-50"
-                  : "border-b-2 border-b-[#4e3fb6]"
+                  ? "table-divider-v2"
+                  : "table-divider-v1"
               }
             >
               {row.getVisibleCells().map((cell) => (
@@ -150,7 +150,7 @@ const Table = <TData extends object>({
       {isPaginate && <TablePagination table={table} />}
       {linkTo && (
         <Link
-          className=" button-v1 flex justify-center items-center w-3/4 h-10 mx-auto mt-5"
+          className="button-v1 flex justify-center items-center w-3/4 h-10 mx-auto mt-5"
           to={linkTo}
         >
           View all

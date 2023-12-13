@@ -42,7 +42,7 @@ const columns: ColumnDef<TableElementTx, any>[] = [
   columnHelper.accessor("id", {
     header: "Txn Hash",
     cell: (i) => (
-      <div className="text-[#08e8de]">
+      <div className="table-cell-link">
         {i.getValue()}
       </div>
     )
@@ -51,7 +51,7 @@ const columns: ColumnDef<TableElementTx, any>[] = [
   columnHelper.accessor("from", {
     header: "From",
     cell: (i) => (
-        <div className=" text-[#08e8de]">
+        <div className=" table-cell-link">
           {i.getValue()}
         </div>
     ),
@@ -59,7 +59,7 @@ const columns: ColumnDef<TableElementTx, any>[] = [
   columnHelper.accessor("to", {
     header: "To",
     cell: (i) => (
-      <div className="text-[#08e8de]">
+      <div className="table-cell-link">
         {i.getValue()}
       </div>
     )
@@ -81,7 +81,7 @@ const TableTxsMini = () => {
   });
 
   return (
-    <div className="text-center text-white">
+    <div className="text-center">
       <Table
         queryKey="txMini"
         data={txs}

@@ -35,7 +35,7 @@ const columns: ColumnDef<TableElementTx, any>[] = [
   columnHelper.accessor("id", {
     header: "Txn Hash",
     cell: (info) => (
-      <Link className="text-[#08e8de]" to={`/transactions/${info.getValue()}`}>
+      <Link className="table-cell-link" to={`/transactions/${info.getValue()}`}>
         {info.getValue()}
       </Link>
     ),
@@ -65,7 +65,7 @@ const TableBlockTransactions = () => {
         queryKey="block transactions"
         data={txs}
         columns={columns}
-        className=" w-full m-auto text-center text-white"
+        className=" w-full m-auto text-center"
         fetchDataFn={fetchData}
         isPaginate={true}
       />

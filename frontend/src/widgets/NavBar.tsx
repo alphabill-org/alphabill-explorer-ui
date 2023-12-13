@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import { IconSocialDiscord } from "../shared/ui/icons";
 import { AlphExplorerLogo } from "../shared/ui/assets/logo/AlphExplorerLogo";
+import { ThemeSwitcher } from ".";
 
 type Menu = {
   title: string;
@@ -73,6 +74,7 @@ const NavBar = () => {
             </NavLink>
           ))}
           <IconSocialDiscord className="fill-white hover:fill-[#08e8de] transition-colors duration-300"/>
+          <ThemeSwitcher/>
         </div>
       </nav>
       <nav ref={mobileMenuRef} className={`${isOpen ? "menu-primary" : "menu-secondary"} transition-all duration-100`}>
@@ -124,7 +126,7 @@ const NavBar = () => {
                   <p className="text-[#08e8de] ml-1">(+1.06%)</p>
                 </div>
 
-                <p className=" font-medium text-white"> TxFee: 1 ALPHA</p>
+                <ThemeSwitcher/>
               </div>
             </div>
           </div>

@@ -8,28 +8,28 @@ const TablePagination = <TData extends object>({ table }: Props<TData>) => {
   return (
     <div className="flex items-center justify-center gap-2 text-white mt-5">
       <button
-        className="border py-1 px-2"
+        className="table-pagination-button"
         onClick={() => table.setPageIndex(0)}
         disabled={!table.getCanPreviousPage()}
       >
         {"<<"}
       </button>
       <button
-        className="border py-1 px-2"
+        className="table-pagination-button"
         onClick={() => table.previousPage()}
         disabled={!table.getCanPreviousPage()}
       >
         {"<"}
       </button>
       <button
-        className="border py-1 px-2"
+        className="table-pagination-button"
         onClick={() => table.nextPage()}
         disabled={!table.getCanNextPage()}
       >
         {">"}
       </button>
       <button
-        className="border py-1 px-2"
+        className="table-pagination-button"
         onClick={() => table.setPageIndex(table.getPageCount() - 1)}
         disabled={!table.getCanNextPage()}
       >

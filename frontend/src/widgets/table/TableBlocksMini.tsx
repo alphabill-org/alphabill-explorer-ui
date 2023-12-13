@@ -36,7 +36,7 @@ const columns: ColumnDef<TableElementBlock, any>[] = [
   columnHelper.accessor("blockNumber", {
     header: "Block Number", 
     cell: (i) => (
-      <div className="text-[#08e8de]">
+      <div className="table-cell-link">
         {i.getValue()}
       </div>
     )
@@ -44,7 +44,7 @@ const columns: ColumnDef<TableElementBlock, any>[] = [
   columnHelper.accessor("txCount", {
     header: "txCount", 
     cell: (i) => (
-      <div className="text-[#08e8de]">
+      <div className="table-cell-link">
         {i.getValue()}
       </div>
     )
@@ -53,7 +53,7 @@ const columns: ColumnDef<TableElementBlock, any>[] = [
     {
       header: "Shard",
       cell: (i) => (
-        <div className="text-[#08e8de]">
+        <div className="table-cell-link">
           {i.getValue()}
         </div>
       )
@@ -76,7 +76,7 @@ const TableBlocksMini = () => {
   });
 
   return (
-    <div className="text-center text-white">
+    <div className="text-center">
       <Table
         queryKey="blocksMini"
         data={blocks}
