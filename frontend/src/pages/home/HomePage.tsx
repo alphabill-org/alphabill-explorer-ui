@@ -1,5 +1,6 @@
 import { Button } from "../../shared/ui/button/Button";
 import { TableBlocksMini, TableTxsMini } from "../../widgets";
+import LineChart from "../../shared/ui/chart/LineChart";
 
 const HomePage = () => {
   return (
@@ -59,8 +60,10 @@ const HomePage = () => {
             <p className="widget-additional">(12.0 TPS)</p>
           </div>
         </div>
-        {/* TODO Graphics */}
-        <div className="bg-black bg-opacity-50 sm:col-span-2 sm:row-span-2 lg:col-span-2 lg:row-span-2 order-last lg:order-3"></div>
+        
+        <div className="bg-black bg-opacity-50 sm:col-span-2 sm:row-span-2 lg:col-span-2 lg:row-span-2 order-last lg:order-3 lg:max-h-full flex justify-center p-5">
+          <LineChart/>
+        </div>
         <div className="widget order-3 lg:order-4">
           <h4 className="widget-header">MARKET CAP</h4>
           <div className="flex flex-row items-center">

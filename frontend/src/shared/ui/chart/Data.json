@@ -1,0 +1,37 @@
+[
+    {
+        "id": 1,
+        "date": "Dec 1",
+        "txAmount": 5000
+    },
+    {
+        "id": 2,
+        "date": "Dec 2",
+        "txAmount": 4000
+    },
+    {
+        "id": 3,
+        "date": "Dec 3",
+        "txAmount": 3000
+    },
+    {
+        "id": 4,
+        "date": "Dec 4",
+        "txAmount": 5000
+    },
+    {
+        "id": 5,
+        "date": "Dec 5",
+        "txAmount": 6000
+    },
+    {
+        "id": 6,
+        "date": "Dec 6",
+        "txAmount":5500
+    },
+    {
+        "id": 7,
+        "date": "Dec 7",
+        "txAmount": 7000
+    }
+]
