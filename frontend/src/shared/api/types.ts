@@ -71,3 +71,32 @@ export type ClientMetadata = {
   MaxTransactionFee: number;
   FeeCreditRecordID: string;
 };
+
+// Explorer Models
+
+export type BlockExplorer = {
+  SystemID: string;
+  RoundNumber: number;
+  Header: HeaderExplorer;
+  TxHashes: string[];
+  SummaryValue: string; // summary value to certified
+  SumOfEarnedFees: number; // sum of the actual fees over all transaction records in the block
+};
+
+export type HeaderExplorer = {
+  Timestamp: number;
+  BlockHash: string;
+  PreviousBlockHash: string;
+  ProposerID: string; // validator
+};
+
+export type TxExplorer = {
+  Hash: string;
+  BlockNumber: number;
+  Timeout: number;
+  PayloadType: string;
+  Status: number;
+  TargetUnits: string[];
+  TransactionOrder: TransactionOrder;
+  Fee: number;
+};
