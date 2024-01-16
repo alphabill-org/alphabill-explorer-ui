@@ -45,7 +45,7 @@ const HomePage = () => {
         </Button>
       </div>
 
-      <div className="grid grid-rows-5 grid-cols-1 sm:grid-rows-4 sm:grid-cols-2 lg:grid-rows-2 lg:grid-cols-4 gap-1 my-10 px-14">
+      <div className="grid grid-rows-6 grid-cols-1 sm:grid-rows-4 sm:grid-cols-2 lg:grid-rows-2 lg:grid-cols-4 gap-1 my-10 px-14">
         <div className="widget order-1">
           <h4 className="widget-header">ALPHA PRICE</h4>
           <div className="flex flex-row items-center">
@@ -61,7 +61,7 @@ const HomePage = () => {
           </div>
         </div>
         
-        <div className="bg-black bg-opacity-50 sm:col-span-2 sm:row-span-2 lg:col-span-2 lg:row-span-2 order-last lg:order-3 lg:max-h-full flex justify-center p-5">
+        <div className="bg-black bg-opacity-50 row-span-2 sm:col-span-2 sm:row-span-2 lg:col-span-2 lg:row-span-2 order-last lg:order-3 lg:max-h-full flex justify-center py-5 px-10">
           <LineChart/>
         </div>
         <div className="widget order-3 lg:order-4">

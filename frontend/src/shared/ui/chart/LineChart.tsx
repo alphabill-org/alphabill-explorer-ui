@@ -17,6 +17,18 @@ const LineChart = () => {
         {
           type: 'line',
           data: TxData,
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              x: {
+                type: 'category',
+              },
+              y: {
+                type: 'linear',
+              }
+            }
+          }
         }
       )
     }
@@ -25,7 +37,7 @@ const LineChart = () => {
  
 
   return (
-    <canvas id='activityChart' style={{width: '60%', height: '60%'}}></canvas>
+    <canvas id='activityChart'></canvas>
   )
 }
 

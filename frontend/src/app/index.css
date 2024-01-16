@@ -88,7 +88,7 @@
   }
 
   .layout{
-    @apply bg-[--layout-primary-bg] relative min-h-screen w-full py-10 z-0;
+    @apply bg-[--layout-primary-bg] relative min-h-[60vh] w-full py-10 z-0;
   }
   .layout-circle{
     @apply border-[--layout-circle-border-bg] border-[2px] rounded-full absolute; 

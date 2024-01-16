@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { IconSocialDiscord } from "../shared/ui/icons";
 import { AlphExplorerLogo } from "../shared/ui/assets/logo/AlphExplorerLogo";
 import { ThemeSwitcher } from ".";
@@ -73,15 +73,17 @@ const NavBar = () => {
               {item.title}
             </NavLink>
           ))}
-          <IconSocialDiscord className="fill-white hover:fill-[#08e8de] transition-colors duration-300"/>
-          <ThemeSwitcher/>
+          <IconSocialDiscord className="fill-white hover:fill-[#08e8de] transition-colors duration-300" />
+          <ThemeSwitcher />
         </div>
       </nav>
       <nav ref={mobileMenuRef} className={`${isOpen ? "menu-primary" : "menu-secondary"} transition-all duration-100`}>
         <div className="container max-w-6xl mx-auto flex justify-between items-center p-4">
           <div className="flex items-center">
             <div className="text-white text-xl font-semibold">
-              <AlphExplorerLogo className="w-[157px]"/>
+              <Link to="/">
+                <AlphExplorerLogo className="w-[157px]" />
+              </Link>
             </div>
           </div>
 
@@ -126,7 +128,7 @@ const NavBar = () => {
                   <p className="text-[#08e8de] ml-1">(+1.06%)</p>
                 </div>
 
-                <ThemeSwitcher/>
+                <ThemeSwitcher />
               </div>
             </div>
           </div>
