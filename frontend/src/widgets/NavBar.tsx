@@ -73,7 +73,9 @@ const NavBar = () => {
               {item.title}
             </NavLink>
           ))}
-          <IconSocialDiscord className="fill-white hover:fill-[#08e8de] transition-colors duration-300" />
+          <Link to="https://discord.com/invite/dcFURChe86">
+            <IconSocialDiscord className="fill-white hover:fill-[#08e8de] transition-colors duration-300" />
+          </Link>
           <ThemeSwitcher />
         </div>
       </nav>
