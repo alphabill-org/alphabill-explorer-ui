@@ -1,8 +1,11 @@
 import { Button } from "../../shared/ui/button/Button";
 import { TableBlocksMini, TableTxsMini } from "../../widgets";
 import LineChart from "../../shared/ui/chart/LineChart";
+//import { useBlockQuery } from './../../entities/block/hooks/useBlock';
 
 const HomePage = () => {
+   //const {data} = useBlockQuery(`279458`)
+   //console.log(data)
   return (
     <>
       <div className="w-full flex justify-center py-4 lg:pt-10 lg:pb-20">

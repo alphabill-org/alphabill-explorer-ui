@@ -3,7 +3,7 @@ type InputRecord = {
   hash: string;
   block_hash: string;
   summary_value: string;
-  round_number: number;
+  round_number: bigint;
 };
 
 type UnicityTreeCertificate = {
@@ -13,7 +13,7 @@ type UnicityTreeCertificate = {
 };
 
 type UnicitySeal = {
-  root_chain_round_number: number;
+  root_chain_round_number: bigint;
   timestamp: number;
   previous_hash: string;
   hash: string;
@@ -28,7 +28,7 @@ type UnicityCertificate = {
 
 type Header = {
   SystemID: number;
-  ShardID: null;
+  ShardID: string;
   ProposerID: string;
   PreviousBlockHash: string;
 };
