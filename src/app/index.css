@@ -110,6 +110,9 @@
   .link {
     @apply text-[--menu-link-text] hover:text-[--menu-link-text-hover] transition-colors duration-300;
   }
+  .link-icon {
+    @apply fill-[--menu-link-text] hover:fill-[--menu-link-text-hover] transition-colors duration-300;
+  }
   .link-active {
     @apply text-[--menu-link-text-active] font-medium;
   }

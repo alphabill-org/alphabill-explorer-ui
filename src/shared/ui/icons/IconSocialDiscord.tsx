@@ -3,8 +3,8 @@ import { IconProps } from "./types";
 export const IconSocialDiscord = ({ className }: IconProps) => {
     return (
         <svg
-            width="32"
-            height="32"
+            width="30"
+            height="30"
             viewBox="0 0 32 32"
             fill="#4E3EB6"
             xmlns="http://www.w3.org/2000/svg"

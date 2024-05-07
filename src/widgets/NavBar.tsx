@@ -10,16 +10,16 @@ type Menu = {
 };
 
 const subMenu: Menu[] = [
-  { title: "Docs", link: "/docs" },
-  { title: "Blog", link: "/blog" },
+  { title: "Docs", link: "https://docs.alphabill.org/docs/welcome" },
+  { title: "Whitepaper", link: "https://alphabill.org/files/AlphaBill%20Whitepaper.pdf" }
 ];
 
 const menu: Menu[] = [
   { title: "Home", link: "/" },
   { title: "Blocks", link: "/blocks" },
   { title: "Transactions", link: "/transactions" },
-  { title: "Bills", link: "/bills" },
-  { title: "NFT", link: "/nft" },
+  { title: "Bills", link: "/" },
+  { title: "Tokens", link: "/tokens" }
 ];
 
 const NavBar = () => {
@@ -69,12 +69,12 @@ const NavBar = () => {
       <nav className=" menu-primary">
         <div className=" container max-w-6xl w- mx-auto justify-end items-center hidden sm:flex space-x-4 px-4 py-1">
           {subMenu.map((item, index) => (
-            <NavLink key={index} className={({ isActive }) => isActive ? "link-active" : "link"} to={item.link}>
+            <Link key={index} className="link" to={item.link}>
               {item.title}
-            </NavLink>
+            </Link>
           ))}
           <Link to="https://discord.com/invite/dcFURChe86">
-            <IconSocialDiscord className="fill-white hover:fill-[#08e8de] transition-colors duration-300" />
+            <IconSocialDiscord className="fill-white hover:fill-[#08e8de] transition-colors duration-300 h-[28px] w-[28px]" />
           </Link>
           <ThemeSwitcher />
         </div>
