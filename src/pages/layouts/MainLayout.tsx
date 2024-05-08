@@ -4,10 +4,8 @@ import { AnimatedCirclesElement, SphereElement } from "../../shared/ui/backgroun
 
 export const MainLayout = () => {
   return (
-    <div className="">
-
-      <NavBar />
-
+    <div>
+      <NavBar/>
       <div className="layout" style={{ overflow: 'hidden' }}>
         <div className="container mx-auto max-w-6xl z-30">
           <Outlet />

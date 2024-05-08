@@ -7,6 +7,7 @@ import { ThemeSwitcher } from ".";
 type Menu = {
   title: string;
   link: string;
+  subItems?: Menu[];
 };
 
 const subMenu: Menu[] = [
@@ -16,14 +17,24 @@ const subMenu: Menu[] = [
 
 const menu: Menu[] = [
   { title: "Home", link: "/" },
-  { title: "Blocks", link: "/blocks" },
-  { title: "Transactions", link: "/transactions" },
-  { title: "Bills", link: "/" },
-  { title: "Tokens", link: "/tokens" }
+  {
+    title: "Bills", link: "/bills", subItems: [
+      { title: "Blocks", link: "/bills/blocks" },
+      { title: "Transactions", link: "/bills/transactions" },
+    ]
+  },
+  {
+    title: "Tokens", link: "/tokens", subItems: [
+      { title: "Blocks", link: "/tokens/blocks" },
+      { title: "Transactions", link: "/tokens/transactions" },
+    ]
+  }
 ];
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isBillsOpen, setIsBillsOpen] = useState(false);
+  const [isTokensOpen, setIsTokensOpen] = useState(false);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
 
   const toggleMenu = () => {
@@ -35,7 +46,7 @@ const NavBar = () => {
   };
 
   const overlayClass = isOpen
-    ? "fixed inset-0 z-50"
+    ? "fixed inset-x-0 z-50"
     : "flex flex-col";
 
   useEffect(() => {
@@ -67,7 +78,7 @@ const NavBar = () => {
   return (
     <div className={overlayClass}>
       <nav className=" menu-primary">
-        <div className=" container max-w-6xl w- mx-auto justify-end items-center hidden sm:flex space-x-4 px-4 py-1">
+        <div className=" container max-w-6xl mx-auto justify-end items-center hidden sm:flex space-x-4 px-4 py-1">
           {subMenu.map((item, index) => (
             <Link key={index} className="link" to={item.link}>
               {item.title}
@@ -91,9 +102,32 @@ const NavBar = () => {
 
           <div className="hidden sm:flex space-x-4">
             {menu.map((item, index) => (
-              <NavLink key={index} className={({ isActive }) => isActive ? "link-active" : "link"} to={item.link}>
-                {item.title}
-              </NavLink>
+              <div className="relative">
+                <NavLink
+                  key={index}
+                  className={({ isActive }) => isActive ? "link-active" : "link"} to={item.link}
+                  onMouseEnter={() => {
+                    if (item.title === "Bills") {
+                      setIsBillsOpen(true);
+                      setIsTokensOpen(false);
+                    } else if (item.title === "Tokens") {
+                      setIsTokensOpen(true);
+                      setIsBillsOpen(false);
+                    }
+                  }}
+                >
+                  {item.title}
+                </NavLink>
+                {item.subItems && ((item.title === "Bills" && isBillsOpen) || (item.title === "Tokens" && isTokensOpen)) && (
+                  <div className="absolute shadow-2xl menu-secondary py-3 px-4 z-50" onMouseLeave={() => item.title === "Bills" ? setIsBillsOpen(false) : item.title === "Tokens" ? setIsTokensOpen(false) : null}>
+                    {item.subItems.map((subItem, subIndex) => (
+                      <NavLink key={subIndex} to={subItem.link} className={({ isActive }) => isActive ? "link-active block p-2" : "link block p-2"}>
+                        {subItem.title}
+                      </NavLink>
+                    ))}
+                  </div>
+                )}
+              </div>
             ))}
           </div>
 
@@ -117,22 +151,22 @@ const NavBar = () => {
               ))}
 
               {subMenu.map((item, index) => (
-                <NavLink key={index} onClick={toggleMenu} className={({ isActive }) => isActive ? "link-active px-4 py-2" : "px-4 py-2 link link-mobile"} to={item.link}>
+                <Link key={index} onClick={toggleMenu} className="px-4 py-2 link link-mobile" to={item.link}>
                   {item.title}
-                </NavLink>
+                </Link>
               ))}
 
               <span className="h-[2px] bg-black bg-opacity-20 mr-4 ml-4 my-2"></span>
 
-              <div className="flex flex-row px-4 py-2 mb-2 justify-between">
-                <div className="flex flex-row">
-                  <p className=" font-medium text-white"> ALPHA: 100$</p>
-                  <p className="text-[#08e8de] ml-1">(+1.06%)</p>
-                </div>
+              <div className="flex flex-row px-4 py-2 mb-2 justify-start">
+                <Link to="https://discord.com/invite/dcFURChe86">
+                  <IconSocialDiscord className="fill-white hover:fill-[#08e8de] transition-colors duration-300 h-[28px] w-[28px]" />
+                </Link>
 
                 <ThemeSwitcher />
               </div>
             </div>
+            <div className="left-0 right-0 top-0 bottom-0 fixed bg-black opacity-50 -z-10"></div>
           </div>
         )}
       </nav>
