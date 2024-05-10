@@ -1,6 +1,6 @@
 const Page404 = () => {
   return (
-    <div className="min-h-[64vh] flex justify-center items-center text-[#08e8de] font-black text-6xl">
+    <div className="min-h-[64vh] flex justify-center items-center text-primary font-black text-6xl">
       404. Page not found
     </div>
   )

@@ -5,6 +5,8 @@ import BlocksPage from "./blocks/BlocksPage";
 import TransactionsPage from "./transactions/TransactionsPage";
 import BlockDetailsPage from "./blocks/BlockDetailsPage";
 import TransactionDetailsPage from "./transactions/TransactionDetailsPage";
+import Bills from "./bills/Bills";
+import ComingSoon from "./comingsoon/ComingSoon";
 
 export {
   MainLayout,
@@ -14,4 +16,6 @@ export {
   BlockDetailsPage,
   TransactionsPage,
   TransactionDetailsPage,
+  Bills,
+  ComingSoon,
 };

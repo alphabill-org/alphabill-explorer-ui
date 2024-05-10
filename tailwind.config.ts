@@ -4,6 +4,14 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      screens: {
+        'lg': '1320px', 
+      },
+      colors: {
+        primary: 'var(--primary)',
+        secondary: 'var(--color-secondary)',
+        tetriary: 'var(--color-tetriary)'
+      },
       fontFamily: {
         space: ["Space Grotesk", "sans-serif"],
       },

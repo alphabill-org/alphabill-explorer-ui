@@ -6,6 +6,10 @@
 
 @layer base {
   :root {
+    --primary: #0c0a3e;
+    --color-secondary: #08e8de;
+    --color-tetriary: #4e3fb6;
+
     --layout-primary-bg: #0c0a3e;
     --layout-circle-border-bg: #4e3fb6;
 
@@ -48,6 +52,10 @@
 
   }
   .theme-light{
+    --color-primary: #847fa8;
+    --color-secondary: #005752;
+    --color-tetriary: #dbdbdb;
+
     --layout-primary-bg: #847fa8;
     --layout-circle-border-bg: #dbdbdb;
 
@@ -88,7 +96,7 @@
   }
 
   .layout{
-    @apply bg-[--layout-primary-bg] relative min-h-[60vh] w-full py-10 z-0;
+    @apply bg-[--layout-primary-bg] relative min-h-[80vh] lg:min-h-[77vh] w-full py-10 z-0;
   }
   .layout-circle{
     @apply border-[--layout-circle-border-bg] border-[2px] rounded-full absolute; 

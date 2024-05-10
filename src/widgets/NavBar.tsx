@@ -39,11 +39,22 @@ const NavBar = () => {
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
+    if(!isOpen){
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "visible";
+    }
   };
 
   const closeMenu = () => {
     setIsOpen(false);
+    document.body.style.overflow = "visible";
   };
+
+  const closeMenuDropdowns = () => {
+    setIsBillsOpen(false);
+    setIsTokensOpen(false);
+  }
 
   const overlayClass = isOpen
     ? "fixed inset-x-0 z-50"
@@ -51,8 +62,9 @@ const NavBar = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 640) {
+      if (window.innerWidth >= 1320) {
         closeMenu();
+        closeMenuDropdowns();
       }
     }
 
@@ -78,14 +90,14 @@ const NavBar = () => {
   return (
     <div className={overlayClass}>
       <nav className=" menu-primary">
-        <div className=" container max-w-6xl mx-auto justify-end items-center hidden sm:flex space-x-4 px-4 py-1">
+        <div className=" container max-w-6xl mx-auto justify-end items-center hidden lg:flex space-x-4 px-4 py-1">
           {subMenu.map((item, index) => (
             <Link key={index} className="link" to={item.link}>
               {item.title}
             </Link>
           ))}
           <Link to="https://discord.com/invite/dcFURChe86">
-            <IconSocialDiscord className="fill-white hover:fill-[#08e8de] transition-colors duration-300 h-[28px] w-[28px]" />
+            <IconSocialDiscord className="link-icon h-[28px] w-[28px]" />
           </Link>
           <ThemeSwitcher />
         </div>
@@ -100,7 +112,7 @@ const NavBar = () => {
             </div>
           </div>
 
-          <div className="hidden sm:flex space-x-4">
+          <div className="hidden lg:flex space-x-4">
             {menu.map((item, index) => (
               <div className="relative">
                 <NavLink
@@ -119,7 +131,7 @@ const NavBar = () => {
                   {item.title}
                 </NavLink>
                 {item.subItems && ((item.title === "Bills" && isBillsOpen) || (item.title === "Tokens" && isTokensOpen)) && (
-                  <div className="absolute shadow-2xl menu-secondary py-3 px-4 z-50" onMouseLeave={() => item.title === "Bills" ? setIsBillsOpen(false) : item.title === "Tokens" ? setIsTokensOpen(false) : null}>
+                  <div className="absolute mt-4 min-w-[175px] -left-14 shadow-md shadow-neutral-950 menu-secondary py-3 px-4 z-50 border-t-2 border-secondary" onMouseLeave={() => item.title === "Bills" ? setIsBillsOpen(false) : item.title === "Tokens" ? setIsTokensOpen(false) : null}>
                     {item.subItems.map((subItem, subIndex) => (
                       <NavLink key={subIndex} to={subItem.link} className={({ isActive }) => isActive ? "link-active block p-2" : "link block p-2"}>
                         {subItem.title}
@@ -131,7 +143,7 @@ const NavBar = () => {
             ))}
           </div>
 
-          <div className="sm:hidden">
+          <div className="lg:hidden">
             <button
               onClick={toggleMenu}
               className="text-white text-2xl focus:outline-none"
@@ -142,13 +154,43 @@ const NavBar = () => {
         </div>
 
         {isOpen && (
-          <div className="sm:hidden flex flex-col">
+          <div className="container max-w-6xl mx-auto lg:hidden flex flex-col">
             <div className="flex flex-col">
-              {menu.map((item, index) => (
-                <NavLink key={index} onClick={toggleMenu} className={({ isActive }) => isActive ? "link-active px-4 py-2" : "px-4 py-2 link link-mobile"} to={item.link}>
-                  {item.title}
-                </NavLink>
-              ))}
+              <NavLink to="/" onClick={toggleMenu} className="px-4 py-2 link link-mobile">
+                Home
+              </NavLink>
+              <button onClick={() => setIsBillsOpen(!isBillsOpen)} className="px-4 py-2 text-left link link-mobile">
+                Bills
+              </button>
+              {isBillsOpen && (
+                <div className="flex flex-col bg-black bg-opacity-10 border-t-2 border-secondary">
+                  <NavLink to="/bills" className="px-5 py-2 link hover:bg-black hover:bg-opacity-10" onClick={toggleMenu}>
+                    Overview
+                  </NavLink>
+                  <NavLink to="/bills/blocks" className="px-5 py-2 link hover:bg-black hover:bg-opacity-10" onClick={toggleMenu}>
+                    Blocks
+                  </NavLink>
+                  <NavLink to="/bills/transactions" className="px-5 py-2 link hover:bg-black hover:bg-opacity-10" onClick={toggleMenu}>
+                    Transactions
+                  </NavLink>
+                </div>
+              )}
+              <button onClick={() => setIsTokensOpen(!isTokensOpen)} className="px-4 py-2 text-left link link-mobile">
+                Tokens
+              </button>
+              {isTokensOpen && (
+                <div className="flex flex-col bg-black bg-opacity-10 border-t-2 border-secondary">
+                  <NavLink to="/tokens" className="px-5 py-2 link hover:bg-black hover:bg-opacity-10" onClick={toggleMenu}>
+                    Overview
+                  </NavLink>
+                  <NavLink to="/tokens/blocks" className="px-5 py-2 link hover:bg-black hover:bg-opacity-10" onClick={toggleMenu}>
+                    Blocks
+                  </NavLink>
+                  <NavLink to="/tokens/transactions" className="px-5 py-2 link hover:bg-black hover:bg-opacity-10" onClick={toggleMenu}>
+                    Transactions
+                  </NavLink>
+                </div>
+              )}
 
               {subMenu.map((item, index) => (
                 <Link key={index} onClick={toggleMenu} className="px-4 py-2 link link-mobile" to={item.link}>
@@ -158,7 +200,7 @@ const NavBar = () => {
 
               <span className="h-[2px] bg-black bg-opacity-20 mr-4 ml-4 my-2"></span>
 
-              <div className="flex flex-row px-4 py-2 mb-2 justify-start">
+              <div className="flex flex-row px-4 py-2 mb-2 justify-end">
                 <Link to="https://discord.com/invite/dcFURChe86">
                   <IconSocialDiscord className="fill-white hover:fill-[#08e8de] transition-colors duration-300 h-[28px] w-[28px]" />
                 </Link>
@@ -166,7 +208,7 @@ const NavBar = () => {
                 <ThemeSwitcher />
               </div>
             </div>
-            <div className="left-0 right-0 top-0 bottom-0 fixed bg-black opacity-50 -z-10"></div>
+            <div onClick={closeMenu} className="left-0 right-0 top-0 bottom-0 fixed bg-black opacity-50 -z-10"></div>
           </div>
         )}
       </nav>
