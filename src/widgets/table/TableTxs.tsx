@@ -35,7 +35,7 @@ const columns: ColumnDef<TableElementTx, any>[] = [
   columnHelper.accessor("id", {
     header: "Txn Hash",
     cell: (info) => (
-      <Link className="text-[#08e8de]" to={`/transactions/${info.getValue()}`}>
+      <Link className="text-[#08e8de]" to={`${info.getValue()}`}>
         {info.getValue()}
       </Link>
     ),

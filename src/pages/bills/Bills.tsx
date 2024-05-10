@@ -9,23 +9,23 @@ const Bills = () => {
 
       <div className="grid grid-rows-4 grid-cols-1 sm:grid-rows-2 sm:grid-cols-2 lg:grid-rows-1 lg:grid-cols-4 gap-1 my-5 px-14">
         <div className="widget order-1">
-          <h4 className="widget-header">ALPHA PRICE</h4>
+          <h4 className="widget-header">LAST BLOCK</h4>
           <div className="flex flex-row items-center">
-            <p className="widget-body">$1.8563</p>
-            <p className="widget-price-change">(+12.50%)</p>
+            <p className="widget-body">2134542</p>
           </div>
         </div>
         <div className="widget order-2">
+          <h4 className="widget-header">TOTAL BLOCKS</h4>
+          <div className="flex flex-row items-center">
+            <p className="widget-body">20,751</p>
+
+          </div>
+        </div>
+        <div className="widget order-3">
           <h4 className="widget-header">TRANSACTIONS</h4>
           <div className="flex flex-row items-center">
             <p className="widget-body">2,561.12M</p>
             <p className="widget-additional">(12.0 TPS)</p>
-          </div>
-        </div>
-        <div className="widget order-3">
-          <h4 className="widget-header">MARKET CAP</h4>
-          <div className="flex flex-row items-center">
-            <p className="widget-body">$122,632,738,289.33</p>
           </div>
         </div>
         <div className="widget order-4">

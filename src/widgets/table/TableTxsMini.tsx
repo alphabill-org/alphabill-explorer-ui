@@ -87,7 +87,7 @@ const TableTxsMini = () => {
         data={txs}
         columns={columns}
         className=" w-full"
-        linkTo="/transactions"
+        linkTo="/bills/transactions"
         fetchDataFn={fetchData}
       />
     </div>

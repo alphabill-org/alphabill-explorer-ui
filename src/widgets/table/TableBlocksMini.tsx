@@ -82,7 +82,7 @@ const TableBlocksMini = () => {
         data={blocks}
         columns={columns}
         className="w-full"
-        linkTo="/blocks"
+        linkTo="/bills/blocks"
         fetchDataFn={fetchData}
       />
     </div>
