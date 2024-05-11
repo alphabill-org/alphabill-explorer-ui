@@ -1,6 +1,7 @@
 import { Block } from "../../../entities/block";
+import { Tx } from "../../../entities/tx";
 import { convertTimeToTimeAgo } from "../../../shared/utils/time";
-import { TableElementBlock } from "../types";
+import { TableElementBlock, TableElementTx } from "../types";
 
 export function mapBlockToTableElement(block: Block): TableElementBlock {
   const blockCreationTime = block.UnicityCertificate.unicity_seal.timestamp; // timestamp is in seconds
@@ -15,6 +16,20 @@ export function mapBlockToTableElement(block: Block): TableElementBlock {
     summaryValue: block.UnicityCertificate.input_record.summary_value,
     blockHash: block.UnicityCertificate.input_record.hash,
     previousBlockHash: block.Header.PreviousBlockHash,
+  };
+}
+
+export function mapTxToTableElement(tx: Tx): TableElementTx {
+  return {
+      txRecordHash: tx.TxRecordHash,
+      txOrderHash: tx.TxOrderHash,
+      blockNumber: BigInt(tx.BlockNumber),
+      systemID: tx.Transaction.TransactionOrder.Payload.SystemID,
+      transactionType: tx.Transaction.TransactionOrder.Payload.Type,
+      unitID: tx.Transaction.TransactionOrder.Payload.UnitID,
+      timeout: tx.Transaction.TransactionOrder.Payload.ClientMetadata.Timeout,
+      actualFee: tx.Transaction.ServerMetadata.ActualFee,
+      successIndicator: tx.Transaction.ServerMetadata.SuccessIndicator
   };
 }
 

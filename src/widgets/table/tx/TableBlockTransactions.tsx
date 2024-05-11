@@ -1,8 +1,8 @@
 import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 
-import { Table } from "../../features";
+import { Table } from "../../../features";
 import { useEffect } from "react";
-import { TableElementTx } from "./types";
+import { TableElementTx } from "../types";
 import { Link } from "react-router-dom";
 
 const tx1: TableElementTx = {
@@ -35,20 +35,13 @@ const columns: ColumnDef<TableElementTx, any>[] = [
   columnHelper.accessor("id", {
     header: "Txn Hash",
     cell: (info) => (
-      <Link className="text-[#08e8de]" to={`${info.getValue()}`}>
+      <Link className="table-cell-link" to={`/transactions/${info.getValue()}`}>
         {info.getValue()}
       </Link>
     ),
   }),
   columnHelper.accessor("time", { header: "Time" }),
-  columnHelper.accessor("from", {
-    header: "From",
-    cell: (i) => (
-      <div >
-        {i.getValue()}
-      </div>
-    ),
-  }),
+  columnHelper.accessor("from", { header: "From" }),
   columnHelper.accessor("to", { header: "To" }),
   columnHelper.accessor("amount", { header: "Amount" }),
 ];
@@ -61,22 +54,22 @@ async function fetchData() {
   };
 }
 
-const TableTxs = () => {
+const TableBlockTransactions = () => {
   useEffect(() => {
     fetchData();
   });
 
   return (
-    <div>
+    <div className="">
       <Table
-        queryKey="transactions"
+        queryKey="block transactions"
         data={txs}
         columns={columns}
-        className="w-full m-auto text-center text-white"
+        className=" w-full m-auto text-center"
         fetchDataFn={fetchData}
         isPaginate={true}
       />
     </div>
   );
 };
-export default TableTxs;
+export default TableBlockTransactions;

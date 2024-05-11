@@ -16,7 +16,7 @@ const useTxQuery = (txHash: string): QueryObserverResult<Tx, AxiosError> => {
 };
 
 const useTxsQuery = (
-  startTxHash: number,
+  startTxHash: bigint,
   limit?: number
 ): QueryObserverResult<Tx[], AxiosError> => {
   return useQuery({

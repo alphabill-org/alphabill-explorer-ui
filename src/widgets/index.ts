@@ -2,10 +2,10 @@ import NavBar from "./NavBar";
 import FooterBar from "./Footer";
 import TableBlocks from "./table/block/TableBlocks";
 import TableBlocksMini from "./table/block/TableBlocksMini";
-import TableTxsMini from "./table/TableTxsMini";
-import TableTxs from "./table/TableTxs";
+import TableTxsMini from "./table/tx/TableTxsMini";
+import TableTxs from "./table/tx/TableTxs";
 import DetailsBlock from "./details/DetailsBlock";
-import TableBlockTransactions from "./table/TableBlockTransactions";
+import TableBlockTransactions from "./table/tx/TableBlockTransactions";
 import DetailsTransaction from "./details/DetailsTransaction";
 import { ThemeSwitcher } from "./ThemeSwitcher";
 

@@ -1,11 +1,6 @@
 import { getBlocks } from "../../../../entities/block";
-import { TableElementBlock } from "../../types";
+import { FetchDataOptions, TableElementBlock } from "../../types";
 import { mapBlockToTableElement } from "../../utils/tableUtils";
-
-type FetchDataOptions = {
-  pageIndex: number;
-  pageSize: number;
-};
 
 export async function fetchTableBlockData(
   lastBlock: bigint,

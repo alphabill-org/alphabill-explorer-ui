@@ -1,3 +1,8 @@
+type FetchDataOptions = {
+  pageIndex: number;
+  pageSize: number;
+};
+
 type TableElementBlock = {
   id: bigint;
   blockNumber?: bigint;
@@ -13,10 +18,14 @@ type TableElementBlock = {
   previousBlockHash?: string;
 };
 type TableElementTx = {
-  id: string;
-  time?: string;
-  from?: string;
-  to?: string;
-  amount?: number;
+  txRecordHash: string;
+  txOrderHash: string;
+  blockNumber: bigint;
+  systemID: number;
+  transactionType: string;
+  unitID: string;
+  timeout: number;
+  actualFee: number;
+  successIndicator: number;
 };
-export type { TableElementBlock, TableElementTx };
+export type { FetchDataOptions, TableElementBlock, TableElementTx };
