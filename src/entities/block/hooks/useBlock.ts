@@ -2,8 +2,10 @@ import { QueryObserverResult, useQuery } from "@tanstack/react-query";
 import { getBlock, getBlocks } from "../api/blockApi";
 import { Block } from "../types/blockTypes";
 import { AxiosError } from "axios";
+import { isTest } from "../../../app/config";
+import { useBlockQueryTest } from "./useBlockTest";
 
-export const useBlockQuery = (
+const useBlockQueryReal = (
   blockNumber: string
 ): QueryObserverResult<Block, AxiosError> => {
   return useQuery({
@@ -12,8 +14,10 @@ export const useBlockQuery = (
   });
 };
 
+export const useBlockQuery = isTest ? useBlockQueryTest : useBlockQueryReal;
+
 export const useBlocksQuery = (
-  startBlock?: number,
+  startBlock?: bigint,
   limit?: number
 ): QueryObserverResult<Block[], AxiosError> => {
   return useQuery({

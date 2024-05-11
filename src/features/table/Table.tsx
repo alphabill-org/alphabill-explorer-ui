@@ -9,6 +9,7 @@ import React from "react";
 import { TablePagination } from "../../entities";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
+import { calculateTotalPages } from "../../widgets/table/utils/tableUtils";
 
 interface ReactTableProps<TData> {
   queryKey: string;
@@ -17,7 +18,7 @@ interface ReactTableProps<TData> {
   className?: string;
   linkTo?: string;
   isPaginate?: boolean;
-  dataCount?: number;
+  dataCount?: number | bigint;
   fetchDataFn: (options?: {
     pageIndex: number;
     pageSize: number;
@@ -62,7 +63,7 @@ const Table = <TData extends object>({
   const table = useReactTable({
     data: dataQuery.data?.rows ?? defaultData,
     columns,
-    pageCount: Math.ceil(dataCount / pageSize) ?? -1,
+    pageCount: calculateTotalPages(dataCount , pageSize) ?? -1,
     state: {
       pagination,
     },

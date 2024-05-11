@@ -1,17 +1,16 @@
 type TableElementBlock = {
-  id: number;
-  blockNumber?: number;
-  timestamp?: number;
+  id: bigint;
+  blockNumber?: bigint;
+  timeAgo?: string;
   proposerID?: string;
   txCount?: number;
-  
+
   shardId?: string;
-  earnedFees?: number;
+  earnedFees?: bigint;
   summaryValue?: string;
 
-  hash?: string;
+  blockHash?: string;
   previousBlockHash?: string;
-
 };
 type TableElementTx = {
   id: string;
@@ -20,4 +19,4 @@ type TableElementTx = {
   to?: string;
   amount?: number;
 };
-export type { TableElementBlock , TableElementTx};
+export type { TableElementBlock, TableElementTx };

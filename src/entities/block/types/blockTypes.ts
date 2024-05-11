@@ -4,6 +4,7 @@ type InputRecord = {
   block_hash: string;
   summary_value: string;
   round_number: bigint;
+  sum_of_earned_fees: bigint;
 };
 
 type UnicityTreeCertificate = {
