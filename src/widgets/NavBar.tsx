@@ -96,9 +96,8 @@ const NavBar = () => {
 
           <div className="hidden lg:flex items-center space-x-4">
             {menu.map((item, index) => (
-              <div className="relative group">
+              <div key={index} className="relative group">
                 <NavLink
-                  key={index}
                   className={({ isActive }) => isActive ? "link-active flex items-center w-fit justify-between" : "link flex items-center w-fit justify-between"} to={item.link}
                 >
                   {item.title}   

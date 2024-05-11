@@ -92,7 +92,6 @@ const Table = <TData extends object>({
           />
         </svg>
       </div>
-
     );
   }
 

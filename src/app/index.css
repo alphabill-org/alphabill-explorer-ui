@@ -162,7 +162,7 @@
     @apply bg-[--table-bg] p-5 w-full text-[--table-cell-text];
   }
   .table-column-header{
-    @apply text-sm font-light border-b-2 border-b-[--table-divider-v1-bg];
+    @apply text-sm font-light border-b-2 border-b-[--table-divider-v1-bg] sticky;
   }
   .table-divider-v1{
     @apply border-b-2 border-b-[--table-divider-v1-bg]

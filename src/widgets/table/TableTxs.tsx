@@ -67,12 +67,12 @@ const TableTxs = () => {
   });
 
   return (
-    <div className="">
+    <div>
       <Table
         queryKey="transactions"
         data={txs}
         columns={columns}
-        className=" w-full m-auto text-center text-white"
+        className="w-full m-auto text-center text-white"
         fetchDataFn={fetchData}
         isPaginate={true}
       />
