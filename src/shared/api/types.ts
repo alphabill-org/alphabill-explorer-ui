@@ -22,8 +22,8 @@ export type InputRecord = {
   Hash: string; //`json:"hash,omitempty"`               // state hash to be certified
   BlockHash: string; //`json:"block_hash,omitempty"`         // hash of the block
   SummaryValue: string; //`json:"summary_value,omitempty"`      // summary value to certified
-  RoundNumber: number; //`json:"round_number,omitempty"`       // transaction system's round number
-  SumOfEarnedFees: number; //`json:"sum_of_earned_fees,omitempty"` // sum of the actual fees over all transaction records in the block
+  RoundNumber: bigint; //`json:"round_number,omitempty"`       // transaction system's round number
+  SumOfEarnedFees: bigint; //`json:"sum_of_earned_fees,omitempty"` // sum of the actual fees over all transaction records in the block
 };
 
 export type UnicityTreeCertificate = {
@@ -46,7 +46,7 @@ export type TransactionRecord = {
 };
 
 export type ServerMetadata = {
-  ActualFee: number;
+  ActualFee: bigint;
   TargetUnits: string[];
   SuccessIndicator: number;
   ProcessingDetails: string;

@@ -10,6 +10,7 @@ type TableElementBlock = {
   proposerID?: string;
   txCount?: number;
 
+  timestamp?:number;
   shardId?: string;
   earnedFees?: bigint;
   summaryValue?: string;
