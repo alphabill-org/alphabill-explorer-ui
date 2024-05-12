@@ -17,7 +17,7 @@ const useBlockQueryReal = (
 export const useBlockQuery = isTest ? useBlockQueryTest : useBlockQueryReal;
 
 export const useBlocksQuery = (
-  startBlock?: bigint,
+  startBlock?: string,
   limit?: number
 ): QueryObserverResult<Block[], AxiosError> => {
   return useQuery({

@@ -9,14 +9,15 @@ export async function fetchTableBlockData(
   if (!options) {
     throw new Error("Options are required for fetchData");
   }
-
   const { pageIndex, pageSize } = options;
-  const startBlock = lastBlock - BigInt(pageIndex * pageSize);
+  const startBlock = BigInt(lastBlock) - BigInt(pageIndex) * BigInt(pageSize);
+  console.log( startBlock  )
   const limit = pageSize;
 
   try {
-    const data = await getBlocks(startBlock, limit);
+    const data = await getBlocks(startBlock.toString(), limit);
     const rows = data.map((block) => mapBlockToTableElement(block));
+    console.log(rows)
     return { rows };
   } catch (error) {
     console.error("Error fetching data:", error);

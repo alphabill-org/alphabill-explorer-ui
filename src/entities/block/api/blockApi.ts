@@ -11,8 +11,8 @@ const getBlock = async (blockNumber: string) : Promise<Block> => {
     const decodedData = transformObject<Block>(response.data)
     return decodedData;
   }
-const getBlocksReal = async (startBlock?: bigint, limit?: number) : Promise<Block[]> => {
-  const response = await axios.get(`${moneyURL}/blocks`, {
+const getBlocksReal = async (startBlock?: string, limit?: number) : Promise<Block[]> => {
+  const response = await axios.get(`${moneyURL}/blocks/`, {
     params: { startBlock, limit }
   });
   const decodedData = response.data.map((block: Block) => transformObject<Block>(block));
