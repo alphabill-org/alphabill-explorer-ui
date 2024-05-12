@@ -11,13 +11,13 @@ export async function fetchTableBlockData(
   }
   const { pageIndex, pageSize } = options;
   const startBlock = BigInt(lastBlock) - BigInt(pageIndex) * BigInt(pageSize);
-  console.log( startBlock  )
+
   const limit = pageSize;
 
   try {
     const data = await getBlocks(startBlock.toString(), limit);
     const rows = data.map((block) => mapBlockToTableElement(block));
-    console.log(rows)
+
     return { rows };
   } catch (error) {
     console.error("Error fetching data:", error);

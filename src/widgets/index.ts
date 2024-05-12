@@ -5,7 +5,7 @@ import TableBlocksMini from "./table/block/TableBlocksMini";
 import TableTxsMini from "./table/tx/TableTxsMini";
 import TableTxs from "./table/tx/TableTxs";
 import DetailsBlock from "./details/DetailsBlock";
-import TableBlockTransactions from "./table/tx/TableBlockTransactions";
+import TableBlockTxs from "./table/tx/TableBlockTxs";
 import DetailsTransaction from "./details/DetailsTransaction";
 import { ThemeSwitcher } from "./ThemeSwitcher";
 
@@ -18,7 +18,7 @@ export {
   TableBlocksMini,
   TableTxsMini,
   TableTxs,
-  TableBlockTransactions,
+  TableBlockTxs,
 };
 
 export { DetailsBlock, DetailsTransaction };

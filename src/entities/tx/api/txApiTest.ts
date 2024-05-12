@@ -1,5 +1,5 @@
 import { fakeTransaction1, fakeTransaction2 } from "../test/fakeTxs";
-import { Tx } from "../types/txTypes";
+import { Tx, TxsResponse } from "../types/txTypes";
 
 // Optionally simulate delay to mimic network behavior
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -32,14 +32,14 @@ const fakeBlocks: Tx[] = [
 ];
 
 const getTxsTest = async (
-  startTx?: bigint,
+  startSeqNumber?: string,
   limit?: number
-): Promise<Tx[]> => {
+): Promise<TxsResponse> => {
   // Optionally simulate a delay to mimic network response times
   await delay(500); // Simulate 500ms network delay
 
   // Return the slice of fake blocks array as per calculated indices
-  return fakeBlocks.slice(0, limit);
+  return { transactions: fakeBlocks.slice(0, limit) , offsetKey: `10`};
 };
 
 export { getTxsTest };
