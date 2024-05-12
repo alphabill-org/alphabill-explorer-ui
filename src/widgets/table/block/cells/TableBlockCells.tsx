@@ -11,5 +11,3 @@ export const TransactionCountCell = (info: any) => (
     {info.getValue()}
   </Link>
 );
-
-export const EarnedFeesCell = (info: any) => info.getValue().toString();

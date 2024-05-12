@@ -1,8 +1,8 @@
-import { getTxs } from "../../../../entities/tx/api/txApi";
+import { getBlockTxsByBlockNumber, getTxs } from "../../../../entities/tx/api/txApi";
 import { FetchDataOptions, TableElementTx } from "../../types";
 import { mapTxToTableElement } from "../../utils/tableUtils";
 
-export async function fetchTableTxData(
+export async function fetchTableTxsData(
   lastTx: bigint,
   options?: FetchDataOptions
 ): Promise<{ rows: TableElementTx[] }> {
@@ -11,15 +11,29 @@ export async function fetchTableTxData(
   }
 
   const { pageIndex, pageSize } = options;
-  const startTx = lastTx - BigInt(pageIndex * pageSize);
+  const startTx = BigInt(lastTx) - BigInt(pageIndex) * BigInt(pageSize);
   const limit = pageSize;
 
   try {
-    const data = await getTxs(startTx, limit);
+    const data = await getTxs(startTx.toString(), limit);
+    const rows = data.transactions.map((tx) => mapTxToTableElement(tx));
+    return { rows };
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw new Error("Failed to fetch txs"); // Rethrow or handle as needed
+  }
+}
+
+export async function fetchTableBlockTxsData(
+  blockNumber: bigint
+): Promise<{ rows: TableElementTx[] }> {
+
+  try {
+    const data = await getBlockTxsByBlockNumber(blockNumber.toString());
     const rows = data.map((tx) => mapTxToTableElement(tx));
     return { rows };
   } catch (error) {
     console.error("Error fetching data:", error);
-    throw new Error("Failed to fetch blocks"); // Rethrow or handle as needed
+    throw new Error("Failed to fetch txs"); // Rethrow or handle as needed
   }
 }

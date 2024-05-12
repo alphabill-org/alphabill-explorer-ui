@@ -37,7 +37,7 @@ const fakeBlocks: Block[] = [
 ];
 
 const getBlocksTest = async (
-  startBlock?: bigint,
+  startBlock?: string,
   limit?: number
 ): Promise<Block[]> => {
   // Optionally simulate a delay to mimic network response times

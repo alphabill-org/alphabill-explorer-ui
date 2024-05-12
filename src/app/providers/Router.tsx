@@ -10,7 +10,7 @@ import {
   Bills,
   ComingSoon
 } from "../../pages";
-import { DetailsBlock, TableBlockTransactions } from "../../widgets";
+import { DetailsBlock, TableBlockTxs } from "../../widgets";
 
 export function Router() {
   return (
@@ -22,7 +22,7 @@ export function Router() {
         <Route path="bills/blocks" element={<BlocksPage />} />
         <Route path="bills/blocks/:id" element={<BlockDetailsPage />}>
           <Route index element={<DetailsBlock />} />
-          <Route path="transactions" element={<TableBlockTransactions />} />
+          <Route path="transactions" element={<TableBlockTxs/>} />
         </Route>
         <Route path="bills/transactions" element={<TransactionsPage />} />
         <Route path="bills/transactions/:id" element={<TransactionDetailsPage />} />

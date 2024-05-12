@@ -4,7 +4,6 @@ type InputRecord = {
   block_hash: string;
   summary_value: string;
   round_number: bigint;
-  sum_of_earned_fees: bigint;
 };
 
 type UnicityTreeCertificate = {
@@ -21,13 +20,13 @@ type UnicitySeal = {
   signatures: { [key: string]: string };
 };
 
-type UnicityCertificate = {
+export type UnicityCertificate = {
   input_record: InputRecord;
   unicity_tree_certificate: UnicityTreeCertificate;
   unicity_seal: UnicitySeal;
 };
 
-type Header = {
+export type Header = {
   SystemID: number;
   ShardID: string;
   ProposerID: string;

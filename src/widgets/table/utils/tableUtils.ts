@@ -12,9 +12,8 @@ export function mapBlockToTableElement(block: Block): TableElementBlock {
     proposerID: block.Header.ProposerID,
     txCount: block.TxHashes.length,
     shardId: block.Header.ShardID,
-    earnedFees: block.UnicityCertificate.input_record.sum_of_earned_fees,
     summaryValue: block.UnicityCertificate.input_record.summary_value,
-    blockHash: block.UnicityCertificate.input_record.hash,
+    blockHash: block.UnicityCertificate.input_record.block_hash,
     previousBlockHash: block.Header.PreviousBlockHash,
   };
 }

@@ -15,7 +15,6 @@ const fakeBlock1: Block = {
           block_hash: "blockhash1",
           summary_value: "summary1",
           round_number: 105n,
-          sum_of_earned_fees: 5000n
       },
       unicity_tree_certificate: {
           system_identifier: 1,
@@ -50,7 +49,6 @@ const fakeBlock2: Block = {
           block_hash: "blockhash2",
           summary_value: "summary2",
           round_number: 20n,
-          sum_of_earned_fees: 10000n
       },
       unicity_tree_certificate: {
           system_identifier: 2,
