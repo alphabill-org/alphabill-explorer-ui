@@ -12,7 +12,6 @@ type TableElementBlock = {
 
   timestamp?:number;
   shardId?: string;
-  earnedFees?: bigint;
   summaryValue?: string;
 
   blockHash?: string;
