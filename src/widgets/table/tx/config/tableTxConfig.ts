@@ -1,23 +1,25 @@
 import { createColumnHelper, ColumnDef } from "@tanstack/react-table";
 import { TableElementTx } from "../../types";
+import { TxHashCell, TxOrderHashCell, UnitCell } from "../cells/TableTxCells";
+import { BlockNumberCell } from "../../block/cells/TableBlockCells";
 
 const columnHelper = createColumnHelper<TableElementTx>();
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const tableTxColumns: ColumnDef<TableElementTx, any>[] = [
   columnHelper.accessor("txRecordHash", {
-    header: () => "Tx Record Hash",
-    cell: (info) => info.getValue(),
+    header: () => "Tx Hash",
+    cell: TxHashCell,
     footer: (props) => props.column.id,
   }),
   columnHelper.accessor("txOrderHash", {
     header: "Tx Order Hash",
-    cell: (info) => info.getValue(),
+    cell: TxOrderHashCell,
     footer: (props) => props.column.id,
   }),
   columnHelper.accessor("blockNumber", {
     header: "Block Number",
-    cell: (info) => info.getValue().toString(),
+    cell: BlockNumberCell,
     footer: (props) => props.column.id,
   }),
   columnHelper.accessor("systemID", {
@@ -26,13 +28,13 @@ export const tableTxColumns: ColumnDef<TableElementTx, any>[] = [
     footer: (props) => props.column.id,
   }),
   columnHelper.accessor("transactionType", {
-    header: "Transaction Type",
+    header: "Tx Type",
     cell: (info) => info.getValue(),
     footer: (props) => props.column.id,
   }),
   columnHelper.accessor("unitID", {
     header: "Unit ID",
-    cell: (info) => info.getValue(),
+    cell: UnitCell,
     footer: (props) => props.column.id,
   }),
   columnHelper.accessor("timeout", {
@@ -55,19 +57,18 @@ export const tableTxColumns: ColumnDef<TableElementTx, any>[] = [
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const tableTxMiniColumns: ColumnDef<TableElementTx, any>[] = [
   columnHelper.accessor("txRecordHash", {
-    header: () => "Tx Record Hash",
-    cell: (info) => info.getValue(),
+    header: () => "Tx Hash",
+    cell: TxHashCell,
     footer: (props) => props.column.id,
   }),
   columnHelper.accessor("transactionType", {
-    header: "Transaction Type",
+    header: "Tx Type",
     cell: (info) => info.getValue(),
     footer: (props) => props.column.id,
   }),
   columnHelper.accessor("unitID", {
     header: "Unit ID",
-    cell: (info) => info.getValue(),
+    cell: UnitCell,
     footer: (props) => props.column.id,
   }),
 ];
-

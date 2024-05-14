@@ -63,7 +63,7 @@ const Table = <TData extends object>({
   const table = useReactTable({
     data: dataQuery.data?.rows ?? defaultData,
     columns,
-    pageCount: calculateTotalPages(dataCount , pageSize) ?? -1,
+    pageCount: calculateTotalPages(dataCount, pageSize) ?? -1,
     state: {
       pagination,
     },
@@ -72,7 +72,13 @@ const Table = <TData extends object>({
     manualPagination: true,
     debugTable: true,
   });
-
+  if (dataQuery?.isError) {
+    return (
+      <div className=" bg-black bg-opacity-50 w-full flex justify-center items-center h-[60vh] text-white">
+        <h3 className=" ">No data found...</h3>
+      </div>
+    );
+  }
   if (dataQuery?.isFetching) {
     return (
       <div className=" bg-black w-full h-[60vh] bg-opacity-50 flex justify-center items-center">
@@ -107,9 +113,9 @@ const Table = <TData extends object>({
                   {header.isPlaceholder
                     ? null
                     : flexRender(
-                      header.column.columnDef.header,
-                      header.getContext()
-                    )}
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
                 </th>
               ))}
             </tr>
