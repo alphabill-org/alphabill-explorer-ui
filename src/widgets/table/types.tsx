@@ -1,23 +1,31 @@
+type FetchDataOptions = {
+  pageIndex: number;
+  pageSize: number;
+};
+
 type TableElementBlock = {
-  id: number;
-  blockNumber?: number;
-  timestamp?: number;
+  id: bigint;
+  blockNumber?: bigint;
+  timeAgo?: string;
   proposerID?: string;
   txCount?: number;
-  
+
+  timestamp?:number;
   shardId?: string;
-  earnedFees?: number;
   summaryValue?: string;
 
-  hash?: string;
+  blockHash?: string;
   previousBlockHash?: string;
-
 };
 type TableElementTx = {
-  id: string;
-  time?: string;
-  from?: string;
-  to?: string;
-  amount?: number;
+  txRecordHash: string;
+  txOrderHash: string;
+  blockNumber: bigint;
+  systemID: number;
+  transactionType: string;
+  unitID: string;
+  timeout: number;
+  actualFee: number;
+  successIndicator: number;
 };
-export type { TableElementBlock , TableElementTx};
+export type { FetchDataOptions, TableElementBlock, TableElementTx };

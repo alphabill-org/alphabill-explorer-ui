@@ -1,17 +1,12 @@
 import { Button } from "../../shared/ui/button/Button";
 import { TableBlocksMini, TableTxsMini } from "../../widgets";
 import LineChart from "../../shared/ui/chart/LineChart";
-//import { useBlockQuery } from './../../entities/block/hooks/useBlock';
 
 const HomePage = () => {
-   //const {data} = useBlockQuery(`279458`)
-   //console.log(data)
   return (
     <>
       <div className="w-full flex justify-center py-4 lg:pt-10 lg:pb-20">
-        <h1 className="main-header">
-          The Alphabill Blockchain Explorer ...
-        </h1>
+        <h1 className="main-header">The Alphabill Blockchain Explorer ...</h1>
       </div>
 
       <div className="w-full flex flex-row justify-center px-5 pb-5">
@@ -63,9 +58,9 @@ const HomePage = () => {
             <p className="widget-additional">(12.0 TPS)</p>
           </div>
         </div>
-        
+
         <div className="bg-black bg-opacity-50 row-span-2 sm:col-span-2 sm:row-span-2 lg:col-span-2 lg:row-span-2 order-last lg:order-3 lg:max-h-full flex justify-center py-5 px-10">
-          <LineChart/>
+          <LineChart />
         </div>
         <div className="widget order-3 lg:order-4">
           <h4 className="widget-header">MARKET CAP</h4>

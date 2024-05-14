@@ -1,129 +1,77 @@
-import { useParams } from "react-router-dom";
-import { block as testBlock } from "./../../shared/api/test";
-import { TableElementBlock } from "../table/types";
-import { useQuery } from "@tanstack/react-query";
-
-const block: TableElementBlock = {
-  id: testBlock.UnicityCertificate.InputRecord.RoundNumber,
-  blockNumber: testBlock.UnicityCertificate.InputRecord.RoundNumber,
-  txCount: testBlock.Transactions.length,
-  shardId: testBlock.Header.ShardID,
-  earnedFees: testBlock.UnicityCertificate.InputRecord.SumOfEarnedFees,
-  summaryValue: testBlock.UnicityCertificate.InputRecord.SummaryValue,
-  timestamp: testBlock.UnicityCertificate.UnicitySeal.Timestamp,
-  proposerID: testBlock.Header.ProposerID,
-  hash: testBlock.UnicityCertificate.InputRecord.BlockHash,
-  previousBlockHash: testBlock.UnicityCertificate.InputRecord.PreviousHash,
-};
-
-async function fetchData(id: string = "1") {
-  // Simulate some network latency
-  console.log("getBlockByBlockNumber: " + id);
-  await new Promise((r) => setTimeout(r, 500));
-  const data = block;
-  return {
-    data,
-  };
-}
+import { Link, useParams } from "react-router-dom";
+import { useBlockQuery } from "../../entities/block";
+import { mapBlockToTableElement } from "../table/utils/tableUtils";
 
 const DetailsBlock = () => {
   const { id } = useParams();
+  const { data, isFetching } = useBlockQuery(id ? id : "latest");
 
-  const dataQuery = useQuery({
-    queryKey: ["block details", id],
-    queryFn: () => fetchData(id),
-  });
+  if (isFetching) {
+    return (
+      <div className=" bg-black w-full h-[60vh] bg-opacity-50 flex justify-center items-center">
+        <svg
+          aria-hidden="true"
+          className="inline w-8 h-8 text-transparent text-opacity-30 animate-spin dark:text-gray-600 fill-[#ffffff]"
+          viewBox="0 0 100 101"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+            fill="currentColor"
+          />
+          <path
+            d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+            fill="currentFill"
+          />
+        </svg>
+      </div>
+    );
+  }
+
+  const block = mapBlockToTableElement(data!);
 
   return (
-    <section className="text-gray-400 body-font overflow-hidden">
-      <div className="container px-5 mx-auto">
-        <div className="py-8 flex flex-wrap md:flex-nowrap">
-          <div className="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col">
-            <span className="font-semibold title-font text-white">
-              Block Round:
-            </span>
-          </div>
-          <div className="md:flex-grow">
-            <p className="">{dataQuery.data?.data.blockNumber}</p>
-          </div>
+    <section className="text-gray-300 bg-black bg-opacity-50">
+      <div className="px-10 py-5 space-y-5 mx-auto">
+        <div className="md:mb-0 mb-6 flex font-semibold flex-col md:flex-row">
+          <span className="md:basis-3/12">Block:</span>
+          <p className="text-white md:basis-9/12">
+            {block?.blockNumber?.toString()}
+          </p>
         </div>
-        <div className="py-8 flex flex-wrap md:flex-nowrap">
-          <div className="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col">
-            <span className="font-semibold title-font text-white">
-              Timestamp:
-            </span>
-          </div>
-          <div className="md:flex-grow">
-            <p className="">{dataQuery.data?.data.timestamp}</p>
-          </div>
+        <div className="md:mb-0 mb-6 flex font-semibold flex-col md:flex-row">
+          <span className="md:basis-3/12">Timestamp:</span>
+          <p className="text-white md:basis-9/12">{block?.timeAgo}</p>
         </div>
-        <div className="py-8 flex flex-wrap md:flex-nowrap">
-          <div className="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col">
-            <span className="font-semibold title-font text-white">
-              Proposer ID:
-            </span>
-          </div>
-          <div className="md:flex-grow">
-            <p className="">{dataQuery.data?.data.proposerID}</p>
-          </div>
+        <div className="md:mb-0 mb-6 flex font-semibold flex-col md:flex-row">
+          <span className="md:basis-3/12">Proposer ID:</span>
+          <p className="text-white md:basis-9/12">{block?.proposerID}</p>
         </div>
-        <div className="py-8 flex flex-wrap md:flex-nowrap">
-          <div className="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col">
-            <span className="font-semibold title-font text-white">
-              Transactions:
-            </span>
-          </div>
-          <div className="md:flex-grow">
-            <p className="">{dataQuery.data?.data.txCount}</p>
-          </div>
+        <div className="md:mb-0 mb-6 flex font-semibold flex-col md:flex-row">
+          <span className="md:basis-3/12">Transactions:</span>
+          <Link
+            className=" text-[#08e8de]"
+            to={`/bills/blocks/${id}/transactions`}
+          >
+            <p className=" md:basis-9/12">{block?.txCount}</p>
+          </Link>
         </div>
-        <div className="py-8 flex border-t-2 border-[#4e3fb6] border-opacity-50 flex-wrap md:flex-nowrap">
-          <div className="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col">
-            <span className="font-semibold title-font text-white">Shard:</span>
-          </div>
-          <div className="md:flex-grow">
-            <p className="">{dataQuery.data?.data.shardId}</p>
-          </div>
+        <div className="md:mb-0 mb-6 flex font-semibold flex-col pt-6 md:flex-row border-t border-white border-opacity-20">
+          <span className="md:basis-3/12">Shard:</span>
+          <p className="text-white md:basis-9/12">{block?.shardId}</p>
         </div>
-        <div className="py-8 flex flex-wrap md:flex-nowrap">
-          <div className="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col">
-            <span className="font-semibold title-font text-white">
-              Earned Fees:
-            </span>
-          </div>
-          <div className="md:flex-grow">
-            <p className="">{dataQuery.data?.data.earnedFees}</p>
-          </div>
+        <div className="md:mb-0 mb-6 flex font-semibold flex-col md:flex-row">
+          <span className="md:basis-3/12">Summary Value:</span>
+          <p className="text-white md:basis-9/12">{block?.summaryValue}</p>
         </div>
-        <div className="py-8 flex flex-wrap md:flex-nowrap">
-          <div className="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col">
-            <span className="font-semibold title-font text-white">
-            Summary Value:
-            </span>
-          </div>
-          <div className="md:flex-grow">
-            <p className="">{dataQuery.data?.data.summaryValue}</p>
-          </div>
+        <div className="md:mb-0 mb-6 flex font-semibold flex-col pt-6 md:flex-row border-t border-white border-opacity-20">
+          <span className="md:basis-3/12">Block Hash:</span>
+          <p className="text-white md:basis-9/12">{block?.blockHash}</p>
         </div>
-        <div className="py-8 flex border-t-2 border-[#4e3fb6] border-opacity-50 flex-wrap md:flex-nowrap">
-          <div className="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col">
-            <span className="font-semibold title-font text-white">
-            Block Hash:
-            </span>
-          </div>
-          <div className="md:flex-grow">
-            <p className="">{dataQuery.data?.data.hash}</p>
-          </div>
-        </div>
-        <div className="py-8 flex flex-wrap md:flex-nowrap">
-          <div className="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col">
-            <span className="font-semibold title-font text-white">
-            Previous Block Hash:
-            </span>
-          </div>
-          <div className="md:flex-grow">
-            <p className="">{dataQuery.data?.data.previousBlockHash}</p>
-          </div>
+        <div className="md:mb-0 mb-6 flex font-semibold flex-col md:flex-row">
+          <span className="md:basis-3/12">Previous Block Hash:</span>
+          <p className="text-white md:basis-9/12">{block?.previousBlockHash}</p>
         </div>
       </div>
     </section>

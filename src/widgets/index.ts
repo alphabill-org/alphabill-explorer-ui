@@ -1,14 +1,13 @@
 import NavBar from "./NavBar";
 import FooterBar from "./Footer";
-import TableBlocks from "./table/TableBlocks";
-import TableBlocksMini from "./table/TableBlocksMini";
-import TableTxsMini from "./table/TableTxsMini";
-import TableTxs from "./table/TableTxs";
+import TableBlocks from "./table/block/TableBlocks";
+import TableBlocksMini from "./table/block/TableBlocksMini";
+import TableTxsMini from "./table/tx/TableTxsMini";
+import TableTxs from "./table/tx/TableTxs";
 import DetailsBlock from "./details/DetailsBlock";
-import TableBlockTransactions from "./table/TableBlockTransactions";
-import DetailsTransaction from './details/DetailsTransaction';
-import { ThemeSwitcher } from './ThemeSwitcher';
-
+import TableBlockTxs from "./table/tx/TableBlockTxs";
+import DetailsTransaction from "./details/DetailsTransaction";
+import { ThemeSwitcher } from "./ThemeSwitcher";
 
 export { ThemeSwitcher };
 
@@ -19,7 +18,7 @@ export {
   TableBlocksMini,
   TableTxsMini,
   TableTxs,
-  TableBlockTransactions,
+  TableBlockTxs,
 };
 
 export { DetailsBlock, DetailsTransaction };

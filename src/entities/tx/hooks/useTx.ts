@@ -5,7 +5,7 @@ import {
   getBlockTxsByBlockNumber,
   getTxsByUnitID,
 } from "../api/txApi";
-import { Tx } from "../types/txTypes";
+import { Tx, TxsResponse } from "../types/txTypes";
 import { AxiosError } from "axios";
 
 const useTxQuery = (txHash: string): QueryObserverResult<Tx, AxiosError> => {
@@ -16,9 +16,9 @@ const useTxQuery = (txHash: string): QueryObserverResult<Tx, AxiosError> => {
 };
 
 const useTxsQuery = (
-  startTxHash: number,
+  startTxHash: string,
   limit?: number
-): QueryObserverResult<Tx[], AxiosError> => {
+): QueryObserverResult<TxsResponse, AxiosError> => {
   return useQuery({
     queryKey: ["Txs", startTxHash, limit],
     queryFn: () => getTxs(startTxHash, limit),

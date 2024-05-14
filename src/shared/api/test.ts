@@ -24,8 +24,8 @@ const inputRecord: InputRecord = {
   Hash: "hash", //`json:"hash,omitempty"`               // state hash to be certified
   BlockHash: "block hash", //`json:"block_hash,omitempty"`         // hash of the block
   SummaryValue: "summaryValue", //`json:"summary_value,omitempty"`      // summary value to certified
-  RoundNumber: 1, //`json:"round_number,omitempty"`       // transaction system's round number
-  SumOfEarnedFees: 5555, //`json:"sum_of_earned_fees,omitempty"` // sum of the actual fees over all transaction records in the block
+  RoundNumber: BigInt(1), //`json:"round_number,omitempty"`       // transaction system's round number
+  SumOfEarnedFees: BigInt(5555), //`json:"sum_of_earned_fees,omitempty"` // sum of the actual fees over all transaction records in the block
 };
 
 const unicitySeal: UnicitySeal = {
@@ -59,7 +59,7 @@ const transactionOrder: TransactionOrder = {
   FeeProof: "feeProof",
 };
 const serverMetadata: ServerMetadata = {
-  ActualFee: 234,
+  ActualFee: BigInt(234),
   TargetUnits: ["1", "2"],
   SuccessIndicator: 111,
   ProcessingDetails: "processDetails",
