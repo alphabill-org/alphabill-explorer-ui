@@ -8,6 +8,7 @@ import DetailsBlock from "./details/DetailsBlock";
 import TableBlockTxs from "./table/tx/TableBlockTxs";
 import DetailsTransaction from "./details/DetailsTransaction";
 import { ThemeSwitcher } from "./ThemeSwitcher";
+import DetailsUnit from './details/DetailsUnit';
 
 export { ThemeSwitcher };
 
@@ -21,4 +22,4 @@ export {
   TableBlockTxs,
 };
 
-export { DetailsBlock, DetailsTransaction };
+export { DetailsBlock, DetailsTransaction , DetailsUnit};

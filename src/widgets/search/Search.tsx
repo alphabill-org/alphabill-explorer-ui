@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useQueries } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { Block, getBlock } from "../../entities/block";
-import { getTx } from "../../entities/tx/api/txApi";
+import { getTx, getTxsByUnitID } from "../../entities/tx/api/txApi";
 import { Tx } from "../../entities/tx";
 import { Button } from "../../shared/ui/button/Button";
 
@@ -29,6 +29,12 @@ const Search = () => {
         enabled: !!queryKey,
         staleTime: Infinity,
       },
+      {
+        queryKey: ["searchUnit", queryKey],
+        queryFn: () => getTxsByUnitID(queryKey),
+        enabled: !!queryKey,
+        staleTime: Infinity,
+      },
     ],
   });
 
@@ -37,12 +43,15 @@ const Search = () => {
     setQueryKey(searchQuery);
   };
 
-  const newResult = (item: Block | Tx | undefined): Result => {
+  const newResult = (item: Block | Tx | Tx[]| undefined): Result => {
     if (item && (item as Block).Header) {
       return { title: `Block: ${(item as Block).UnicityCertificate.input_record.round_number}`, routeTo: `/bills/blocks/${(item as Block).UnicityCertificate.input_record.round_number}` };
     } else if (item && (item as Tx).TxRecordHash) {
       return { title: `Transaction: ${(item as Tx).TxRecordHash}`, routeTo: `bills/transactions/${(item as Tx).TxOrderHash}` };
     }
+else if (item && (item as Tx[])[0].TxRecordHash) {
+    return { title: `Transactions: ${(item as Tx[]).length}`, routeTo: `bills/units/${queryKey}` };
+  }
     return { title: "Unknown", routeTo: "#" };
   };
 
@@ -86,8 +95,8 @@ const Search = () => {
         Search
       </Button>
 
-      {combinedResults.length > 0 && (
-        <div className="absolute mt-2 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+      {combinedResults.length > 0 ? (
+        <div className="absolute mt-14 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
           {combinedResults.map((result, index) => (
             <div key={index}>
               <Link to={newResult(result).routeTo} className="block p-2 hover:bg-gray-200">
@@ -96,6 +105,12 @@ const Search = () => {
             </div>
           ))}
         </div>
+      ) : (
+        queryKey && (
+          <div className="absolute mt-14 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 p-2">
+            No data found
+          </div>
+        )
       )}
     </div>
   );

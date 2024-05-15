@@ -7,6 +7,7 @@ import BlockDetailsPage from "./blocks/BlockDetailsPage";
 import TransactionDetailsPage from "./transactions/TransactionDetailsPage";
 import Bills from "./bills/Bills";
 import ComingSoon from "./comingsoon/ComingSoon";
+import UnitDetailsPage from './units/UnitDetailsPage';
 
 export {
   MainLayout,
@@ -15,6 +16,7 @@ export {
   BlocksPage,
   BlockDetailsPage,
   TransactionsPage,
+  UnitDetailsPage ,
   TransactionDetailsPage,
   Bills,
   ComingSoon,

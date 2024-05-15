@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
 import { TableElementTx } from "../table/types";
 import { block as testBlock } from "./../../shared/api/test";
+import { DetailProps } from "./types";
 
 const tx: TableElementTx= {
   id: "0xksdzxczczxcz",
@@ -40,8 +40,9 @@ async function fetchData(bNo: string = "1", hash: string = "1") {
     data,
   };
 }
-const DetailsTransaction = () => {
-  const { id } = useParams();
+
+
+const DetailsTransaction = ({id}:DetailProps) => {
 
   const blockNumberQuery = useQuery({
     queryKey: ["transaction block", id],

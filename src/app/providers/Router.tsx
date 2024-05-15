@@ -8,7 +8,8 @@ import {
   TransactionDetailsPage,
   TransactionsPage,
   Bills,
-  ComingSoon
+  ComingSoon,
+  UnitDetailsPage
 } from "../../pages";
 import { DetailsBlock, TableBlockTxs } from "../../widgets";
 
@@ -26,6 +27,8 @@ export function Router() {
         </Route>
         <Route path="bills/transactions" element={<TransactionsPage />} />
         <Route path="bills/transactions/:id" element={<TransactionDetailsPage />} />
+
+        <Route path="bills/units/:id" element={<UnitDetailsPage />} />
         
         <Route path="tokens" element={<ComingSoon/>}/>
         <Route path="tokens/blocks" element={<ComingSoon/>} />
