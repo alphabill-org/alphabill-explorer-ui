@@ -9,7 +9,7 @@ const TransactionDetailsPage = () => {
   } else {
     return (
       <div>
-        <h3 className="text-white font-bold px-5">Unit: {id}</h3>
+        <h3 className="text-white font-bold px-5">Transaction: {id}</h3>
         <DetailsTransaction id={id} />
       </div>
     );
