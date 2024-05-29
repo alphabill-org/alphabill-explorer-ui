@@ -4,7 +4,7 @@ export function extractOffsetKey(linkHeader: string) {
 }
 
 export function shortenHash(
-  hash: string,
+  hash: string = "0x000000",
   frontLength: number = 4,
   endLength: number = 4
 ): string {
