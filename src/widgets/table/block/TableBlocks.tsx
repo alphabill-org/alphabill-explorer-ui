@@ -24,7 +24,7 @@ const TableBlocks = () => {
         data={[]}
         columns={tableBlockColumns}
         isPaginate={true}
-        className=" w-full m-auto text-center text-white"
+        className=" "
         fetchDataFn={(options) => fetchTableBlockData(lastBlock, options)}
         dataCount={lastBlock}
       />
