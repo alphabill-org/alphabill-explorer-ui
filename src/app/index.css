@@ -96,7 +96,7 @@
   }
 
   .layout{
-    @apply bg-[--layout-primary-bg] relative min-h-[80vh] lg:min-h-[77vh] w-full py-10 z-0;
+    @apply bg-[--layout-primary-bg] flex-grow relative w-full py-10 z-0;
   }
   .layout-circle{
     @apply border-[--layout-circle-border-bg] border-[2px] rounded-full absolute; 

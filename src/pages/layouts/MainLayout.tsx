@@ -4,7 +4,7 @@ import { AnimatedCirclesElement, SphereElement } from "../../shared/ui/backgroun
 
 export const MainLayout = () => {
   return (
-    <div>
+    <div className="min-h-screen flex flex-col">
       <NavBar/>
       <div className="layout" style={{ overflow: 'hidden' }}>
         <div className="container mx-auto max-w-6xl z-30">
