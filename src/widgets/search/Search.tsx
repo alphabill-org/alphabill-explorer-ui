@@ -47,7 +47,7 @@ const Search = () => {
     if (item && (item as Block).Header) {
       return { title: `Block: ${(item as Block).UnicityCertificate.input_record.round_number}`, routeTo: `/bills/blocks/${(item as Block).UnicityCertificate.input_record.round_number}` };
     } else if (item && (item as Tx).TxRecordHash) {
-      return { title: `Transaction: ${(item as Tx).TxRecordHash}`, routeTo: `bills/transactions/${(item as Tx).TxOrderHash}` };
+      return { title: `Transaction: ${(item as Tx).TxRecordHash}`, routeTo: `bills/transactions/${(item as Tx).TxRecordHash}` };
     }
     else if (item && (item as Tx[])[0].TxRecordHash) {
       return { title: `Transactions: ${(item as Tx[]).length}`, routeTo: `bills/units/${queryKey}` };
