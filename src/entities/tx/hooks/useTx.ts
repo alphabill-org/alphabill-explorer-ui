@@ -26,7 +26,7 @@ const useTxsQuery = (
 };
 
 const useTxsByBlockNumberQuery = (
-  blockNumber: number
+  blockNumber: string
 ): QueryObserverResult<Tx[], AxiosError> => {
   return useQuery({
     queryKey: ["BlockTxsByBlockNumber", blockNumber],

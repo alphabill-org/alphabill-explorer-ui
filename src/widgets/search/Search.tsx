@@ -43,15 +43,15 @@ const Search = () => {
     setQueryKey(searchQuery);
   };
 
-  const newResult = (item: Block | Tx | Tx[]| undefined): Result => {
+  const newResult = (item: Block | Tx | Tx[] | undefined): Result => {
     if (item && (item as Block).Header) {
       return { title: `Block: ${(item as Block).UnicityCertificate.input_record.round_number}`, routeTo: `/bills/blocks/${(item as Block).UnicityCertificate.input_record.round_number}` };
     } else if (item && (item as Tx).TxRecordHash) {
       return { title: `Transaction: ${(item as Tx).TxRecordHash}`, routeTo: `bills/transactions/${(item as Tx).TxOrderHash}` };
     }
-else if (item && (item as Tx[])[0].TxRecordHash) {
-    return { title: `Transactions: ${(item as Tx[]).length}`, routeTo: `bills/units/${queryKey}` };
-  }
+    else if (item && (item as Tx[])[0].TxRecordHash) {
+      return { title: `Transactions: ${(item as Tx[]).length}`, routeTo: `bills/units/${queryKey}` };
+    }
     return { title: "Unknown", routeTo: "#" };
   };
 
@@ -81,11 +81,29 @@ else if (item && (item as Tx[])[0].TxRecordHash) {
         </span>
         <input
           type="search"
-          placeholder="Search by Address / Txn Hash / Block / Token "
+          placeholder="Search by Address / Txn Hash / Block"
           className="w-[70vw] md:w-[65vw] lg:w-[37vw] h-[6.5vh] p-5 focus:outline-none placeholder:lg:text-[0.95vw] placeholder:sm:text-[2vw] placeholder:md:text-[1.6vw] placeholder:text-[2.4vw]"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
+
+        {combinedResults.length > 0 ? (
+          <div className="absolute w-[70vw] md:w-[65vw] lg:w-[37vw] mt-1 px-5 py-5 bg-black bg-opacity-70 text-white">
+            {combinedResults.map((result, index) => (
+              <div key={index}>
+                <Link to={newResult(result).routeTo} className="block p-2 hover:bg-gray-200">
+                  {newResult(result).title}
+                </Link>
+              </div>
+            ))}
+          </div>
+        ) : (
+          queryKey && (
+            <div className="absolute w-[70vw] md:w-[65vw] lg:w-[37vw] mt-1 px-5 py-5 text-center bg-black bg-opacity-70 text-white">
+              No data found
+            </div>
+          )
+        )}
       </div>
       <Button
         type="submit"
@@ -94,24 +112,6 @@ else if (item && (item as Tx[])[0].TxRecordHash) {
       >
         Search
       </Button>
-
-      {combinedResults.length > 0 ? (
-        <div className="absolute mt-14 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
-          {combinedResults.map((result, index) => (
-            <div key={index}>
-              <Link to={newResult(result).routeTo} className="block p-2 hover:bg-gray-200">
-                {newResult(result).title}
-              </Link>
-            </div>
-          ))}
-        </div>
-      ) : (
-        queryKey && (
-          <div className="absolute mt-14 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 p-2">
-            No data found
-          </div>
-        )
-      )}
     </div>
   );
 };

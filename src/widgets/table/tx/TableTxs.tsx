@@ -18,7 +18,7 @@ const TableTxs = () => {
       : BigInt(0);
 
   return (
-    <div>
+    <div className="px-5 lg:px-0">
       <Table
         queryKey="transactions"
         data={[]}

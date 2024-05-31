@@ -112,20 +112,16 @@ const Table = <TData extends object>({
   }
 
   return (
-    <div
-      className={`px-5 block max-w-full overflow-x-auto overflow-y-hidden custom-scroll text-center ${className}`}
-    >
-      <table className="table">
+    <div className={`px-5 block max-w-full overflow-x-auto overflow-y-hidden custom-scroll text-center table-main`}>
+      <table className={`w-full ${className}`}>
         <thead className="table-column-header">
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id} className=" text-center">
               {headerGroup.headers.map((header) => {
                 return (
                   <th
-                    className="py-2 px-2"
+                    className="pb-3 px-7 md:px-2"
                     key={header.id}
-                    colSpan={header.colSpan}
-                    style={{ position: "relative", width: header.getSize() }}
                   >
                     {header.isPlaceholder
                       ? null
@@ -137,9 +133,6 @@ const Table = <TData extends object>({
                       <div
                         onMouseDown={header.getResizeHandler()}
                         onTouchStart={header.getResizeHandler()}
-                        className={`resizer ${
-                          header.column.getIsResizing() ? "isResizing" : ""
-                        }`}
                       ></div>
                     )}
                   </th>
@@ -161,7 +154,7 @@ const Table = <TData extends object>({
               >
                 {row.getVisibleCells().map((cell) => {
                   return (
-                    <td key={cell.id}  className="py-4" style={{ width: cell.column.getSize() }}>
+                    <td key={cell.id}  className="py-4 px-7 md:px-0" style={{ width: cell.column.getSize() }}>
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()

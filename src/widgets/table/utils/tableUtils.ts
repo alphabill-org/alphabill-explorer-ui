@@ -25,7 +25,7 @@ export function mapTxToTableElement(tx: Tx): TableElementTx {
       blockNumber: BigInt(tx.BlockNumber),
       systemID: tx.Transaction.TransactionOrder.Payload.SystemID,
       transactionType: tx.Transaction.TransactionOrder.Payload.Type,
-      unitID: tx.Transaction.TransactionOrder.Payload.UnitID,
+      unitID: tx.Transaction.ServerMetadata.TargetUnits,
       timeout: tx.Transaction.TransactionOrder.Payload.ClientMetadata.Timeout,
       actualFee: tx.Transaction.ServerMetadata.ActualFee,
       successIndicator: tx.Transaction.ServerMetadata.SuccessIndicator
