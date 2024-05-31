@@ -4,9 +4,11 @@ import { useTxQuery } from "../../entities/tx/hooks/useTx";
 import { useState } from "react";
 import { mapTxToTableElement } from "../table/utils/tableUtils";
 import { IconArrowSmallDown, IconArrowSmallUp } from "../../shared/ui/icons";
+// import { TableElementTx } from "../table/types";
+import { shortenHash } from "../../shared/utils/helpers";
 
 // const tx: TableElementTx = {
-//   txRecordHash: "0xksdzxczczxcz",
+//   txRecordHash: "0xksdzxczczxczdjksdjiajdoisajdnsijdioadj",
 //   txOrderHash: "0xdsjdisjdioajdia",
 //   blockNumber: BigInt(321321),
 //   systemID: 1,
@@ -20,7 +22,7 @@ import { IconArrowSmallDown, IconArrowSmallUp } from "../../shared/ui/icons";
 const DetailsTransaction = () => {
   const { id } = useParams();
   const { data, isFetching, isError } = useTxQuery(id!);
-    const [showUnits, setShowUnits] = useState<boolean>(false);
+  const [showUnits, setShowUnits] = useState<boolean>(false);
 
   if(isError){
     return(
@@ -56,12 +58,21 @@ const DetailsTransaction = () => {
 
   return (
     <div className="px-4 space-y-2">
-      <h3 className="text-white font-bold px-5">Transaction: {tx.txRecordHash}</h3>
+      <h3 className="text-white text-3xl md:text-4xl font-bold flex md:flex-col lg:flex-row">
+        Transaction:
+        <span className="block md:hidden font-semibold ml-3">
+          {shortenHash(tx.txRecordHash, 4, 3)}
+        </span>
+        <span className="hidden md:block ml-3 md:ml-0 lg:ml-3">{tx.txRecordHash}</span>
+      </h3>
       <section className="text-gray-300 bg-black bg-opacity-50">
         <div className="px-10 py-10 space-y-8 mx-auto">
           <div className="md:mb-0 mb-6 flex flex-col md:flex-row">
             <span className="md:basis-3/12">Transaction Hash:</span>
-            <p className="text-white md:basis-9/12 font-semibold">
+            <p className="text-white sm:hidden md:basis-9/12 font-semibold">
+              {shortenHash(tx.txRecordHash)}
+            </p>
+            <p className="text-white hidden sm:block md:basis-9/12 font-semibold">
               {tx.txRecordHash}
             </p>
           </div>
@@ -103,10 +114,13 @@ const DetailsTransaction = () => {
             <div className="md:basis-9/12 font-semibold text-white space-y-2">
               <button onClick={() => setShowUnits(!showUnits)} className="flex items-center hover:text-secondary transition-all duration-200">
                 {tx.unitID.length}
-                {showUnits ? <IconArrowSmallUp className="ml-2 h-[11px] w-[11px]"/> : <IconArrowSmallDown className="ml-2 h-[11px] w-[11px]"/> }
+                {showUnits ? <IconArrowSmallUp className="ml-2 h-[11px] w-[11px]" /> : <IconArrowSmallDown className="ml-2 h-[11px] w-[11px]" />}
               </button>
               {showUnits && tx.unitID.map((unit, index) =>
-                <p key={index}>{unit}</p>
+                <>
+                  <p key={index} className="sm:hidden">{shortenHash(unit)}</p>
+                  <p key={index} className="hidden sm:block">{unit}</p>
+                </>
               )}
             </div>
           </div>
@@ -117,9 +131,12 @@ const DetailsTransaction = () => {
             </p>
           </div>
           <div className="md:mb-0 mb-6 flex flex-col md:flex-row">
-            <span className="md:basis-3/12">Transaction Order Hash:</span>
-            <p className="text-white md:basis-9/12 font-semibold">
+            <span className="md:basis-3/12">Order Hash:</span>
+            <p className="text-white hidden sm:block md:basis-9/12 font-semibold">
               {tx.txOrderHash}
+            </p>
+            <p className="text-white sm:hidden md:basis-9/12 font-semibold">
+              {shortenHash(tx.txOrderHash)}
             </p>
           </div>
         </div>
