@@ -43,7 +43,9 @@ const DetailsBlock = () => {
         </div>
         <div className="md:mb-0 mb-6 flex flex-col md:flex-row">
           <span className="md:basis-3/12">Timestamp:</span>
-          <p className="text-white md:basis-9/12 font-semibold">{block?.timeAgo}</p>
+          <p className="text-white md:basis-9/12 font-semibold">
+            {block?.timeAgo}
+          </p>
         </div>
         <div className="md:mb-0 mb-6 flex flex-col md:flex-row text-white md:basis-9/12">
           <span className="md:basis-3/12">Proposer ID:</span>
@@ -56,20 +58,28 @@ const DetailsBlock = () => {
         </div>
         <div className="md:mb-0 mb-6 flex flex-col md:flex-row">
           <span className="md:basis-3/12">Transactions:</span>
-          <Link
-            className="text-[#08e8de]"
-            to={`/bills/blocks/${id}/transactions`}
-          >
-            <p className="md:basis-9/12 font-semibold">{block?.txCount}</p>
-          </Link>
+          {block?.txCount == 0 ? (
+            <p className="text-white md:basis-9/12 font-semibold">0</p>
+          ) : (
+            <Link
+              className="text-[#08e8de]"
+              to={`/bills/blocks/${id}/transactions`}
+            >
+              <p className="md:basis-9/12 font-semibold">{block?.txCount}</p>
+            </Link>
+          )}
         </div>
         <div className="md:mb-0 mb-6 flex flex-col pt-8 md:flex-row border-t border-white border-opacity-20">
           <span className="md:basis-3/12">Shard:</span>
-          <p className="text-white md:basis-9/12 font-semibold">{block?.shardId}</p>
+          <p className="text-white md:basis-9/12 font-semibold">
+            {block?.shardId}
+          </p>
         </div>
         <div className="md:mb-0 mb-6 flex flex-col md:flex-row">
           <span className="md:basis-3/12">Summary Value:</span>
-          <p className="text-white md:basis-9/12 font-semibold">{block?.summaryValue}</p>
+          <p className="text-white md:basis-9/12 font-semibold">
+            {block?.summaryValue}
+          </p>
         </div>
         <div className="md:mb-0 mb-6 flex flex-col pt-8 md:flex-row border-t border-white border-opacity-20">
           <span className="md:basis-3/12">Block Hash:</span>
