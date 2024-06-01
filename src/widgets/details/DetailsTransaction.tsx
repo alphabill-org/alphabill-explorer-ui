@@ -118,8 +118,8 @@ const DetailsTransaction = () => {
               </button>
               {showUnits && tx.unitID.map((unit, index) =>
                 <>
-                  <p key={index} className="lg:hidden">{shortenHash(unit)}</p>
-                  <p key={index} className="hidden lg:block">{unit}</p>
+                  <Link key={index} className="lg:hidden text-secondary" to={`/bills/units/${unit}`}>{shortenHash(unit)}</Link>
+                  <Link key={index} className="hidden lg:block text-secondary" to={`/bills/units/${unit}`}>{unit}</Link>
                 </>
               )}
             </div>
