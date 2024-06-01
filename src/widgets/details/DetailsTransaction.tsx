@@ -8,12 +8,12 @@ import { IconArrowSmallDown, IconArrowSmallUp } from "../../shared/ui/icons";
 import { shortenHash } from "../../shared/utils/helpers";
 
 // const tx: TableElementTx = {
-//   txRecordHash: "0xksdzxczczxczdjksdjiajdoisajdnsijdioadj",
-//   txOrderHash: "0xdsjdisjdioajdia",
+//   txRecordHash: "0xe5e792c874443e9bc304a97b23806279628997362adb11fb1ab9724ef6d81017",
+//   txOrderHash: "0xe5e792c874443e9bc304a97b23806279628997362adb11fb1ab9724ef6d81017",
 //   blockNumber: BigInt(321321),
 //   systemID: 1,
 //   transactionType: "Transfer",
-//   unitID: ["jdsioajdiodsada", "dskjdajdiadk", "dskjdajdijsid"],
+//   unitID: ["0xe5e792c874443e9bc304a97b23806279628997362adb11fb1ab9724ef6d81017", "0xe5e792c874443e9bc304a97b23806279628997362adb11fb1ab9724ef6d81017", "0xe5e792c874443e9bc304a97b23806279628997362adb11fb1ab9724ef6d81017"],
 //   timeout: 2134,
 //   actualFee: 3224151,
 //   successIndicator: 0
@@ -58,21 +58,21 @@ const DetailsTransaction = () => {
 
   return (
     <div className="px-4 space-y-2">
-      <h3 className="text-white text-3xl md:text-4xl font-bold flex md:flex-col lg:flex-row">
+      <h3 className="text-white text-3xl md:text-4xl font-bold flex lg:flex-col">
         Transaction:
-        <span className="block md:hidden font-semibold ml-3">
+        <span className="block lg:hidden font-semibold ml-3">
           {shortenHash(tx.txRecordHash, 4, 3)}
         </span>
-        <span className="hidden md:block ml-3 md:ml-0 lg:ml-3">{tx.txRecordHash}</span>
+        <span className="hidden lg:block ml-3 md:text-[29px]  md:ml-0">{tx.txRecordHash}</span>
       </h3>
       <section className="text-gray-300 bg-black bg-opacity-50">
         <div className="px-10 py-10 space-y-8 mx-auto">
           <div className="md:mb-0 mb-6 flex flex-col md:flex-row">
             <span className="md:basis-3/12">Transaction Hash:</span>
-            <p className="text-white sm:hidden md:basis-9/12 font-semibold">
+            <p className="text-white lg:hidden md:basis-9/12 font-semibold">
               {shortenHash(tx.txRecordHash)}
             </p>
-            <p className="text-white hidden sm:block md:basis-9/12 font-semibold">
+            <p className="text-white hidden lg:block md:basis-9/12 font-semibold">
               {tx.txRecordHash}
             </p>
           </div>
@@ -118,8 +118,8 @@ const DetailsTransaction = () => {
               </button>
               {showUnits && tx.unitID.map((unit, index) =>
                 <>
-                  <p key={index} className="sm:hidden">{shortenHash(unit)}</p>
-                  <p key={index} className="hidden sm:block">{unit}</p>
+                  <p key={index} className="lg:hidden">{shortenHash(unit)}</p>
+                  <p key={index} className="hidden lg:block">{unit}</p>
                 </>
               )}
             </div>
@@ -132,10 +132,10 @@ const DetailsTransaction = () => {
           </div>
           <div className="md:mb-0 mb-6 flex flex-col md:flex-row">
             <span className="md:basis-3/12">Order Hash:</span>
-            <p className="text-white hidden sm:block md:basis-9/12 font-semibold">
+            <p className="text-white hidden lg:block md:basis-9/12 font-semibold">
               {tx.txOrderHash}
             </p>
-            <p className="text-white sm:hidden md:basis-9/12 font-semibold">
+            <p className="text-white lg:hidden md:basis-9/12 font-semibold">
               {shortenHash(tx.txOrderHash)}
             </p>
           </div>

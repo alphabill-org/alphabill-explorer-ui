@@ -14,7 +14,7 @@ type SocialLink = {
 
 const menu: Menu[] = [
   { title: "Alphabill", link: "https://alphabill.org/" },
-  { title: "Docs", link: "https://docs.alphabill.org/docs/welcome" },
+  { title: "Docs", link: "https://docs.alphabill.org/welcome" },
   { title: "Whitepaper", link: "https://alphabill.org/files/AlphaBill%20Whitepaper.pdf" },
 ];
 
