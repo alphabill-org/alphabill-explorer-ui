@@ -1,4 +1,4 @@
-import { DetailsTransaction } from "../../widgets";
+import { DetailsTransaction } from "../../../widgets";
 
 const TransactionDetailsPage = () => {
   return (

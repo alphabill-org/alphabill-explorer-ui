@@ -1,5 +1,5 @@
 import { NavLink, Outlet, useParams } from "react-router-dom";
-import { useBlockQuery } from "../../entities/block";
+import { useBlockQuery } from "../../../entities/block";
 
 const BlockDetailsPage = () => {
   const { id } = useParams();

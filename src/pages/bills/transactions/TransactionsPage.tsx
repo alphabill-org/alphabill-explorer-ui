@@ -1,4 +1,4 @@
-import { TableTxs } from "../../widgets";
+import { TableTxs } from "../../../widgets";
 
 const TransactionsPage = () => {
   return (

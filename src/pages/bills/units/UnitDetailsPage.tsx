@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
-import { DetailsUnit } from "../../widgets";
-import Page404 from "../404/Page404";
+import { DetailsUnit } from "../../../widgets";
+import Page404 from "../../404/Page404";
 
 const UnitDetailsPage = () => {
   const { id } = useParams();
