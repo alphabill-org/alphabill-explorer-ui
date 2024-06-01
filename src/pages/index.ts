@@ -7,7 +7,8 @@ import BlockDetailsPage from "./bills/blocks/BlockDetailsPage";
 import TransactionDetailsPage from "./bills/transactions/TransactionDetailsPage";
 import Bills from "./bills/Bills";
 import ComingSoon from "./comingsoon/ComingSoon";
-import UnitDetailsPage from './units/UnitDetailsPage';
+import UnitDetailsPage from './bills/units/UnitDetailsPage';
+
 
 export {
   MainLayout,
