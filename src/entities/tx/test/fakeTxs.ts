@@ -1,7 +1,7 @@
 import { Tx } from "../types/txTypes";
 
 const fakeTransaction1: Tx = {
-    TxRecordHash: "MX2EFp5xXLWzUyHGvr/Uv9ypaNEJRuV5NZUH+JaXf20=",
+    TxRecordHash: "MX2EFp5xXLWzUyHGvrUv9ypaNEJRuV5NZUH+JaXf20=",
     TxOrderHash: "2grCq/EsVv6WnHA6fNOEKnGNCTw6Zllgoba1xnZRL0E=",
     BlockNumber: BigInt(279458),
     Transaction: {
@@ -30,7 +30,7 @@ const fakeTransaction1: Tx = {
 };
 
 const fakeTransaction2: Tx = {
-    TxRecordHash: "AE3fFp5xXLWzUyHGvr/Uv9ypaNEJRuV5NZUH+XgXf21=",
+    TxRecordHash: "AE3fFp5xXLWzUyHGvrUv9ypaNEJRuV5NZUH+XgXf21=",
     TxOrderHash: "3HsCq/EsVv6WnHA6fNOEKnGNCTw6Zllgoba1xnZRL0F=",
     BlockNumber: BigInt(279459),
     Transaction: {
