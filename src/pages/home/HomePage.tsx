@@ -1,6 +1,6 @@
-import { Button } from "../../shared/ui/button/Button";
 import { TableBlocksMini, TableTxsMini } from "../../widgets";
 import LineChart from "../../shared/ui/chart/LineChart";
+import Search from "../../widgets/search/Search";
 
 const HomePage = () => {
   return (
@@ -9,39 +9,7 @@ const HomePage = () => {
         <h1 className="main-header">The Alphabill Blockchain Explorer ...</h1>
       </div>
 
-      <div className="w-full flex flex-row justify-center px-5 pb-5">
-        <div className="relative">
-          <span className="absolute flex inset-y-0 right-0 items-center mx-3 lg:hidden">
-            <button
-              type="submit"
-              className="p-1 focus:outline-none focus:shadow-outline"
-            >
-              <svg
-                fill="none"
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-                className="w-6 h-6"
-              >
-                <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-              </svg>
-            </button>
-          </span>
-          <input
-            type="search"
-            placeholder="Search by Address / Txn Hash / Block / Token "
-            className=" w-[70vw] md:w-[65vw] lg:w-[37vw] h-[6.5vh] p-5 focus:outline-none placeholder:lg:text-[0.95vw] placeholder:sm:text-[2vw] placeholder:md:text-[1.6vw] placeholder:text-[2.4vw]"
-          />
-        </div>
-        <Button
-          type="submit"
-          className="button-v2 w-[13vw] h-[6.5vh] ml-[26px] text-[18px] hidden lg:flex"
-        >
-          Search
-        </Button>
-      </div>
+      <Search />
 
       <div className="grid grid-rows-6 grid-cols-1 sm:grid-rows-4 sm:grid-cols-2 lg:grid-rows-2 lg:grid-cols-4 gap-1 my-10 px-14">
         <div className="widget order-1">

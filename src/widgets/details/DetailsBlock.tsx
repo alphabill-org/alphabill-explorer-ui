@@ -1,6 +1,7 @@
 import { Link, useParams } from "react-router-dom";
 import { useBlockQuery } from "../../entities/block";
 import { mapBlockToTableElement } from "../table/utils/tableUtils";
+import { shortenHash } from "../../shared/utils/helpers";
 
 const DetailsBlock = () => {
   const { id } = useParams();
@@ -8,7 +9,7 @@ const DetailsBlock = () => {
 
   if (isFetching) {
     return (
-      <div className=" bg-black w-full h-[60vh] bg-opacity-50 flex justify-center items-center">
+      <div className="bg-black w-full h-[60vh] bg-opacity-50 flex justify-center items-center">
         <svg
           aria-hidden="true"
           className="inline w-8 h-8 text-transparent text-opacity-30 animate-spin dark:text-gray-600 fill-[#ffffff]"
@@ -33,45 +34,70 @@ const DetailsBlock = () => {
 
   return (
     <section className="text-gray-300 bg-black bg-opacity-50">
-      <div className="px-10 py-5 space-y-5 mx-auto">
-        <div className="md:mb-0 mb-6 flex font-semibold flex-col md:flex-row">
+      <div className="px-10 py-10 space-y-8 mx-auto">
+        <div className="md:mb-0 mb-6 flex flex-col md:flex-row">
           <span className="md:basis-3/12">Block:</span>
-          <p className="text-white md:basis-9/12">
+          <p className="text-white md:basis-9/12 font-semibold">
             {block?.blockNumber?.toString()}
           </p>
         </div>
-        <div className="md:mb-0 mb-6 flex font-semibold flex-col md:flex-row">
+        <div className="md:mb-0 mb-6 flex flex-col md:flex-row">
           <span className="md:basis-3/12">Timestamp:</span>
-          <p className="text-white md:basis-9/12">{block?.timeAgo}</p>
+          <p className="text-white md:basis-9/12 font-semibold">
+            {block?.timeAgo}
+          </p>
         </div>
-        <div className="md:mb-0 mb-6 flex font-semibold flex-col md:flex-row">
+        <div className="md:mb-0 mb-6 flex flex-col md:flex-row text-white md:basis-9/12">
           <span className="md:basis-3/12">Proposer ID:</span>
-          <p className="text-white md:basis-9/12">{block?.proposerID}</p>
+          <p className="text-white md:basis-9/12">
+            <span className="block md:hidden font-semibold">
+              {shortenHash(block?.proposerID)}
+            </span>
+            <span className="hidden md:block">{block?.proposerID}</span>
+          </p>
         </div>
-        <div className="md:mb-0 mb-6 flex font-semibold flex-col md:flex-row">
+        <div className="md:mb-0 mb-6 flex flex-col md:flex-row">
           <span className="md:basis-3/12">Transactions:</span>
-          <Link
-            className=" text-[#08e8de]"
-            to={`/bills/blocks/${id}/transactions`}
-          >
-            <p className=" md:basis-9/12">{block?.txCount}</p>
-          </Link>
+          {block?.txCount == 0 ? (
+            <p className="text-white md:basis-9/12 font-semibold">0</p>
+          ) : (
+            <Link
+              className="text-[#08e8de]"
+              to={`/bills/blocks/${id}/transactions`}
+            >
+              <p className="md:basis-9/12 font-semibold">{block?.txCount}</p>
+            </Link>
+          )}
         </div>
-        <div className="md:mb-0 mb-6 flex font-semibold flex-col pt-6 md:flex-row border-t border-white border-opacity-20">
+        <div className="md:mb-0 mb-6 flex flex-col pt-8 md:flex-row border-t border-white border-opacity-20">
           <span className="md:basis-3/12">Shard:</span>
-          <p className="text-white md:basis-9/12">{block?.shardId}</p>
+          <p className="text-white md:basis-9/12 font-semibold">
+            {block?.shardId}
+          </p>
         </div>
-        <div className="md:mb-0 mb-6 flex font-semibold flex-col md:flex-row">
+        <div className="md:mb-0 mb-6 flex flex-col md:flex-row">
           <span className="md:basis-3/12">Summary Value:</span>
-          <p className="text-white md:basis-9/12">{block?.summaryValue}</p>
+          <p className="text-white md:basis-9/12 font-semibold">
+            {block?.summaryValue}
+          </p>
         </div>
-        <div className="md:mb-0 mb-6 flex font-semibold flex-col pt-6 md:flex-row border-t border-white border-opacity-20">
+        <div className="md:mb-0 mb-6 flex flex-col pt-8 md:flex-row border-t border-white border-opacity-20">
           <span className="md:basis-3/12">Block Hash:</span>
-          <p className="text-white md:basis-9/12">{block?.blockHash}</p>
+          <p className="text-white md:basis-9/12">
+            <span className="block md:hidden font-semibold">
+              {shortenHash(block?.blockHash)}
+            </span>
+            <span className="hidden md:block">{block?.blockHash}</span>
+          </p>
         </div>
-        <div className="md:mb-0 mb-6 flex font-semibold flex-col md:flex-row">
+        <div className="md:mb-0 mb-6 flex flex-col md:flex-row">
           <span className="md:basis-3/12">Previous Block Hash:</span>
-          <p className="text-white md:basis-9/12">{block?.previousBlockHash}</p>
+          <p className="text-white md:basis-9/12">
+            <span className="block md:hidden font-semibold">
+              {shortenHash(block?.previousBlockHash)}
+            </span>
+            <span className="hidden md:block">{block?.previousBlockHash}</span>
+          </p>
         </div>
       </div>
     </section>

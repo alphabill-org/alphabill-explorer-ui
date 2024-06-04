@@ -63,25 +63,34 @@ const Table = <TData extends object>({
   const table = useReactTable({
     data: dataQuery.data?.rows ?? defaultData,
     columns,
+
     pageCount: calculateTotalPages(dataCount, pageSize) ?? -1,
     state: {
       pagination,
     },
     onPaginationChange: setPagination,
-    getCoreRowModel: getCoreRowModel(),
     manualPagination: true,
+
     debugTable: true,
+    debugHeaders: true,
+    debugColumns: true,
+
+    enableColumnResizing: true,
+    columnResizeMode: "onChange",
+    getCoreRowModel: getCoreRowModel(),
   });
+
   if (dataQuery?.isError) {
     return (
-      <div className=" bg-black bg-opacity-50 w-full flex justify-center items-center h-[60vh] text-white">
-        <h3 className=" ">No data found...</h3>
+      <div className="bg-black bg-opacity-50 w-full flex justify-center items-center h-[60vh] text-white">
+        <h3>No data found...</h3>
       </div>
     );
   }
+
   if (dataQuery?.isFetching) {
     return (
-      <div className=" bg-black w-full h-[60vh] bg-opacity-50 flex justify-center items-center">
+      <div className="bg-black w-full h-[60vh] bg-opacity-50 flex justify-center items-center">
         <svg
           aria-hidden="true"
           className="inline w-8 h-8 text-transparent text-opacity-30 animate-spin dark:text-gray-600 fill-[#ffffff]"
@@ -103,41 +112,59 @@ const Table = <TData extends object>({
   }
 
   return (
-    <div className="table">
-      <table className={className}>
+    <div className={`px-5 block max-w-full overflow-x-auto overflow-y-hidden custom-scroll text-center table-main`}>
+      <table className={`w-full ${className}`}>
         <thead className="table-column-header">
           {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
-                <th key={header.id} className="pb-5">
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )}
-                </th>
-              ))}
+            <tr key={headerGroup.id} className=" text-center">
+              {headerGroup.headers.map((header) => {
+                return (
+                  <th
+                    className="pb-3 px-7 md:px-2"
+                    key={header.id}
+                  >
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                    {header.column.getCanResize() && (
+                      <div
+                        onMouseDown={header.getResizeHandler()}
+                        onTouchStart={header.getResizeHandler()}
+                      ></div>
+                    )}
+                  </th>
+                );
+              })}
             </tr>
           ))}
         </thead>
         <tbody>
-          {table.getRowModel().rows.map((row, index) => (
-            <tr
-              key={row.id}
-              className={
-                index < table.getRowModel().rows.length - 1
-                  ? "table-divider-v2"
-                  : "table-divider-v1"
-              }
-            >
-              {row.getVisibleCells().map((cell) => (
-                <td key={cell.id} className="py-4">
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </td>
-              ))}
-            </tr>
-          ))}
+          {table.getRowModel().rows.map((row, index) => {
+            return (
+              <tr
+                key={row.id}
+                className={
+                  index < table.getRowModel().rows.length - 1
+                    ? "table-divider-v2"
+                    : "table-divider-v1"
+                }
+              >
+                {row.getVisibleCells().map((cell) => {
+                  return (
+                    <td key={cell.id}  className="py-4 px-7 md:px-0" style={{ width: cell.column.getSize() }}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </td>
+                  );
+                })}
+              </tr>
+            );
+          })}
         </tbody>
       </table>
       {isPaginate && <TablePagination table={table} />}

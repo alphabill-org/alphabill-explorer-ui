@@ -23,7 +23,7 @@ type TableElementTx = {
   blockNumber: bigint;
   systemID: number;
   transactionType: string;
-  unitID: string;
+  unitID: string[];
   timeout: number;
   actualFee: number;
   successIndicator: number;

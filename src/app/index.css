@@ -96,7 +96,7 @@
   }
 
   .layout{
-    @apply bg-[--layout-primary-bg] relative min-h-[80vh] lg:min-h-[77vh] w-full py-10 z-0;
+    @apply bg-[--layout-primary-bg] flex-grow relative w-full py-10 z-0;
   }
   .layout-circle{
     @apply border-[--layout-circle-border-bg] border-[2px] rounded-full absolute; 
@@ -158,7 +158,7 @@
   .table-header{
     @apply text-[--table-header-text] px-5 text-lg font-normal;
   }
-  .table{
+  .table-main{
     @apply bg-[--table-bg] p-5 w-full text-[--table-cell-text];
   }
   .table-column-header{
@@ -180,5 +180,48 @@
   .table-cell-link{
     @apply text-[--table-cell-link-text];
   }
+
+  .resizer {
+    display: inline-block;
+    background: white;
+    width: 1px;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin-left: 2px;
+    margin-right: 2px;
+    transform: translateX(50%);
+    z-index: 1;
+    touch-action: none;
+    cursor: col-resize;
+  }
+  
+  .isResizing {
+    background: green;
+  }
+
+  .custom-scroll {
+    scrollbar-width: thin; 
+    scrollbar-color: var(--layout-primary-bg) var(--button-v1-bg); 
+  }
+  
+  .custom-scroll::-webkit-scrollbar {
+    height: 8px;
+  }
+  
+  .custom-scroll::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  .custom-scroll::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+  }
+  
+  .custom-scroll::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+  
 
 }

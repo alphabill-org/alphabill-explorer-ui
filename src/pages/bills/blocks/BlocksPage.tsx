@@ -1,4 +1,4 @@
-import { TableBlocks } from "../../widgets";
+import { TableBlocks } from "../../../widgets";
 
 
 const BlocksPage = () => {
