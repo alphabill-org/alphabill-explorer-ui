@@ -4,13 +4,15 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --mode localhost",
+    "local": "vite --mode localhost",
+    "dev": "vite --mode devnet",
     "test": "vite --mode test",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@alphabill/alphabill-js-sdk": "^1.0.0-rc1-rc.a500758",
     "@tanstack/react-query": "^5.8.1",
     "@tanstack/react-query-devtools": "^5.8.3",
     "@tanstack/react-table": "^8.10.7",
