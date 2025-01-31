@@ -2,6 +2,7 @@ import {Block} from "../../../entities/block";
 import {Tx} from "../../../entities/tx";
 import {convertTimeToTimeAgo} from "../../../shared/utils/time";
 import {TableElementBlock, TableElementTx} from "../types";
+import {TxDTO} from "../../../entities/tx/types/txTypes.ts";
 
 export function mapBlockToTableElement(block: Block): TableElementBlock {
     const blockCreationTime: bigint = block.UnicityCertificate.unicitySeal.timestamp; // timestamp is in seconds
@@ -18,15 +19,16 @@ export function mapBlockToTableElement(block: Block): TableElementBlock {
     };
 }
 
-export function mapTxToTableElement(tx: Tx): TableElementTx {
+export function mapTxToTableElement(tx: TxDTO): TableElementTx {
+    console.log("tx: ", tx);
     return {
         txRecordHash: tx.TxRecordHash,
         txOrderHash: tx.TxOrderHash,
         blockNumber: BigInt(tx.BlockNumber),
-        systemID: tx.Transaction.TransactionOrder.Payload.SystemID,
-        transactionType: tx.Transaction.TransactionOrder.Payload.Type,
+        systemID: tx.PartitionID,//Transaction.TransactionOrder.Payload.SystemID,
+        transactionType: "todo",//tx.Transaction.TransactionOrder.Payload.Type,
         unitID: tx.Transaction.ServerMetadata.TargetUnits,
-        timeout: tx.Transaction.TransactionOrder.Payload.ClientMetadata.Timeout,
+        timeout: 0, //tx.Transaction.TransactionOrder.Payload.ClientMetadata.Timeout,
         actualFee: tx.Transaction.ServerMetadata.ActualFee,
         successIndicator: tx.Transaction.ServerMetadata.SuccessIndicator
     };
