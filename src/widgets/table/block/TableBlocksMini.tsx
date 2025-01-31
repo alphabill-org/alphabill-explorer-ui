@@ -1,35 +1,35 @@
-import { Table } from "../../../features";
-import { useBlockQuery } from "../../../entities/block";
-import { fetchTableBlockData } from "./api/tableBlockApi";
-import { tableBlockMiniColumns } from "./config/tableBlockConfig";
+import {Table} from "../../../features";
+import {useBlockQuery} from "../../../entities/block";
+import {fetchTableBlockData} from "./api/tableBlockApi";
+import {tableBlockMiniColumns} from "./config/tableBlockConfig";
 
 const TableBlocks = () => {
-  const { data: lastBlockData, isFetching } = useBlockQuery("latest");
+    const {data: lastBlockData, isFetching} = useBlockQuery(1, "latest");
 
-  if (isFetching) {
+    if (isFetching) {
+        return (
+            <div className=" bg-black w-full h-[60vh] bg-opacity-50 flex justify-center items-center">
+                {/* Place your loading indicator here */}
+            </div>
+        );
+    }
+
+    const lastBlock = lastBlockData
+        ? lastBlockData.UnicityCertificate.inputRecord.roundNumber
+        : BigInt(-1);
     return (
-      <div className=" bg-black w-full h-[60vh] bg-opacity-50 flex justify-center items-center">
-        {/* Place your loading indicator here */}
-      </div>
+        <div className="text-center">
+            <Table
+                queryKey="blocksMini"
+                data={[]}
+                columns={tableBlockMiniColumns}
+                className="w-full"
+                linkTo="/bills/blocks"
+                fetchDataFn={(options) => fetchTableBlockData(lastBlock, options)}
+                dataCount={5}
+            />
+        </div>
     );
-  }
-
-  const lastBlock = lastBlockData
-    ? lastBlockData.UnicityCertificate.input_record.round_number
-    : BigInt(-1);
-  return (
-    <div className="text-center">
-    <Table
-      queryKey="blocksMini"
-      data={[]}
-      columns={tableBlockMiniColumns}
-      className="w-full"
-      linkTo="/bills/blocks"
-      fetchDataFn={(options)=> fetchTableBlockData(lastBlock , options)}
-      dataCount={5}
-    />
-  </div>
-  );
 };
 
 export default TableBlocks;
