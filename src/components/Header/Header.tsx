@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import ExplorerLogo from '../../assets/ab-explorer-ico.svg?react';
 import DiscordIcon from '../../assets/discord-ico.svg?react';
+import HeaderMenu from './HeaderMenu';
 
 interface MenuItem {
   label?: string;
@@ -46,6 +47,7 @@ export const Header: React.FC = () => {
                 <ExplorerLogo />
               </Link>
             </div>
+            <HeaderMenu />
           </nav>
         </div>
       </div>

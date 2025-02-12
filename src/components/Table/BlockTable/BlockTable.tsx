@@ -1,12 +1,14 @@
 import React, { useMemo } from 'react';
 import { Table } from '../Table';
 import { ColumnDef } from '@tanstack/react-table';
+import { Link } from 'react-router-dom';
 
 export interface BlockInfo {
   BlockNumber: number;
   TxHashes: string[];
   ShardID: string;
   ProposerID: string;
+  PartitionID: number;
 }
 
 export interface TableElementBlock {
@@ -14,6 +16,7 @@ export interface TableElementBlock {
   txCount: number;
   shardId: string;
   proposerId: string;
+  partitionID: number;
 }
 
 const mapBlockInfoToTableElement = (block: BlockInfo): TableElementBlock => {
@@ -22,6 +25,7 @@ const mapBlockInfoToTableElement = (block: BlockInfo): TableElementBlock => {
     txCount: Array.isArray(block.TxHashes) ? block.TxHashes.length : 0,
     shardId: block.ShardID,
     proposerId: block.ProposerID,
+    partitionID: block.PartitionID,
   };
 };
 
@@ -34,7 +38,21 @@ export const BlockTable: React.FC<BlockTableProps> = ({ data }) => {
 
   const columns = useMemo<ColumnDef<TableElementBlock, any>[]>(
     () => [
-      { accessorKey: 'blockNumber', header: 'Block Number' },
+      {
+        accessorKey: 'blockNumber',
+        header: 'Block Number',
+        cell: ({ getValue, row }) => {
+          const blockNumber = getValue() as number;
+          return (
+            <Link
+              to={`/${row.original.partitionID}/blocks/${blockNumber}`}
+              className="text-[#08e8de]"
+            >
+              {blockNumber}
+            </Link>
+          );
+        },
+      },
       { accessorKey: 'txCount', header: 'Transactions Count' },
       { accessorKey: 'shardId', header: 'Shard ID' },
       { accessorKey: 'proposerId', header: 'Proposer ID' },

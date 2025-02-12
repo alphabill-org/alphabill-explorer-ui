@@ -3,6 +3,8 @@ import { Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout/Layout';
 import { Home } from './routes/Home';
 import { Partition } from './routes/Partition';
+import { PartitionBlocks } from './routes/PartitionBlocks';
+import { BlockDetails } from './routes/BlockDetails';
 import { PartitionTxs } from './routes/PartitionTxs';
 import { TxDetails } from './routes/TxDetails';
 
@@ -17,7 +19,12 @@ const App: React.FC = () => {
           path=":partitionID/transactions/:txHash"
           element={<TxDetails />}
         />
+        <Route
+          path=":partitionID/blocks/:blockNumber"
+          element={<BlockDetails />}
+        />
       </Route>
+      <Route path=":partitionID/blocks" element={<PartitionBlocks />} />
     </Routes>
   );
 };

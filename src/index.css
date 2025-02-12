@@ -160,10 +160,6 @@ h1 {
   background-color: var(--layout-circle-border-bg);
 }
 
-/* .link-icon {
-  @apply mx-2 h-7 w-auto;
-} */
-
 .link {
   @apply transition-colors duration-300;
   color: var(--color-white);

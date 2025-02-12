@@ -5,6 +5,7 @@ export interface BlockInfo {
   TxHashes: string[];
   ShardID: string;
   ProposerID: string;
+  PartitionID: number;
 }
 
 export const fetchBlocks = async (
