@@ -16,49 +16,90 @@ export interface TableElementBlock {
   txCount: number;
   shardId: string;
   proposerId: string;
+  timeAgo: string;
   partitionID: number;
 }
 
-const mapBlockInfoToTableElement = (block: BlockInfo): TableElementBlock => {
-  return {
-    blockNumber: block.BlockNumber,
-    txCount: Array.isArray(block.TxHashes) ? block.TxHashes.length : 0,
-    shardId: block.ShardID,
-    proposerId: block.ProposerID,
-    partitionID: block.PartitionID,
-  };
+const mapBlockInfoToTableElement = (block: BlockInfo): TableElementBlock => ({
+  blockNumber: block.BlockNumber,
+  txCount: Array.isArray(block.TxHashes) ? block.TxHashes.length : 0,
+  shardId: block.ShardID,
+  proposerId: block.ProposerID,
+  timeAgo: 'N/A',
+  partitionID: block.PartitionID,
+});
+
+const baseBlockColumns: Record<string, ColumnDef<TableElementBlock, any>> = {
+  blockNumber: {
+    accessorKey: 'blockNumber',
+    header: 'Block Number',
+    cell: ({ getValue, row }) => {
+      const blockNumber = getValue() as number;
+      const partitionID = row.original.partitionID;
+      return (
+        <Link
+          to={`/${partitionID}/blocks/${blockNumber}`}
+          className="text-[#08e8de]"
+        >
+          {blockNumber}
+        </Link>
+      );
+    },
+  },
+  txCount: {
+    accessorKey: 'txCount',
+    header: 'Transactions Count',
+  },
+  shardId: {
+    accessorKey: 'shardId',
+    header: 'Shard ID',
+  },
+  proposerId: {
+    accessorKey: 'proposerId',
+    header: 'Proposer ID',
+  },
+  timeAgo: {
+    accessorKey: 'timeAgo',
+    header: 'Time Ago',
+  },
 };
+
+const getBlockColumns = (isCompact: boolean): ColumnDef<TableElementBlock>[] =>
+  isCompact
+    ? [
+        baseBlockColumns.blockNumber,
+        baseBlockColumns.txCount,
+        baseBlockColumns.timeAgo,
+      ]
+    : [
+        baseBlockColumns.blockNumber,
+        baseBlockColumns.txCount,
+        baseBlockColumns.shardId,
+        baseBlockColumns.proposerId,
+      ];
 
 interface BlockTableProps {
   data: BlockInfo[];
+  compact?: boolean;
+  isLoading?: boolean;
+  error?: string;
 }
 
-export const BlockTable: React.FC<BlockTableProps> = ({ data }) => {
+export const BlockTable: React.FC<BlockTableProps> = ({
+  data,
+  compact = false,
+  isLoading,
+  error,
+}) => {
   const tableData = useMemo(() => data.map(mapBlockInfoToTableElement), [data]);
+  const columns = useMemo(() => getBlockColumns(compact), [compact]);
 
-  const columns = useMemo<ColumnDef<TableElementBlock, any>[]>(
-    () => [
-      {
-        accessorKey: 'blockNumber',
-        header: 'Block Number',
-        cell: ({ getValue, row }) => {
-          const blockNumber = getValue() as number;
-          return (
-            <Link
-              to={`/${row.original.partitionID}/blocks/${blockNumber}`}
-              className="text-[#08e8de]"
-            >
-              {blockNumber}
-            </Link>
-          );
-        },
-      },
-      { accessorKey: 'txCount', header: 'Transactions Count' },
-      { accessorKey: 'shardId', header: 'Shard ID' },
-      { accessorKey: 'proposerId', header: 'Proposer ID' },
-    ],
-    [],
+  return (
+    <Table<TableElementBlock>
+      data={tableData}
+      columns={columns}
+      isLoading={isLoading}
+      error={error}
+    />
   );
-
-  return <Table<TableElementBlock> data={tableData} columns={columns} />;
 };

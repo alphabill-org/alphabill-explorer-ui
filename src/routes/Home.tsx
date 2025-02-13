@@ -30,27 +30,27 @@ export const Home: React.FC = () => {
         Alphabill Block Explorer
       </h1>
 
-      <section className="mt-8">
-        <h2 className="text-2xl font-semibold mb-4">Blocks</h2>
-        {blocksLoading && <p>Loading blocks...</p>}
-        {blocksError && <p>Error loading blocks</p>}
-        {blocks && blocks.length > 0 ? (
-          <BlockTable data={blocks} />
-        ) : (
-          <p>No blocks found.</p>
-        )}
-      </section>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+        <section>
+          <h2 className="text-2xl font-semibold mb-4">LATEST BLOCKS</h2>
+          <BlockTable
+            data={blocks || []}
+            isLoading={blocksLoading}
+            error={blocksError ? 'Error loading blocks' : undefined}
+            compact
+          />
+        </section>
 
-      <section className="mt-8">
-        <h2 className="text-2xl font-semibold mb-4">Transactions</h2>
-        {transactionsLoading && <p>Loading transactions...</p>}
-        {transactionsError && <p>Error loading transactions</p>}
-        {transactions && transactions.length > 0 ? (
-          <TxTable data={transactions} />
-        ) : (
-          <p>No transactions found.</p>
-        )}
-      </section>
+        <section>
+          <h2 className="text-2xl font-semibold mb-4">LATEST TRANSACTIONS</h2>
+          <TxTable
+            data={transactions || []}
+            isLoading={transactionsLoading}
+            error={transactionsError ? 'Error loading transactions' : undefined}
+            compact
+          />
+        </section>
+      </div>
     </div>
   );
 };

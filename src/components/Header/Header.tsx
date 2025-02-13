@@ -21,7 +21,7 @@ const menuItems: MenuItem[] = [
   },
   {
     url: 'https://discord.com/invite/dcFURChe86',
-    icon: <DiscordIcon className="w-7 h-7 link-icon" />,
+    icon: <DiscordIcon className="!w-7 h-7 link-icon" />,
   },
 ];
 
@@ -33,7 +33,9 @@ export const Header: React.FC = () => {
           <ul className="flex gap-4 items-center">
             {menuItems.map((item, index) => (
               <li key={index}>
-                <a href={item.url}>{item.icon ? item.icon : item.label}</a>
+                <a href={item.url} className="link">
+                  {item.icon ? item.icon : item.label}
+                </a>
               </li>
             ))}
           </ul>
