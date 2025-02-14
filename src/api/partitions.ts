@@ -1,6 +1,6 @@
 const API_URL = import.meta.env.VITE_MONEY_BACKEND_URL;
 
-export interface LatestBlock {
+export interface ILatestBlock {
   PartitionID: number;
   PartitionTypeID: number;
   ShardID: string;
@@ -10,11 +10,11 @@ export interface LatestBlock {
   UnicityCertificate: number[];
 }
 
-export interface LatestBlocksResponse {
-  [partitionID: string]: LatestBlock;
+export interface ILatestBlocksResponse {
+  [partitionID: string]: ILatestBlock;
 }
 
-export const fetchLatestBlocks = async (): Promise<LatestBlocksResponse> => {
+export const fetchLatestBlocks = async (): Promise<ILatestBlocksResponse> => {
   const response = await fetch(`${API_URL}/blocks/latest`);
   if (!response.ok) {
     throw new Error('Error fetching latest blocks');

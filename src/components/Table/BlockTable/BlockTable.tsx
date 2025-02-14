@@ -1,9 +1,10 @@
+import type { ColumnDef } from '@tanstack/react-table';
 import React, { useMemo } from 'react';
-import { Table } from '../Table';
-import { ColumnDef } from '@tanstack/react-table';
 import { Link } from 'react-router-dom';
 
-export interface BlockInfo {
+import { Table } from '../Table';
+
+export interface IBlockInfo {
   BlockNumber: number;
   TxHashes: string[];
   ShardID: string;
@@ -11,7 +12,7 @@ export interface BlockInfo {
   PartitionID: number;
 }
 
-export interface TableElementBlock {
+export interface ITableElementBlock {
   blockNumber: number;
   txCount: number;
   shardId: string;
@@ -20,19 +21,18 @@ export interface TableElementBlock {
   partitionID: number;
 }
 
-const mapBlockInfoToTableElement = (block: BlockInfo): TableElementBlock => ({
+const mapBlockInfoToTableElement = (block: IBlockInfo): ITableElementBlock => ({
   blockNumber: block.BlockNumber,
-  txCount: Array.isArray(block.TxHashes) ? block.TxHashes.length : 0,
-  shardId: block.ShardID,
-  proposerId: block.ProposerID,
-  timeAgo: 'N/A',
   partitionID: block.PartitionID,
+  proposerId: block.ProposerID,
+  shardId: block.ShardID,
+  timeAgo: 'N/A',
+  txCount: Array.isArray(block.TxHashes) ? block.TxHashes.length : 0,
 });
 
-const baseBlockColumns: Record<string, ColumnDef<TableElementBlock, any>> = {
+const baseBlockColumns: Record<string, ColumnDef<ITableElementBlock>> = {
   blockNumber: {
     accessorKey: 'blockNumber',
-    header: 'Block Number',
     cell: ({ getValue, row }) => {
       const blockNumber = getValue() as number;
       const partitionID = row.original.partitionID;
@@ -45,26 +45,29 @@ const baseBlockColumns: Record<string, ColumnDef<TableElementBlock, any>> = {
         </Link>
       );
     },
-  },
-  txCount: {
-    accessorKey: 'txCount',
-    header: 'Transactions Count',
-  },
-  shardId: {
-    accessorKey: 'shardId',
-    header: 'Shard ID',
+    header: 'Block Number',
   },
   proposerId: {
     accessorKey: 'proposerId',
     header: 'Proposer ID',
   },
+  shardId: {
+    accessorKey: 'shardId',
+    header: 'Shard ID',
+  },
   timeAgo: {
     accessorKey: 'timeAgo',
     header: 'Time Ago',
   },
+  txCount: {
+    accessorKey: 'txCount',
+    header: 'Transactions Count',
+  },
 };
 
-const getBlockColumns = (isCompact: boolean): ColumnDef<TableElementBlock>[] =>
+const getBlockColumns = (
+  isCompact: boolean,
+): ColumnDef<ITableElementBlock>[] =>
   isCompact
     ? [
         baseBlockColumns.blockNumber,
@@ -78,14 +81,14 @@ const getBlockColumns = (isCompact: boolean): ColumnDef<TableElementBlock>[] =>
         baseBlockColumns.proposerId,
       ];
 
-interface BlockTableProps {
-  data: BlockInfo[];
+interface IBlockTableProps {
+  data: IBlockInfo[];
   compact?: boolean;
   isLoading?: boolean;
   error?: string;
 }
 
-export const BlockTable: React.FC<BlockTableProps> = ({
+export const BlockTable: React.FC<IBlockTableProps> = ({
   data,
   compact = false,
   isLoading,
@@ -95,7 +98,7 @@ export const BlockTable: React.FC<BlockTableProps> = ({
   const columns = useMemo(() => getBlockColumns(compact), [compact]);
 
   return (
-    <Table<TableElementBlock>
+    <Table<ITableElementBlock>
       data={tableData}
       columns={columns}
       isLoading={isLoading}

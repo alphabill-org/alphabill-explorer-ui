@@ -14,74 +14,74 @@ export const AnimatedBackground: React.FC = () => {
       <div
         className="layout-circle-filled"
         style={{
-          position: 'absolute',
-          width: '1000px',
+          filter: 'blur(250px)',
           height: '1000px',
+          left: '1191.55px',
+          position: 'absolute',
           top: '375.24px',
-          left: '1191.55px',
-          filter: 'blur(250px)',
           transform: 'translateZ(0) translate3d(0,0,0)',
+          width: '1000px',
         }}
       />
       <div
         className="layout-circle-filled"
         style={{
-          position: 'absolute',
-          width: '1000px',
+          filter: 'blur(250px)',
           height: '1000px',
-          top: '1334.9px',
           left: '-445.78px',
-          filter: 'blur(250px)',
+          position: 'absolute',
+          top: '1334.9px',
           transform: 'translateZ(0) translate3d(0,0,0)',
+          width: '1000px',
         }}
       />
       <div
         className="layout-circle-filled"
         style={{
-          position: 'absolute',
-          width: '1000px',
-          height: '1000px',
-          top: '2712.99px',
-          left: '1191.55px',
           filter: 'blur(250px)',
+          height: '1000px',
+          left: '1191.55px',
+          position: 'absolute',
+          top: '2712.99px',
           transform: 'translateZ(0) translate3d(0,0,0)',
+          width: '1000px',
         }}
       />
 
       <div
         className="layout-circle-filled"
         style={{
-          position: 'absolute',
-          width: '450px',
+          filter: 'blur(250px)',
           height: '450px',
+          left: '-172.89px',
+          position: 'absolute',
           top: '-191px',
-          left: '-172.89px',
-          filter: 'blur(250px)',
           transform: 'translateZ(0) translate3d(0,0,0)',
+          width: '450px',
         }}
       />
       <div
         className="layout-circle-filled"
         style={{
-          position: 'absolute',
-          width: '450px',
+          filter: 'blur(250px)',
           height: '450px',
-          top: '1716.95px',
           left: '1237.04px',
-          filter: 'blur(250px)',
+          position: 'absolute',
+          top: '1716.95px',
           transform: 'translateZ(0) translate3d(0,0,0)',
+          width: '450px',
         }}
       />
       <div
         className="layout-circle-filled"
         style={{
-          position: 'absolute',
-          width: '450px',
-          height: '450px',
-          top: '3122.32px',
-          left: '-172.89px',
           filter: 'blur(250px)',
+          height: '450px',
+          left: '-172.89px',
+          position: 'absolute',
+          top: '3122.32px',
           transform: 'translateZ(0) translate3d(0,0,0)',
+          width: '450px',
         }}
       />
     </>

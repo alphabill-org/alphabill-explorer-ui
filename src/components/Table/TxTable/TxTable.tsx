@@ -1,8 +1,9 @@
+import type { ColumnDef } from '@tanstack/react-table';
 import React, { useMemo } from 'react';
-import { Table } from '../Table';
 import { Link } from 'react-router-dom';
-import { ColumnDef } from '@tanstack/react-table';
-export interface TableElementTx {
+
+import { Table } from '../Table';
+export interface ITableElementTx {
   txRecordHash: string;
   transactionType: string;
   blockNumber: number;
@@ -13,7 +14,7 @@ export interface TableElementTx {
   partitionID: number;
 }
 
-export interface TxInfo {
+export interface ITxInfo {
   TxRecordHash: string;
   TxOrderHash: string;
   BlockNumber: number;
@@ -29,21 +30,40 @@ export interface TxInfo {
   PartitionID: number;
 }
 
-const mapTxInfoToTableElement = (tx: TxInfo): TableElementTx => ({
-  txRecordHash: tx.TxRecordHash,
-  transactionType: 'Unknown',
-  blockNumber: tx.BlockNumber,
-  timeout: tx.Transaction?.ServerMetadata?.ProcessingDetails || 'N/A',
+const mapTxInfoToTableElement = (tx: ITxInfo): ITableElementTx => ({
   actualFee: tx.Transaction?.ServerMetadata?.ActualFee ?? 0,
-  successIndicator: tx.Transaction?.ServerMetadata?.SuccessIndicator ?? 0,
-  unitID: 'N/A',
+  blockNumber: tx.BlockNumber,
   partitionID: tx.PartitionID,
+  successIndicator: tx.Transaction?.ServerMetadata?.SuccessIndicator ?? 0,
+  timeout: tx.Transaction?.ServerMetadata?.ProcessingDetails || 'N/A',
+  transactionType: 'Unknown',
+  txRecordHash: tx.TxRecordHash,
+  unitID: 'N/A',
 });
 
-const baseTxColumns: Record<string, ColumnDef<TableElementTx, any>> = {
+const baseTxColumns: Record<string, ColumnDef<ITableElementTx>> = {
+  actualFee: {
+    accessorKey: 'actualFee',
+    header: 'Actual Fee',
+  },
+  blockNumber: {
+    accessorKey: 'blockNumber',
+    header: 'Block Number',
+  },
+  successIndicator: {
+    accessorKey: 'successIndicator',
+    header: 'Success Indicator',
+  },
+  timeout: {
+    accessorKey: 'timeout',
+    header: 'Timeout',
+  },
+  transactionType: {
+    accessorKey: 'transactionType',
+    header: 'Tx Type',
+  },
   txRecordHash: {
     accessorKey: 'txRecordHash',
-    header: 'Tx Hash',
     cell: ({ getValue, row }) => {
       const txHash = getValue() as string;
       const partitionID = row.original.partitionID;
@@ -57,26 +77,7 @@ const baseTxColumns: Record<string, ColumnDef<TableElementTx, any>> = {
         </Link>
       );
     },
-  },
-  transactionType: {
-    accessorKey: 'transactionType',
-    header: 'Tx Type',
-  },
-  blockNumber: {
-    accessorKey: 'blockNumber',
-    header: 'Block Number',
-  },
-  timeout: {
-    accessorKey: 'timeout',
-    header: 'Timeout',
-  },
-  actualFee: {
-    accessorKey: 'actualFee',
-    header: 'Actual Fee',
-  },
-  successIndicator: {
-    accessorKey: 'successIndicator',
-    header: 'Success Indicator',
+    header: 'Tx Hash',
   },
   unitID: {
     accessorKey: 'unitID',
@@ -84,7 +85,7 @@ const baseTxColumns: Record<string, ColumnDef<TableElementTx, any>> = {
   },
 };
 
-const getTxColumns = (isCompact: boolean): ColumnDef<TableElementTx>[] =>
+const getTxColumns = (isCompact: boolean): ColumnDef<ITableElementTx>[] =>
   isCompact
     ? [
         baseTxColumns.txRecordHash,
@@ -100,14 +101,14 @@ const getTxColumns = (isCompact: boolean): ColumnDef<TableElementTx>[] =>
         baseTxColumns.successIndicator,
       ];
 
-interface TxTableProps {
-  data: TxInfo[];
+interface ITxTableProps {
+  data: ITxInfo[];
   compact?: boolean;
   isLoading?: boolean;
   error?: string;
 }
 
-export const TxTable: React.FC<TxTableProps> = ({
+export const TxTable: React.FC<ITxTableProps> = ({
   data,
   compact = false,
   isLoading,
@@ -117,7 +118,7 @@ export const TxTable: React.FC<TxTableProps> = ({
   const columns = useMemo(() => getTxColumns(compact), [compact]);
 
   return (
-    <Table<TableElementTx>
+    <Table<ITableElementTx>
       data={tableData}
       columns={columns}
       isLoading={isLoading}

@@ -1,16 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+
+import HeaderMenu from './HeaderMenu';
 import ExplorerLogo from '../../assets/ab-explorer-ico.svg?react';
 import DiscordIcon from '../../assets/discord-ico.svg?react';
-import HeaderMenu from './HeaderMenu';
 
-interface MenuItem {
+interface IMenuItem {
   label?: string;
   url: string;
   icon?: React.ReactNode;
 }
 
-const menuItems: MenuItem[] = [
+const menuItems: IMenuItem[] = [
   {
     label: 'Docs',
     url: 'https://docs.alphabill.org/',
@@ -20,8 +21,8 @@ const menuItems: MenuItem[] = [
     url: 'https://alphabill.org/files/AlphaBill%20Whitepaper.pdf',
   },
   {
-    url: 'https://discord.com/invite/dcFURChe86',
     icon: <DiscordIcon className="!w-7 h-7 link-icon" />,
+    url: 'https://discord.com/invite/dcFURChe86',
   },
 ];
 

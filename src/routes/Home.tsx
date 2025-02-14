@@ -1,27 +1,28 @@
-import React from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { fetchBlocks, BlockInfo } from '../api/blocks';
-import { fetchTransactions, TxInfo } from '../api/transactions';
-import { TxTable } from '../components/Table/TxTable/TxTable';
+import React from 'react';
+
+import { fetchBlocks, IBlockInfo } from '../api/blocks';
+import { fetchTransactions, ITxInfo } from '../api/transactions';
 import { BlockTable } from '../components/Table/BlockTable/BlockTable';
+import { TxTable } from '../components/Table/TxTable/TxTable';
 
 export const Home: React.FC = () => {
   const {
     data: blocks,
     isLoading: blocksLoading,
     error: blocksError,
-  } = useQuery<BlockInfo[]>({
-    queryKey: ['blocks', '1'],
+  } = useQuery<IBlockInfo[]>({
     queryFn: () => fetchBlocks('1'),
+    queryKey: ['blocks', '1'],
   });
 
   const {
     data: transactions,
     isLoading: transactionsLoading,
     error: transactionsError,
-  } = useQuery<TxInfo[]>({
-    queryKey: ['transactions', '1'],
+  } = useQuery<ITxInfo[]>({
     queryFn: () => fetchTransactions('1'),
+    queryKey: ['transactions', '1'],
   });
 
   return (

@@ -1,10 +1,11 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
+
 import Layout from './components/Layout/Layout';
+import { BlockDetails } from './routes/BlockDetails';
 import { Home } from './routes/Home';
 import { Partition } from './routes/Partition';
 import { PartitionBlocks } from './routes/PartitionBlocks';
-import { BlockDetails } from './routes/BlockDetails';
 import { PartitionTxs } from './routes/PartitionTxs';
 import { TxDetails } from './routes/TxDetails';
 

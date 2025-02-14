@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+
 import ExplorerLogo from '../../assets/ab-explorer-ico.svg?react';
 import DiscordIcon from '../../assets/discord-ico.svg?react';
 import GitHubIcon from '../../assets/github-ico.svg?react';
-import XIcon from '../../assets/x-ico.svg?react';
 import LinkedInIcon from '../../assets/linkedin-ico.svg?react';
+import XIcon from '../../assets/x-ico.svg?react';
 import YoutubeIcon from '../../assets/youtube-ico.svg?react';
 
 type Menu = {
@@ -18,34 +19,34 @@ type SocialLink = {
 };
 
 const menu: Menu[] = [
-  { title: 'Alphabill', link: 'https://alphabill.org/' },
-  { title: 'Docs', link: 'https://docs.alphabill.org/welcome' },
+  { link: 'https://alphabill.org/', title: 'Alphabill' },
+  { link: 'https://docs.alphabill.org/welcome', title: 'Docs' },
   {
-    title: 'Whitepaper',
     link: 'https://alphabill.org/files/AlphaBill%20Whitepaper.pdf',
+    title: 'Whitepaper',
   },
 ];
 
 const socials: SocialLink[] = [
   {
-    url: 'https://discord.com/invite/dcFURChe86',
     icon: <DiscordIcon className="link-icon" />,
+    url: 'https://discord.com/invite/dcFURChe86',
   },
   {
-    url: 'https://github.com/alphabill-org',
     icon: <GitHubIcon className="link-icon" />,
+    url: 'https://github.com/alphabill-org',
   },
   {
-    url: 'https://twitter.com/alphabill_org',
     icon: <XIcon className="link-icon" />,
+    url: 'https://twitter.com/alphabill_org',
   },
   {
-    url: 'https://www.linkedin.com/company/alphabill/',
     icon: <LinkedInIcon className="link-icon" />,
+    url: 'https://www.linkedin.com/company/alphabill/',
   },
   {
-    url: 'https://www.youtube.com/@alphabill122/featured',
     icon: <YoutubeIcon className="link-icon" />,
+    url: 'https://www.youtube.com/@alphabill122/featured',
   },
 ];
 

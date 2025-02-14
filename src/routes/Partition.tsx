@@ -1,8 +1,9 @@
+import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-import { fetchBlocks, BlockInfo } from '../api/blocks';
-import { fetchTransactions, TxInfo } from '../api/transactions';
+
+import { fetchBlocks, IBlockInfo } from '../api/blocks';
+import { fetchTransactions, ITxInfo } from '../api/transactions';
 import { BlockTable } from '../components/Table/BlockTable/BlockTable';
 import { TxTable } from '../components/Table/TxTable/TxTable';
 
@@ -13,18 +14,18 @@ export const Partition: React.FC = () => {
     data: blocks,
     isLoading: blocksLoading,
     error: blocksError,
-  } = useQuery<BlockInfo[]>({
-    queryKey: ['blocks', partitionID],
+  } = useQuery<IBlockInfo[]>({
     queryFn: () => fetchBlocks(partitionID),
+    queryKey: ['blocks', partitionID],
   });
 
   const {
     data: transactions,
     isLoading: transactionsLoading,
     error: transactionsError,
-  } = useQuery<TxInfo[]>({
-    queryKey: ['transactions', partitionID],
+  } = useQuery<ITxInfo[]>({
     queryFn: () => fetchTransactions(partitionID),
+    queryKey: ['transactions', partitionID],
   });
 
   return (

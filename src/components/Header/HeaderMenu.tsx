@@ -1,12 +1,13 @@
-import React from 'react';
 import { useQuery } from '@tanstack/react-query';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { fetchLatestBlocks, LatestBlocksResponse } from '../../api/partitions';
+
+import { fetchLatestBlocks, ILatestBlocksResponse } from '../../api/partitions';
 
 export const HeaderMenu: React.FC = () => {
-  const { data, isLoading, error } = useQuery<LatestBlocksResponse>({
-    queryKey: ['latestBlocks'],
+  const { data, isLoading, error } = useQuery<ILatestBlocksResponse>({
     queryFn: fetchLatestBlocks,
+    queryKey: ['latestBlocks'],
   });
 
   if (isLoading) return <div>Loading partitions...</div>;

@@ -2,13 +2,14 @@ import {
   useReactTable,
   getCoreRowModel,
   flexRender,
-  ColumnDef,
-  RowData,
+  type ColumnDef,
+  type RowData,
 } from '@tanstack/react-table';
+import { ReactElement } from 'react';
 
-export interface TableProps<TData extends RowData> {
+export interface ITableProps<TData extends RowData> {
   data: TData[];
-  columns: ColumnDef<TData, any>[];
+  columns: ColumnDef<TData>[];
   tableClassName?: string;
   headerClassName?: string;
   cellClassName?: string;
@@ -24,7 +25,7 @@ export function Table<TData extends RowData>({
   cellClassName = '',
   isLoading,
   error,
-}: TableProps<TData>) {
+}: ITableProps<TData>): ReactElement {
   if (error) {
     return (
       <div className="bg-black bg-opacity-50 w-full flex justify-center items-center h-[60vh] text-white">
@@ -34,8 +35,8 @@ export function Table<TData extends RowData>({
   }
 
   const tableInstance = useReactTable({
-    data: isLoading ? [] : data,
     columns,
+    data: isLoading ? [] : data,
     getCoreRowModel: getCoreRowModel(),
   });
 
