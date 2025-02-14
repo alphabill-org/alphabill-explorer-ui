@@ -1,29 +1,21 @@
-import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 
-import { fetchBlocks, IBlockInfo } from '../api/blocks';
-import { fetchTransactions, ITxInfo } from '../api/transactions';
 import { BlockTable } from '../components/Table/BlockTable/BlockTable';
 import { TxTable } from '../components/Table/TxTable/TxTable';
+import { useBlocksQuery } from '../hooks/useBlock';
+import { useTxsQuery } from '../hooks/useTx';
 
 export const Home: React.FC = () => {
   const {
     data: blocks,
     isLoading: blocksLoading,
     error: blocksError,
-  } = useQuery<IBlockInfo[]>({
-    queryFn: () => fetchBlocks('1'),
-    queryKey: ['blocks', '1'],
-  });
-
+  } = useBlocksQuery('1');
   const {
     data: transactions,
     isLoading: transactionsLoading,
     error: transactionsError,
-  } = useQuery<ITxInfo[]>({
-    queryFn: () => fetchTransactions('1'),
-    queryKey: ['transactions', '1'],
-  });
+  } = useTxsQuery('1');
 
   return (
     <div className="container mx-auto p-4">

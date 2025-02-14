@@ -1,32 +1,41 @@
-import { useQuery } from '@tanstack/react-query';
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Navigate } from 'react-router-dom';
 
-import { fetchBlocks, IBlockInfo } from '../api/blocks';
-import { fetchTransactions, ITxInfo } from '../api/transactions';
 import { BlockTable } from '../components/Table/BlockTable/BlockTable';
 import { TxTable } from '../components/Table/TxTable/TxTable';
+import { useBlocksQuery } from '../hooks/useBlock';
+import { useLatestBlocksQuery } from '../hooks/usePartitions';
+import { useTxsQuery } from '../hooks/useTx';
 
 export const Partition: React.FC = () => {
-  const { partitionID } = useParams<{ partitionID: string }>();
+  const { partitionID } = useParams<{ partitionID?: string }>();
+
+  if (!partitionID) {
+    return <Navigate to="/404" replace />;
+  }
+
+  const { data: partitionsData, isLoading: partitionsLoading } =
+    useLatestBlocksQuery();
+
+  if (
+    !partitionsLoading &&
+    partitionsData &&
+    !(partitionID in partitionsData)
+  ) {
+    return <Navigate to="/404" replace />;
+  }
 
   const {
     data: blocks,
     isLoading: blocksLoading,
     error: blocksError,
-  } = useQuery<IBlockInfo[]>({
-    queryFn: () => fetchBlocks(partitionID),
-    queryKey: ['blocks', partitionID],
-  });
+  } = useBlocksQuery(partitionID);
 
   const {
     data: transactions,
     isLoading: transactionsLoading,
     error: transactionsError,
-  } = useQuery<ITxInfo[]>({
-    queryFn: () => fetchTransactions(partitionID),
-    queryKey: ['transactions', partitionID],
-  });
+  } = useTxsQuery(partitionID);
 
   return (
     <div className="container mx-auto p-4">
@@ -58,3 +67,5 @@ export const Partition: React.FC = () => {
     </div>
   );
 };
+
+export default Partition;
