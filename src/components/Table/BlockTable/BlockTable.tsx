@@ -86,6 +86,7 @@ interface IBlockTableProps {
   compact?: boolean;
   isLoading?: boolean;
   error?: string;
+  limit?: number;
 }
 
 export const BlockTable: React.FC<IBlockTableProps> = ({
@@ -93,6 +94,7 @@ export const BlockTable: React.FC<IBlockTableProps> = ({
   compact = false,
   isLoading,
   error,
+  limit,
 }) => {
   const tableData = useMemo(() => data.map(mapBlockInfoToTableElement), [data]);
   const columns = useMemo(() => getBlockColumns(compact), [compact]);
@@ -103,6 +105,7 @@ export const BlockTable: React.FC<IBlockTableProps> = ({
       columns={columns}
       isLoading={isLoading}
       error={error}
+      rowLimit={limit}
     />
   );
 };

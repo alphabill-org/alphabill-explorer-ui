@@ -3,6 +3,7 @@ import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Table } from '../Table';
+
 export interface ITableElementTx {
   txRecordHash: string;
   transactionType: string;
@@ -106,6 +107,7 @@ interface ITxTableProps {
   compact?: boolean;
   isLoading?: boolean;
   error?: string;
+  limit?: number;
 }
 
 export const TxTable: React.FC<ITxTableProps> = ({
@@ -113,6 +115,7 @@ export const TxTable: React.FC<ITxTableProps> = ({
   compact = false,
   isLoading,
   error,
+  limit,
 }) => {
   const tableData = useMemo(() => data.map(mapTxInfoToTableElement), [data]);
   const columns = useMemo(() => getTxColumns(compact), [compact]);
@@ -123,6 +126,7 @@ export const TxTable: React.FC<ITxTableProps> = ({
       columns={columns}
       isLoading={isLoading}
       error={error}
+      rowLimit={limit}
     />
   );
 };

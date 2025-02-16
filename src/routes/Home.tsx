@@ -31,6 +31,7 @@ export const Home: React.FC = () => {
             isLoading={blocksLoading}
             error={blocksError ? 'Error loading blocks' : undefined}
             compact
+            limit={5}
           />
         </section>
 
@@ -41,6 +42,7 @@ export const Home: React.FC = () => {
             isLoading={transactionsLoading}
             error={transactionsError ? 'Error loading transactions' : undefined}
             compact
+            limit={5}
           />
         </section>
       </div>

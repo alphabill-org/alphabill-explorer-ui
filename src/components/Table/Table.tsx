@@ -15,6 +15,7 @@ export interface ITableProps<TData extends RowData> {
   cellClassName?: string;
   isLoading?: boolean;
   error?: string;
+  rowLimit?: number;
 }
 
 export function Table<TData extends RowData>({
@@ -25,6 +26,7 @@ export function Table<TData extends RowData>({
   cellClassName = '',
   isLoading,
   error,
+  rowLimit,
 }: ITableProps<TData>): ReactElement {
   if (error) {
     return (
@@ -39,6 +41,10 @@ export function Table<TData extends RowData>({
     data: isLoading ? [] : data,
     getCoreRowModel: getCoreRowModel(),
   });
+
+  const allRows = tableInstance.getRowModel().rows;
+  const displayedRows =
+    rowLimit !== undefined ? allRows.slice(0, rowLimit) : allRows;
 
   return (
     <div
@@ -64,7 +70,7 @@ export function Table<TData extends RowData>({
         </thead>
         <tbody>
           {isLoading
-            ? Array.from({ length: 10 }).map((_, rowIndex) => (
+            ? Array.from({ length: rowLimit || 10 }).map((_, rowIndex) => (
                 <tr key={rowIndex} className="table-divider-v2">
                   <td
                     colSpan={columns.length}
@@ -74,11 +80,11 @@ export function Table<TData extends RowData>({
                   </td>
                 </tr>
               ))
-            : tableInstance.getRowModel().rows.map((row, index) => (
+            : displayedRows.map((row, index) => (
                 <tr
                   key={row.id}
                   className={
-                    index < tableInstance.getRowModel().rows.length - 1
+                    index < displayedRows.length - 1
                       ? 'table-divider-v2'
                       : 'table-divider-v1'
                   }
