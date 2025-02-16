@@ -15,7 +15,10 @@ export interface ITableProps<TData extends RowData> {
   cellClassName?: string;
   isLoading?: boolean;
   error?: string;
-  rowLimit?: number;
+  manualPagination?: boolean;
+  pageSize?: number;
+  onNextPage?: () => void;
+  onPreviousPage?: () => void;
 }
 
 export function Table<TData extends RowData>({
@@ -26,7 +29,10 @@ export function Table<TData extends RowData>({
   cellClassName = '',
   isLoading,
   error,
-  rowLimit,
+  manualPagination,
+  pageSize = 10,
+  onNextPage,
+  onPreviousPage,
 }: ITableProps<TData>): ReactElement {
   if (error) {
     return (
@@ -40,11 +46,11 @@ export function Table<TData extends RowData>({
     columns,
     data: isLoading ? [] : data,
     getCoreRowModel: getCoreRowModel(),
+    manualPagination: manualPagination,
   });
 
   const allRows = tableInstance.getRowModel().rows;
-  const displayedRows =
-    rowLimit !== undefined ? allRows.slice(0, rowLimit) : allRows;
+  const displayedRows = allRows;
 
   return (
     <div
@@ -70,7 +76,7 @@ export function Table<TData extends RowData>({
         </thead>
         <tbody>
           {isLoading
-            ? Array.from({ length: rowLimit || 10 }).map((_, rowIndex) => (
+            ? Array.from({ length: pageSize }).map((_, rowIndex) => (
                 <tr key={rowIndex} className="table-divider-v2">
                   <td
                     colSpan={columns.length}
@@ -105,6 +111,24 @@ export function Table<TData extends RowData>({
               ))}
         </tbody>
       </table>
+      {manualPagination && (onNextPage || onPreviousPage) && (
+        <div className="flex items-center justify-end mt-2 space-x-2">
+          <button
+            onClick={onPreviousPage}
+            disabled={!onPreviousPage}
+            className="px-3 py-1 border rounded disabled:opacity-50"
+          >
+            Previous
+          </button>
+          <button
+            onClick={onNextPage}
+            disabled={data.length < pageSize || isLoading}
+            className="px-3 py-1 border rounded disabled:opacity-50"
+          >
+            Next
+          </button>
+        </div>
+      )}
     </div>
   );
 }

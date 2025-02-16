@@ -107,7 +107,9 @@ interface ITxTableProps {
   compact?: boolean;
   isLoading?: boolean;
   error?: string;
-  limit?: number;
+  pageIndex?: number;
+  pageSize?: number;
+  onPageChange?: (page: number) => void;
 }
 
 export const TxTable: React.FC<ITxTableProps> = ({
@@ -115,7 +117,9 @@ export const TxTable: React.FC<ITxTableProps> = ({
   compact = false,
   isLoading,
   error,
-  limit,
+  pageIndex,
+  pageSize,
+  onPageChange,
 }) => {
   const tableData = useMemo(() => data.map(mapTxInfoToTableElement), [data]);
   const columns = useMemo(() => getTxColumns(compact), [compact]);
@@ -126,7 +130,12 @@ export const TxTable: React.FC<ITxTableProps> = ({
       columns={columns}
       isLoading={isLoading}
       error={error}
-      rowLimit={limit}
+      manualPagination={
+        !compact && pageIndex !== undefined && pageSize !== undefined
+      }
+      pageIndex={pageIndex}
+      pageSize={pageSize}
+      onPageChange={onPageChange}
     />
   );
 };

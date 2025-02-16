@@ -18,3 +18,21 @@ export const fetchBlocks = async (
   }
   return response.json();
 };
+
+export const fetchPaginatedBlocks = async (
+  partitionID: string,
+  startBlock: number | undefined,
+  limit: number,
+): Promise<IBlockInfo[]> => {
+  const pid = partitionID;
+  const url = new URL(`${API_URL}/partitions/${pid}/blocks`);
+  url.searchParams.set('limit', String(limit));
+  if (startBlock !== undefined) {
+    url.searchParams.set('startBlock', String(startBlock));
+  }
+  const response = await fetch(url.toString());
+  if (!response.ok) {
+    throw new Error('Error fetching blocks');
+  }
+  return response.json();
+};

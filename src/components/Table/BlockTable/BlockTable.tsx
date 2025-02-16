@@ -86,7 +86,10 @@ interface IBlockTableProps {
   compact?: boolean;
   isLoading?: boolean;
   error?: string;
-  limit?: number;
+  manualPagination?: boolean;
+  pageSize?: number;
+  onNextPage?: () => void;
+  onPreviousPage?: () => void;
 }
 
 export const BlockTable: React.FC<IBlockTableProps> = ({
@@ -94,7 +97,10 @@ export const BlockTable: React.FC<IBlockTableProps> = ({
   compact = false,
   isLoading,
   error,
-  limit,
+  manualPagination,
+  pageSize,
+  onNextPage,
+  onPreviousPage,
 }) => {
   const tableData = useMemo(() => data.map(mapBlockInfoToTableElement), [data]);
   const columns = useMemo(() => getBlockColumns(compact), [compact]);
@@ -105,7 +111,10 @@ export const BlockTable: React.FC<IBlockTableProps> = ({
       columns={columns}
       isLoading={isLoading}
       error={error}
-      rowLimit={limit}
+      manualPagination={manualPagination}
+      pageSize={pageSize}
+      onNextPage={onNextPage}
+      onPreviousPage={onPreviousPage}
     />
   );
 };

@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams, Navigate } from 'react-router-dom';
 
 import { BlockTable } from '../components/Table/BlockTable/BlockTable';
 import { TxTable } from '../components/Table/TxTable/TxTable';
-import { useBlocksQuery } from '../hooks/useBlock';
+import { usePaginatedBlocksQuery } from '../hooks/usePaginatedBlock';
+import { usePaginatedTxsQuery } from '../hooks/usePaginatedTx';
 import { useLatestBlocksQuery } from '../hooks/usePartitions';
-import { useTxsQuery } from '../hooks/useTx';
 
 export const Partition: React.FC = () => {
   const { partitionID } = useParams<{ partitionID?: string }>();
@@ -25,17 +25,41 @@ export const Partition: React.FC = () => {
     return <Navigate to="/404" replace />;
   }
 
+  const pageSize = 10;
+
+  const [blocksCursor, setBlocksCursor] = useState<number | undefined>(
+    undefined,
+  );
+  const [blocksHistory, setBlocksHistory] = useState<number[]>([]);
+
   const {
     data: blocks,
     isLoading: blocksLoading,
     error: blocksError,
-  } = useBlocksQuery(partitionID);
+  } = usePaginatedBlocksQuery(partitionID, blocksCursor, pageSize);
+
+  const handleNextBlocks = (): void => {
+    if (blocks && blocks.length > 0) {
+      const lastBlock = blocks[blocks.length - 1];
+      const nextCursor = lastBlock.BlockNumber - 1;
+      setBlocksHistory((prev) => [...prev, blocksCursor ?? 0]);
+      setBlocksCursor(nextCursor);
+    }
+  };
+
+  const handlePreviousBlocks = (): void => {
+    if (blocksHistory.length > 0) {
+      const previousCursor = blocksHistory[blocksHistory.length - 1];
+      setBlocksHistory((prev) => prev.slice(0, prev.length - 1));
+      setBlocksCursor(previousCursor === 0 ? undefined : previousCursor);
+    }
+  };
 
   const {
     data: transactions,
     isLoading: transactionsLoading,
     error: transactionsError,
-  } = useTxsQuery(partitionID);
+  } = usePaginatedTxsQuery(partitionID, undefined, pageSize);
 
   return (
     <div className="container mx-auto p-4">
@@ -48,7 +72,15 @@ export const Partition: React.FC = () => {
         {blocksLoading && <p>Loading blocks...</p>}
         {blocksError && <p>Error loading blocks</p>}
         {blocks && blocks.length > 0 ? (
-          <BlockTable data={blocks} />
+          <BlockTable
+            data={blocks}
+            manualPagination={true}
+            pageSize={pageSize}
+            onNextPage={handleNextBlocks}
+            onPreviousPage={
+              blocksHistory.length > 0 ? handlePreviousBlocks : undefined
+            }
+          />
         ) : (
           <p>No blocks found.</p>
         )}
