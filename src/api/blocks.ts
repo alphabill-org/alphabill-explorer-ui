@@ -6,6 +6,9 @@ export interface IBlockInfo {
   ShardID: string;
   ProposerID: string;
   PartitionID: number;
+  PartitionTypeID: number;
+  PreviousBlockHash: string;
+  UnicityCertificate: string;
 }
 
 export const fetchBlocks = async (
@@ -33,6 +36,21 @@ export const fetchPaginatedBlocks = async (
   const response = await fetch(url.toString());
   if (!response.ok) {
     throw new Error('Error fetching blocks');
+  }
+  return response.json();
+};
+
+export type IBlockDetailsResponse = Record<string, IBlockInfo>;
+
+export const fetchBlockDetails = async (
+  blockNumber: string,
+  partitionID: string,
+): Promise<IBlockDetailsResponse> => {
+  const url = new URL(`${API_URL}/blocks/${blockNumber}`);
+  url.searchParams.set('partitionID', partitionID);
+  const response = await fetch(url.toString());
+  if (!response.ok) {
+    throw new Error('Error fetching block details');
   }
   return response.json();
 };
