@@ -26,6 +26,14 @@ export function decodeUnicityCertificate(rawData: Uint8Array): {
   return { certificate, timestamp };
 }
 
+export function extractSummaryValue(rawData: Uint8Array): string {
+  const tag = CborDecoder.readTag(rawData);
+  const data = CborDecoder.readArray(tag.data);
+  const inputRecordCbor = data[1];
+  const inputRecord: InputRecord = InputRecord.fromCbor(inputRecordCbor);
+  return Base16Converter.encode(inputRecord.summaryValue);
+}
+
 export function getCertificateTimeAgo(cert: string): string {
   try {
     let certHex = cert;

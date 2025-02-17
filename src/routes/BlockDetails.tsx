@@ -1,8 +1,12 @@
+import { Base16Converter } from '@alphabill/alphabill-js-sdk/lib/util/Base16Converter';
 import React from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useBlockDetailsQuery } from '../hooks/useBlockDetails';
-import { getCertificateTimeAgo } from '../utils/certificateUtils';
+import {
+  getCertificateTimeAgo,
+  extractSummaryValue,
+} from '../utils/certificateUtils';
 
 interface IDetailRowProps {
   label: string;
@@ -16,22 +20,18 @@ const DetailRow: React.FC<IDetailRowProps> = ({
   value,
   loading,
   borderTop,
-}) => {
-  return (
-    <div
-      className={`flex flex-col md:flex-row mb-6 ${borderTop ? 'pt-8 border-t border-secondary/80' : ''}`}
-    >
-      <span className="md:basis-3/12 font-semibold">{label}</span>
-      <div className="text-white md:basis-9/12">
-        {loading ? (
-          <div className="h-6 bg-header-bg/50 animate-pulse" />
-        ) : (
-          value
-        )}
-      </div>
+}) => (
+  <div
+    className={`flex flex-col md:flex-row mb-6 ${
+      borderTop ? 'pt-8 border-t border-secondary/80' : ''
+    }`}
+  >
+    <span className="md:basis-3/12 font-semibold">{label}</span>
+    <div className="text-white md:basis-9/12">
+      {loading ? <div className="h-6 bg-header-bg/50 animate-pulse" /> : value}
     </div>
-  );
-};
+  </div>
+);
 
 const Container: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   <div className="container mx-auto p-4">
@@ -66,14 +66,14 @@ export const BlockDetails: React.FC = () => {
   );
 
   const rowDefs = [
+    { label: 'Block Hash:' },
     { label: 'Block:' },
-    { label: 'Timestamp:' },
+    { label: 'Previous Block Hash:' },
     { label: 'Proposer ID:' },
-    { label: 'Transactions:' },
     { borderTop: true, label: 'Shard:' },
     { label: 'Summary Value:' },
-    { borderTop: true, label: 'Block Hash:' },
-    { label: 'Previous Block Hash:' },
+    { borderTop: true, label: 'Timestamp:' },
+    { label: 'Transactions:' },
   ];
 
   if (isLoading) {
@@ -121,10 +121,21 @@ export const BlockDetails: React.FC = () => {
     UnicityCertificate,
   } = blockDetails;
 
-  const timeAgo =
-    UnicityCertificate && typeof UnicityCertificate === 'string'
-      ? getCertificateTimeAgo(UnicityCertificate)
-      : 'N/A';
+  let timeAgo = 'N/A';
+  let summaryValue = 'N/A';
+  if (UnicityCertificate && typeof UnicityCertificate === 'string') {
+    try {
+      timeAgo = getCertificateTimeAgo(UnicityCertificate);
+      let certHex = UnicityCertificate;
+      if (certHex.startsWith('0x')) {
+        certHex = certHex.slice(2);
+      }
+      const rawCert = Base16Converter.decode(certHex);
+      summaryValue = extractSummaryValue(rawCert);
+    } catch (e) {
+      console.error('Error decoding certificate in block details', e);
+    }
+  }
 
   const valuesLookup: Record<string, React.ReactNode> = {
     'Block Hash:': 'N/A',
@@ -132,7 +143,7 @@ export const BlockDetails: React.FC = () => {
     'Previous Block Hash:': PreviousBlockHash || 'N/A',
     'Proposer ID:': ProposerID,
     'Shard:': ShardID,
-    'Summary Value:': 'N/A',
+    'Summary Value:': summaryValue,
     'Timestamp:': timeAgo,
     'Transactions:':
       TxHashes && TxHashes.length > 0 ? TxHashes.join(', ') : 'N/A',
@@ -140,6 +151,8 @@ export const BlockDetails: React.FC = () => {
 
   return (
     <Container>
+      <h1 className="text-5xl font-bold text-white mb-8">{BlockNumber}</h1>
+
       {rowDefs.map((row, idx) => (
         <DetailRow
           key={idx}
