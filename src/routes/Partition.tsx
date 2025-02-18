@@ -31,27 +31,32 @@ export const Partition: React.FC = () => {
     undefined,
   );
   const [blocksHistory, setBlocksHistory] = useState<number[]>([]);
-
   const {
     data: blocks,
     isLoading: blocksLoading,
     error: blocksError,
   } = usePaginatedBlocksQuery(partitionID, blocksCursor, pageSize);
 
-  const handleNextBlocks = (): void => {
-    if (blocks && blocks.length > 0) {
-      const lastBlock = blocks[blocks.length - 1];
-      const nextCursor = lastBlock.BlockNumber - 1;
-      setBlocksHistory((prev) => [...prev, blocksCursor ?? 0]);
-      setBlocksCursor(nextCursor);
-    }
-  };
+  const currentBlocksPage = blocksHistory.length + 1;
+  const totalBlocksPages =
+    blocks && blocks.length === pageSize
+      ? currentBlocksPage + 1
+      : currentBlocksPage;
 
-  const handlePreviousBlocks = (): void => {
-    if (blocksHistory.length > 0) {
-      const previousCursor = blocksHistory[blocksHistory.length - 1];
-      setBlocksHistory((prev) => prev.slice(0, prev.length - 1));
-      setBlocksCursor(previousCursor === 0 ? undefined : previousCursor);
+  const handleBlocksPageChange = (page: number): void => {
+    if (page > currentBlocksPage) {
+      if (blocks && blocks.length > 0) {
+        const lastBlock = blocks[blocks.length - 1];
+        const nextCursor = lastBlock.BlockNumber - 1;
+        setBlocksHistory((prev) => [...prev, blocksCursor ?? 0]);
+        setBlocksCursor(nextCursor);
+      }
+    } else if (page < currentBlocksPage) {
+      if (blocksHistory.length > 0) {
+        const previousCursor = blocksHistory[blocksHistory.length - 1];
+        setBlocksHistory((prev) => prev.slice(0, prev.length - 1));
+        setBlocksCursor(previousCursor === 0 ? undefined : previousCursor);
+      }
     }
   };
 
@@ -63,18 +68,29 @@ export const Partition: React.FC = () => {
     error: txError,
   } = usePaginatedTxsQuery(partitionID, txCursor, pageSize);
 
-  const handleNextTx = (): void => {
-    if (txData && txData.data && txData.data.length > 0 && txData.previousID) {
-      setTxHistory((prev) => [...prev, txCursor || '']);
-      setTxCursor(txData.previousID);
-    }
-  };
+  const currentTxPage = txHistory.length + 1;
+  const totalTxPages =
+    txData && txData.data && txData.data.length === pageSize
+      ? currentTxPage + 1
+      : currentTxPage;
 
-  const handlePreviousTx = (): void => {
-    if (txHistory.length > 0) {
-      const previousCursor = txHistory[txHistory.length - 1];
-      setTxHistory((prev) => prev.slice(0, prev.length - 1));
-      setTxCursor(previousCursor || undefined);
+  const handleTxPageChange = (page: number): void => {
+    if (page > currentTxPage) {
+      if (
+        txData &&
+        txData.data &&
+        txData.data.length > 0 &&
+        txData.previousID
+      ) {
+        setTxHistory((prev) => [...prev, txCursor || '']);
+        setTxCursor(txData.previousID);
+      }
+    } else if (page < currentTxPage) {
+      if (txHistory.length > 0) {
+        const previousCursor = txHistory[txHistory.length - 1];
+        setTxHistory((prev) => prev.slice(0, prev.length - 1));
+        setTxCursor(previousCursor || undefined);
+      }
     }
   };
 
@@ -92,10 +108,9 @@ export const Partition: React.FC = () => {
           error={blocksError ? blocksError.message : ''}
           manualPagination={true}
           pageSize={pageSize}
-          onNextPage={handleNextBlocks}
-          onPreviousPage={
-            blocksHistory.length > 0 ? handlePreviousBlocks : undefined
-          }
+          currentPage={currentBlocksPage}
+          totalPages={totalBlocksPages}
+          onPageChange={handleBlocksPageChange}
         />
       </section>
 
@@ -107,8 +122,9 @@ export const Partition: React.FC = () => {
           error={txError ? txError.message : ''}
           manualPagination={true}
           pageSize={pageSize}
-          onNextPage={handleNextTx}
-          onPreviousPage={txHistory.length > 0 ? handlePreviousTx : undefined}
+          currentPage={currentTxPage}
+          totalPages={totalTxPages}
+          onPageChange={handleTxPageChange}
         />
       </section>
     </div>

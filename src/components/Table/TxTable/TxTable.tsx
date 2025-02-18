@@ -109,8 +109,9 @@ interface ITxTableProps {
   error?: string;
   pageSize?: number;
   manualPagination?: boolean;
-  onNextPage?: () => void;
-  onPreviousPage?: () => void;
+  currentPage?: number;
+  totalPages?: number;
+  onPageChange?: (page: number) => void;
 }
 
 export const TxTable: React.FC<ITxTableProps> = ({
@@ -120,8 +121,9 @@ export const TxTable: React.FC<ITxTableProps> = ({
   error,
   pageSize,
   manualPagination,
-  onNextPage,
-  onPreviousPage,
+  currentPage,
+  totalPages,
+  onPageChange,
 }) => {
   const tableData = useMemo(() => data.map(mapTxInfoToTableElement), [data]);
   const columns = useMemo(() => getTxColumns(compact), [compact]);
@@ -134,8 +136,9 @@ export const TxTable: React.FC<ITxTableProps> = ({
       error={error}
       manualPagination={manualPagination}
       pageSize={pageSize}
-      onNextPage={onNextPage}
-      onPreviousPage={onPreviousPage}
+      currentPage={currentPage}
+      totalPages={totalPages}
+      onPageChange={onPageChange}
     />
   );
 };

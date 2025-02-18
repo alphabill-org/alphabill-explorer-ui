@@ -8,6 +8,7 @@ import {
 import React from 'react';
 
 import { TablePagination } from './TablePagination';
+
 export interface ITableProps<TData extends RowData> {
   data: TData[];
   columns: ColumnDef<TData>[];
@@ -18,8 +19,9 @@ export interface ITableProps<TData extends RowData> {
   error?: string;
   manualPagination?: boolean;
   pageSize?: number;
-  onNextPage?: () => void;
-  onPreviousPage?: () => void;
+  currentPage?: number;
+  totalPages?: number;
+  onPageChange?: (page: number) => void;
 }
 
 const LoadingRows = <TData extends RowData>({
@@ -91,8 +93,9 @@ export function Table<TData extends RowData>({
   error = '',
   manualPagination = false,
   pageSize = 10,
-  onNextPage,
-  onPreviousPage,
+  currentPage,
+  totalPages,
+  onPageChange,
 }: ITableProps<TData>): React.ReactElement {
   const tableInstance = useReactTable({
     columns,
@@ -167,15 +170,19 @@ export function Table<TData extends RowData>({
         </thead>
         <tbody>{renderBody()}</tbody>
       </table>
-      {manualPagination && (onNextPage || onPreviousPage) && (
-        <TablePagination
-          onNextPage={onNextPage}
-          onPreviousPage={onPreviousPage}
-          isLoading={isLoading}
-          dataLength={data.length}
-          pageSize={pageSize}
-        />
-      )}
+      {manualPagination &&
+        currentPage !== undefined &&
+        totalPages !== undefined &&
+        onPageChange && (
+          <TablePagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={onPageChange}
+            isLoading={isLoading}
+            dataLength={data.length}
+            pageSize={pageSize}
+          />
+        )}
     </div>
   );
 }

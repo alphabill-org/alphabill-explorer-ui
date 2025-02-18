@@ -88,8 +88,9 @@ interface IBlockTableProps {
   error?: string;
   manualPagination?: boolean;
   pageSize?: number;
-  onNextPage?: () => void;
-  onPreviousPage?: () => void;
+  currentPage?: number;
+  totalPages?: number;
+  onPageChange?: (page: number) => void;
 }
 
 export const BlockTable: React.FC<IBlockTableProps> = ({
@@ -99,8 +100,9 @@ export const BlockTable: React.FC<IBlockTableProps> = ({
   error,
   manualPagination,
   pageSize,
-  onNextPage,
-  onPreviousPage,
+  currentPage,
+  totalPages,
+  onPageChange,
 }) => {
   const tableData = useMemo(() => data.map(mapBlockInfoToTableElement), [data]);
   const columns = useMemo(() => getBlockColumns(compact), [compact]);
@@ -113,8 +115,9 @@ export const BlockTable: React.FC<IBlockTableProps> = ({
       error={error}
       manualPagination={manualPagination}
       pageSize={pageSize}
-      onNextPage={onNextPage}
-      onPreviousPage={onPreviousPage}
+      currentPage={currentPage}
+      totalPages={totalPages}
+      onPageChange={onPageChange}
     />
   );
 };
