@@ -27,21 +27,13 @@ export function Table<TData extends RowData>({
   tableClassName = '',
   headerClassName = '',
   cellClassName = '',
-  isLoading,
-  error,
-  manualPagination,
+  isLoading = false,
+  error = '',
+  manualPagination = false,
   pageSize = 10,
   onNextPage,
   onPreviousPage,
 }: ITableProps<TData>): ReactElement {
-  if (error) {
-    return (
-      <div className="bg-black bg-opacity-50 w-full flex justify-center items-center h-[60vh] text-white">
-        <h3>No data found...</h3>
-      </div>
-    );
-  }
-
   const tableInstance = useReactTable({
     columns,
     data: isLoading ? [] : data,
@@ -49,85 +41,90 @@ export function Table<TData extends RowData>({
     manualPagination: manualPagination,
   });
 
-  const allRows = tableInstance.getRowModel().rows;
-  const displayedRows = allRows;
-
   return (
     <div
       className={`px-5 block max-w-full overflow-x-auto overflow-y-hidden custom-scroll text-center table-main ${tableClassName}`}
     >
-      <table className={`w-full table-fixed ${tableClassName}`}>
-        <thead className="table-column-header">
-          {tableInstance.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id} className="text-center">
-              {headerGroup.headers.map((header) => (
-                <th
-                  key={header.id}
-                  className={`pb-3 px-7 md:px-2 ${headerClassName}`}
-                >
-                  {flexRender(
-                    header.column.columnDef.header,
-                    header.getContext(),
-                  )}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody>
-          {isLoading
-            ? Array.from({ length: pageSize }).map((_, rowIndex) => (
-                <tr key={rowIndex} className="table-divider-v2">
-                  <td
-                    colSpan={columns.length}
-                    className={`py-4 px-7 md:px-0 ${cellClassName}`}
-                  >
-                    <div className="h-5 w-full bg-header-bg animate-pulse" />
-                  </td>
-                </tr>
-              ))
-            : displayedRows.map((row, index) => (
-                <tr
-                  key={row.id}
-                  className={
-                    index < displayedRows.length - 1
-                      ? 'table-divider-v2'
-                      : 'table-divider-v1'
-                  }
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <td
-                      key={cell.id}
-                      className={`py-4 px-7 md:px-0 overflow-hidden text-ellipsis whitespace-nowrap truncate ${cellClassName}`}
-                      style={{ width: cell.column.getSize() }}
+      {error ? (
+        <div className="bg-black bg-opacity-50 w-full flex justify-center items-center h-[60vh] text-white">
+          <h3>{error}</h3>
+        </div>
+      ) : (
+        <>
+          <table className={`w-full table-fixed ${tableClassName}`}>
+            <thead className="table-column-header">
+              {tableInstance.getHeaderGroups().map((headerGroup) => (
+                <tr key={headerGroup.id} className="text-center">
+                  {headerGroup.headers.map((header) => (
+                    <th
+                      key={header.id}
+                      className={`pb-3 px-7 md:px-2 ${headerClassName}`}
                     >
                       {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext(),
+                        header.column.columnDef.header,
+                        header.getContext(),
                       )}
-                    </td>
+                    </th>
                   ))}
                 </tr>
               ))}
-        </tbody>
-      </table>
-      {manualPagination && (onNextPage || onPreviousPage) && (
-        <div className="flex items-center justify-end mt-2 space-x-2">
-          <button
-            onClick={onPreviousPage}
-            disabled={!onPreviousPage}
-            className="px-3 py-1 border rounded disabled:opacity-50"
-          >
-            Previous
-          </button>
-          <button
-            onClick={onNextPage}
-            disabled={data.length < pageSize || isLoading}
-            className="px-3 py-1 border rounded disabled:opacity-50"
-          >
-            Next
-          </button>
-        </div>
+            </thead>
+            <tbody>
+              {isLoading
+                ? Array.from({ length: pageSize }).map((_, rowIndex) => (
+                    <tr key={rowIndex} className="table-divider-v2">
+                      <td
+                        colSpan={columns.length}
+                        className={`py-4 px-7 md:px-0 ${cellClassName}`}
+                      >
+                        <div className="h-5 w-full bg-header-bg animate-pulse" />
+                      </td>
+                    </tr>
+                  ))
+                : tableInstance.getRowModel().rows.map((row, index) => (
+                    <tr
+                      key={row.id}
+                      className={
+                        index < tableInstance.getRowModel().rows.length - 1
+                          ? 'table-divider-v2'
+                          : 'table-divider-v1'
+                      }
+                    >
+                      {row.getVisibleCells().map((cell) => (
+                        <td
+                          key={cell.id}
+                          className={`py-4 px-7 md:px-0 overflow-hidden text-ellipsis whitespace-nowrap truncate ${cellClassName}`}
+                          style={{ width: cell.column.getSize() }}
+                        >
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext(),
+                          )}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+            </tbody>
+          </table>
+          {manualPagination && (onNextPage || onPreviousPage) && (
+            <div className="flex items-center justify-end mt-2 space-x-2">
+              <button
+                onClick={onPreviousPage}
+                disabled={!onPreviousPage}
+                className="px-3 py-1 border rounded disabled:opacity-50"
+              >
+                Previous
+              </button>
+              <button
+                onClick={onNextPage}
+                disabled={data.length < pageSize || isLoading}
+                className="px-3 py-1 border rounded disabled:opacity-50"
+              >
+                Next
+              </button>
+            </div>
+          )}
+        </>
       )}
     </div>
   );

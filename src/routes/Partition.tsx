@@ -86,38 +86,30 @@ export const Partition: React.FC = () => {
 
       <section className="mt-8">
         <h2 className="text-2xl font-semibold mb-4">Blocks</h2>
-        {blocksLoading && <p>Loading blocks...</p>}
-        {blocksError && <p>Error loading blocks</p>}
-        {blocks && blocks.length > 0 ? (
-          <BlockTable
-            data={blocks}
-            manualPagination={true}
-            pageSize={pageSize}
-            onNextPage={handleNextBlocks}
-            onPreviousPage={
-              blocksHistory.length > 0 ? handlePreviousBlocks : undefined
-            }
-          />
-        ) : (
-          <p>No blocks found.</p>
-        )}
+        <BlockTable
+          data={blocks || []}
+          isLoading={blocksLoading}
+          error={blocksError ? blocksError.message : ''}
+          manualPagination={true}
+          pageSize={pageSize}
+          onNextPage={handleNextBlocks}
+          onPreviousPage={
+            blocksHistory.length > 0 ? handlePreviousBlocks : undefined
+          }
+        />
       </section>
 
       <section className="mt-8">
         <h2 className="text-2xl font-semibold mb-4">Transactions</h2>
-        {txLoading && <p>Loading transactions...</p>}
-        {txError && <p>Error loading transactions: {txError.message}</p>}
-        {txData && txData.data && txData.data.length > 0 ? (
-          <TxTable
-            data={txData.data}
-            manualPagination={true}
-            pageSize={pageSize}
-            onNextPage={handleNextTx}
-            onPreviousPage={txHistory.length > 0 ? handlePreviousTx : undefined}
-          />
-        ) : (
-          <p>No transactions found.</p>
-        )}
+        <TxTable
+          data={txData?.data || []}
+          isLoading={txLoading}
+          error={txError ? txError.message : ''}
+          manualPagination={true}
+          pageSize={pageSize}
+          onNextPage={handleNextTx}
+          onPreviousPage={txHistory.length > 0 ? handlePreviousTx : undefined}
+        />
       </section>
     </div>
   );
