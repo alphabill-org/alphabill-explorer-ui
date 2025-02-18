@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Navigate } from 'react-router-dom';
 
 import { BlockTable } from '../components/Table/BlockTable/BlockTable';
@@ -9,6 +9,13 @@ import { useLatestBlocksQuery } from '../hooks/usePartitions';
 
 export const Partition: React.FC = () => {
   const { partitionID } = useParams<{ partitionID?: string }>();
+
+  useEffect(() => {
+    setBlocksCursor(undefined);
+    setBlocksHistory([]);
+    setTxCursor(undefined);
+    setTxHistory([]);
+  }, [partitionID]);
 
   if (!partitionID) {
     return <Navigate to="/404" replace />;
