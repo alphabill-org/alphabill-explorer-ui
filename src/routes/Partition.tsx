@@ -25,7 +25,7 @@ export const Partition: React.FC = () => {
     return <Navigate to="/404" replace />;
   }
 
-  const pageSize = 10;
+  const pageSize = 5;
 
   const [blocksCursor, setBlocksCursor] = useState<number | undefined>(
     undefined,
@@ -55,11 +55,28 @@ export const Partition: React.FC = () => {
     }
   };
 
+  const [txCursor, setTxCursor] = useState<string | undefined>(undefined);
+  const [txHistory, setTxHistory] = useState<string[]>([]);
   const {
-    data: transactions,
-    isLoading: transactionsLoading,
-    error: transactionsError,
-  } = usePaginatedTxsQuery(partitionID, undefined, pageSize);
+    data: txData,
+    isLoading: txLoading,
+    error: txError,
+  } = usePaginatedTxsQuery(partitionID, txCursor, pageSize);
+
+  const handleNextTx = (): void => {
+    if (txData && txData.data && txData.data.length > 0 && txData.previousID) {
+      setTxHistory((prev) => [...prev, txCursor || '']);
+      setTxCursor(txData.previousID);
+    }
+  };
+
+  const handlePreviousTx = (): void => {
+    if (txHistory.length > 0) {
+      const previousCursor = txHistory[txHistory.length - 1];
+      setTxHistory((prev) => prev.slice(0, prev.length - 1));
+      setTxCursor(previousCursor || undefined);
+    }
+  };
 
   return (
     <div className="container mx-auto p-4">
@@ -88,10 +105,16 @@ export const Partition: React.FC = () => {
 
       <section className="mt-8">
         <h2 className="text-2xl font-semibold mb-4">Transactions</h2>
-        {transactionsLoading && <p>Loading transactions...</p>}
-        {transactionsError && <p>Error loading transactions</p>}
-        {transactions && transactions.length > 0 ? (
-          <TxTable data={transactions} />
+        {txLoading && <p>Loading transactions...</p>}
+        {txError && <p>Error loading transactions: {txError.message}</p>}
+        {txData && txData.data && txData.data.length > 0 ? (
+          <TxTable
+            data={txData.data}
+            manualPagination={true}
+            pageSize={pageSize}
+            onNextPage={handleNextTx}
+            onPreviousPage={txHistory.length > 0 ? handlePreviousTx : undefined}
+          />
         ) : (
           <p>No transactions found.</p>
         )}

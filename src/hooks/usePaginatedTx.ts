@@ -8,13 +8,13 @@ import { fetchPaginatedTransactions, ITxInfo } from '../api/transactions';
 
 export const usePaginatedTxsQuery = (
   partitionID: string,
-  page: number,
+  startID: string | undefined,
   limit: number,
-): UseQueryResult<ITxInfo[], Error> =>
-  useQuery<ITxInfo[], Error>({
+): UseQueryResult<{ data: ITxInfo[]; previousID: string | null }, Error> =>
+  useQuery({
     enabled: Boolean(partitionID),
     placeholderData: keepPreviousData,
-    queryFn: () => fetchPaginatedTransactions(partitionID, page, limit),
-    queryKey: ['txs', partitionID, page, limit],
+    queryFn: () => fetchPaginatedTransactions(partitionID, startID, limit),
+    queryKey: ['txs', partitionID, startID, limit],
     staleTime: 1000 * 60,
   });

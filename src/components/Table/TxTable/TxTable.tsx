@@ -107,9 +107,10 @@ interface ITxTableProps {
   compact?: boolean;
   isLoading?: boolean;
   error?: string;
-  pageIndex?: number;
   pageSize?: number;
-  onPageChange?: (page: number) => void;
+  manualPagination?: boolean;
+  onNextPage?: () => void;
+  onPreviousPage?: () => void;
 }
 
 export const TxTable: React.FC<ITxTableProps> = ({
@@ -117,9 +118,10 @@ export const TxTable: React.FC<ITxTableProps> = ({
   compact = false,
   isLoading,
   error,
-  pageIndex,
   pageSize,
-  onPageChange,
+  manualPagination,
+  onNextPage,
+  onPreviousPage,
 }) => {
   const tableData = useMemo(() => data.map(mapTxInfoToTableElement), [data]);
   const columns = useMemo(() => getTxColumns(compact), [compact]);
@@ -130,12 +132,12 @@ export const TxTable: React.FC<ITxTableProps> = ({
       columns={columns}
       isLoading={isLoading}
       error={error}
-      manualPagination={
-        !compact && pageIndex !== undefined && pageSize !== undefined
-      }
-      pageIndex={pageIndex}
+      manualPagination={manualPagination}
       pageSize={pageSize}
-      onPageChange={onPageChange}
+      onNextPage={onNextPage}
+      onPreviousPage={onPreviousPage}
     />
   );
 };
+
+export default TxTable;
