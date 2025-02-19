@@ -1,8 +1,5 @@
 import { CborDecoder } from '@alphabill/alphabill-js-sdk/lib/codec/cbor/CborDecoder';
-import {
-  UnicityCertificate,
-  InputRecord,
-} from '@alphabill/alphabill-js-sdk/lib/unit/UnicityCertificate';
+import { InputRecord } from '@alphabill/alphabill-js-sdk/lib/unit/UnicityCertificate';
 import { Base16Converter } from '@alphabill/alphabill-js-sdk/lib/util/Base16Converter';
 
 import { computeTimeAgo } from './timeUtils';
@@ -13,33 +10,18 @@ function parseInputRecord(rawData: Uint8Array): InputRecord {
   const inputRecordCbor = data[1];
   return InputRecord.fromCbor(inputRecordCbor);
 }
-
-export function decodeUnicityCertificate(rawData: Uint8Array): {
-  certificate: UnicityCertificate;
-  timestamp: number;
-} {
-  const certificate: UnicityCertificate = UnicityCertificate.fromCbor(rawData);
-  const timestamp = Number(certificate.inputRecord.timestamp);
-  return { certificate, timestamp };
-}
-
 export function extractPreviousHash(rawData: Uint8Array): string {
   const inputRecord = parseInputRecord(rawData);
-  return inputRecord.previousHash
+  return inputRecord.previousHash != null
     ? Base16Converter.encode(inputRecord.previousHash)
     : 'N/A';
 }
 
 export function extractBlockHash(rawData: Uint8Array): string {
   const inputRecord = parseInputRecord(rawData);
-  return inputRecord.blockHash
+  return inputRecord.blockHash != null
     ? Base16Converter.encode(inputRecord.blockHash)
     : 'N/A';
-}
-
-export function extractCertificateTimestamp(rawData: Uint8Array): number {
-  const inputRecord = parseInputRecord(rawData);
-  return Number(inputRecord.timestamp);
 }
 
 export function extractSummaryValue(rawData: Uint8Array): string {
@@ -49,12 +31,9 @@ export function extractSummaryValue(rawData: Uint8Array): string {
 
 export function getCertificateTimeAgo(cert: string): string {
   try {
-    let certHex = cert;
-    if (certHex.startsWith('0x')) {
-      certHex = certHex.slice(2);
-    }
+    const certHex = cert.startsWith('0x') ? cert.slice(2) : cert;
     const rawCert = Base16Converter.decode(certHex);
-    const timestamp = extractCertificateTimestamp(rawCert);
+    const timestamp = Number(parseInputRecord(rawCert).timestamp);
     return computeTimeAgo(timestamp);
   } catch (e) {
     console.error('Error decoding certificate', e);
@@ -75,10 +54,7 @@ export function parseCertificateValues(cert: string): ICertificateValues {
   let blockHash = 'N/A';
   let previousHash = 'N/A';
   try {
-    let certHex = cert;
-    if (certHex.startsWith('0x')) {
-      certHex = certHex.slice(2);
-    }
+    const certHex = cert.startsWith('0x') ? cert.slice(2) : cert;
     const rawCert = Base16Converter.decode(certHex);
     timeAgo = getCertificateTimeAgo(cert);
     summaryValue = extractSummaryValue(rawCert);

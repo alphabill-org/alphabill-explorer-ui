@@ -63,7 +63,7 @@ export const DetailsContainer: React.FC<IDetailsContainerProps> = ({
 }) => {
   return (
     <Container>
-      <h1 className="text-5xl font-bold text-white break-all mb-8">{title}</h1>
+      <h1 className="text-5xl font-bold break-all mb-8">{title}</h1>
       {error ? (
         <p className="text-center">Error loading details: {error}</p>
       ) : isLoading ? (

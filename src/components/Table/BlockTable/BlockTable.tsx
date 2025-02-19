@@ -2,6 +2,7 @@ import type { ColumnDef } from '@tanstack/react-table';
 import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 
+import { shortenHash } from '../../../utils/helpers';
 import { Table } from '../Table';
 
 export interface IBlockInfo {
@@ -24,7 +25,7 @@ export interface ITableElementBlock {
 const mapBlockInfoToTableElement = (block: IBlockInfo): ITableElementBlock => ({
   blockNumber: block.BlockNumber,
   partitionID: block.PartitionID,
-  proposerId: block.ProposerID,
+  proposerId: shortenHash(block.ProposerID),
   shardId: block.ShardID,
   timeAgo: 'N/A',
   txCount: Array.isArray(block.TxHashes) ? block.TxHashes.length : 0,
