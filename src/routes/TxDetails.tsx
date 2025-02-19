@@ -8,6 +8,7 @@ import {
 } from '../components/Details/DetailsContainer';
 import { useTxDetailsQuery } from '../hooks/useTxDetails';
 import { shortenHash } from '../utils/helpers';
+import { parseTransactionOrder } from '../utils/txUtils';
 
 export const TxDetails: React.FC = () => {
   const { partitionID, txHash } = useParams<{
@@ -34,7 +35,7 @@ export const TxDetails: React.FC = () => {
     },
     { label: 'Transaction Order:' },
     { label: 'Block Number:' },
-    { label: 'System ID:' },
+    { label: 'Partition ID:' },
     { label: 'Transaction Type:' },
     { label: 'Unit ID:' },
     { label: 'Timeout:' },
@@ -50,8 +51,11 @@ export const TxDetails: React.FC = () => {
       TxOrderHash,
       BlockNumber,
       PartitionID,
-      Transaction: { ServerMetadata },
+      Transaction: { ServerMetadata, TransactionOrder },
     } = data;
+
+    const { transactionType, timeout } =
+      parseTransactionOrder(TransactionOrder);
 
     const unitID =
       ServerMetadata?.TargetUnits && ServerMetadata.TargetUnits.length > 0
@@ -70,9 +74,13 @@ export const TxDetails: React.FC = () => {
           {BlockNumber}
         </Link>
       ),
+      'Partition ID:': (
+        <Link to={`/${PartitionID}`} className="text-[#08e8de] hover:underline">
+          {PartitionID}
+        </Link>
+      ),
       'Success Indicator:': ServerMetadata?.SuccessIndicator ?? 'N/A',
-      'System ID:': PartitionID,
-      'Timeout:': 'TODO',
+      'Timeout:': timeout,
       'Transaction Hash:': (
         <CopyToClipboard
           text={TxRecordHash}
@@ -85,7 +93,7 @@ export const TxDetails: React.FC = () => {
           displayText={shortenHash(TxOrderHash) || 'N/A'}
         />
       ),
-      'Transaction Type:': 'TODO',
+      'Transaction Type:': transactionType,
       'Unit ID:': unitID,
     };
 
