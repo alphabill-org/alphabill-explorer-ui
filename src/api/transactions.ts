@@ -8,9 +8,10 @@ export interface ITxInfo {
     Version: number;
     TransactionOrder?: string;
     ServerMetadata?: {
-      ActualFee: number;
-      SuccessIndicator: number;
-      ProcessingDetails: string;
+      ActualFee?: number;
+      SuccessIndicator?: number;
+      ProcessingDetails?: string;
+      TargetUnits?: string[];
     };
   };
   PartitionID: number;
@@ -62,4 +63,17 @@ export const fetchPaginatedTransactions = async (
   const data: ITxInfo[] = await response.json();
 
   return { data, previousID };
+};
+
+export const fetchTransactionByHash = async (
+  txHash: string,
+): Promise<ITxInfo> => {
+  const url = new URL(`${API_URL}/txs/${txHash}`);
+  const response = await fetch(url.toString());
+
+  if (!response.ok) {
+    throw new Error(`Error fetching transaction: ${response.statusText}`);
+  }
+
+  return response.json();
 };

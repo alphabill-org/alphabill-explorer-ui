@@ -2,6 +2,7 @@ import type { ColumnDef } from '@tanstack/react-table';
 import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 
+import { ITxInfo } from '../../../api/transactions';
 import { Table } from '../Table';
 
 export interface ITableElementTx {
@@ -13,22 +14,6 @@ export interface ITableElementTx {
   successIndicator: number;
   unitID: string;
   partitionID: number;
-}
-
-export interface ITxInfo {
-  TxRecordHash: string;
-  TxOrderHash: string;
-  BlockNumber: number;
-  Transaction: {
-    Version: number;
-    TransactionOrder?: string;
-    ServerMetadata?: {
-      ActualFee: number;
-      SuccessIndicator: number;
-      ProcessingDetails: string;
-    };
-  };
-  PartitionID: number;
 }
 
 const mapTxInfoToTableElement = (tx: ITxInfo): ITableElementTx => ({
