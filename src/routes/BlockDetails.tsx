@@ -1,4 +1,3 @@
-import { Base16Converter } from '@alphabill/alphabill-js-sdk/lib/util/Base16Converter';
 import React from 'react';
 import { useParams } from 'react-router-dom';
 
@@ -7,10 +6,7 @@ import {
   IDetailRowDef,
 } from '../components/Details/DetailsContainer';
 import { useBlockDetailsQuery } from '../hooks/useBlockDetails';
-import {
-  getCertificateTimeAgo,
-  extractSummaryValue,
-} from '../utils/certificateUtils';
+import { parseCertificateValues } from '../utils/certificateUtils';
 
 export const BlockDetails: React.FC = () => {
   const { partitionID, blockNumber } = useParams<{
@@ -58,24 +54,21 @@ export const BlockDetails: React.FC = () => {
 
     let timeAgo = 'N/A';
     let summaryValue = 'N/A';
+    let blockHash = 'N/A';
+    let previousHash = PreviousBlockHash || 'N/A';
+
     if (UnicityCertificate && typeof UnicityCertificate === 'string') {
-      try {
-        timeAgo = getCertificateTimeAgo(UnicityCertificate);
-        let certHex = UnicityCertificate;
-        if (certHex.startsWith('0x')) {
-          certHex = certHex.slice(2);
-        }
-        const rawCert = Base16Converter.decode(certHex);
-        summaryValue = extractSummaryValue(rawCert);
-      } catch (e) {
-        console.error('Error decoding certificate in block details', e);
-      }
+      const certValues = parseCertificateValues(UnicityCertificate);
+      timeAgo = certValues.timeAgo;
+      summaryValue = certValues.summaryValue;
+      blockHash = certValues.blockHash;
+      previousHash = certValues.previousHash;
     }
 
     const valuesLookup: Record<string, React.ReactNode> = {
-      'Block Hash:': 'N/A',
+      'Block Hash:': blockHash,
       'Block:': BlockNumber,
-      'Previous Block Hash:': PreviousBlockHash || 'N/A',
+      'Previous Block Hash:': previousHash,
       'Proposer ID:': ProposerID,
       'Shard:': ShardID,
       'Summary Value:': summaryValue,
