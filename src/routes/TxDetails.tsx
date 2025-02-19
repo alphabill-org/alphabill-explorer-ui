@@ -1,6 +1,7 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 
+import { CopyToClipboard } from '../components/Common/CopyToClipboard';
 import {
   DetailsContainer,
   IDetailRowDef,
@@ -25,7 +26,12 @@ export const TxDetails: React.FC = () => {
   const { data, isLoading, error } = useTxDetailsQuery(txHash);
 
   const baseRowDefs: IDetailRowDef[] = [
-    { label: 'Transaction Hash:', value: shortenHash(txHash) },
+    {
+      label: 'Transaction Hash:',
+      value: (
+        <CopyToClipboard text={txHash} displayText={shortenHash(txHash)} />
+      ),
+    },
     { label: 'Transaction Order:' },
     { label: 'Block Number:' },
     { label: 'System ID:' },
@@ -50,18 +56,35 @@ export const TxDetails: React.FC = () => {
     const unitID =
       ServerMetadata?.TargetUnits && ServerMetadata.TargetUnits.length > 0
         ? ServerMetadata.TargetUnits.map((id) => (
-            <div key={id}>{shortenHash(id)}</div>
+            <CopyToClipboard key={id} text={id} displayText={id} />
           ))
         : 'N/A';
 
     const valuesLookup: Record<string, React.ReactNode> = {
       'Actual Fee:': ServerMetadata?.ActualFee ?? 'N/A',
-      'Block Number:': BigInt(BlockNumber).toString(),
+      'Block Number:': (
+        <Link
+          to={`/${PartitionID}/blocks/${BlockNumber}`}
+          className="text-[#08e8de] hover:underline"
+        >
+          {BlockNumber}
+        </Link>
+      ),
       'Success Indicator:': ServerMetadata?.SuccessIndicator ?? 'N/A',
       'System ID:': PartitionID,
       'Timeout:': 'TODO',
-      'Transaction Hash:': shortenHash(TxRecordHash),
-      'Transaction Order:': shortenHash(TxOrderHash) || 'N/A',
+      'Transaction Hash:': (
+        <CopyToClipboard
+          text={TxRecordHash}
+          displayText={shortenHash(TxRecordHash)}
+        />
+      ),
+      'Transaction Order:': (
+        <CopyToClipboard
+          text={TxOrderHash}
+          displayText={shortenHash(TxOrderHash) || 'N/A'}
+        />
+      ),
       'Transaction Type:': 'TODO',
       'Unit ID:': unitID,
     };

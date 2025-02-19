@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 
 import {
   DetailsContainer,
@@ -74,7 +74,21 @@ export const BlockDetails: React.FC = () => {
       'Summary Value:': summaryValue,
       'Timestamp:': timeAgo,
       'Transactions:':
-        TxHashes && TxHashes.length > 0 ? TxHashes.join(', ') : 'N/A',
+        TxHashes && TxHashes.length > 0 ? (
+          <div className="flex flex-col space-y-1">
+            {TxHashes.map((txHash) => (
+              <Link
+                key={txHash}
+                to={`/${partitionID}/transactions/${txHash}`}
+                className="text-[#08e8de] hover:underline"
+              >
+                {txHash}
+              </Link>
+            ))}
+          </div>
+        ) : (
+          'N/A'
+        ),
     };
 
     loadedRowDefs = baseRowDefs.map((row) => ({
