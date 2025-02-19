@@ -3,6 +3,9 @@ import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 
 import { ITxInfo } from '../../../api/transactions';
+import { shortenHash } from '../../../utils/helpers';
+import { formatTimeout } from '../../../utils/timeUtils';
+import { parseTransactionOrder } from '../../../utils/txUtils';
 import { Table } from '../Table';
 
 export interface ITableElementTx {
@@ -16,16 +19,21 @@ export interface ITableElementTx {
   partitionID: number;
 }
 
-const mapTxInfoToTableElement = (tx: ITxInfo): ITableElementTx => ({
-  actualFee: tx.Transaction?.ServerMetadata?.ActualFee ?? 0,
-  blockNumber: tx.BlockNumber,
-  partitionID: tx.PartitionID,
-  successIndicator: tx.Transaction?.ServerMetadata?.SuccessIndicator ?? 0,
-  timeout: tx.Transaction?.ServerMetadata?.ProcessingDetails || 'N/A',
-  transactionType: 'Unknown',
-  txRecordHash: tx.TxRecordHash,
-  unitID: 'N/A',
-});
+const mapTxInfoToTableElement = (tx: ITxInfo): ITableElementTx => {
+  const parsedOrder = parseTransactionOrder(tx.Transaction?.TransactionOrder);
+  return {
+    actualFee: tx.Transaction?.ServerMetadata?.ActualFee ?? 0,
+    blockNumber: tx.BlockNumber,
+    partitionID: tx.PartitionID,
+    successIndicator: tx.Transaction?.ServerMetadata?.SuccessIndicator ?? 0,
+    timeout: formatTimeout(parsedOrder.timeout),
+    transactionType: parsedOrder.transactionType.toString(),
+    txRecordHash: tx.TxRecordHash,
+    unitID: tx.Transaction?.ServerMetadata?.TargetUnits
+      ? tx.Transaction.ServerMetadata.TargetUnits.join(', ')
+      : 'N/A',
+  };
+};
 
 const baseTxColumns: Record<string, ColumnDef<ITableElementTx>> = {
   actualFee: {
@@ -59,7 +67,7 @@ const baseTxColumns: Record<string, ColumnDef<ITableElementTx>> = {
           to={`/${partitionID}/transactions/${txHash}`}
           className="text-[#08e8de]"
         >
-          {txHash}
+          {shortenHash(txHash)}
         </Link>
       );
     },

@@ -11,3 +11,11 @@ export function computeTimeAgo(timestampSec: number): string {
   const days = Math.floor(hours / 24);
   return `${days} days ago`;
 }
+
+export const formatTimeout = (timeout: string | number): string => {
+  const seconds = typeof timeout === 'string' ? parseInt(timeout) : timeout;
+  if (isNaN(seconds)) return 'N/A';
+  const minutes = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  return minutes > 0 ? `${minutes} min ${secs} sec` : `${secs} sec`;
+};

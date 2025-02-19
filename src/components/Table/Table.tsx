@@ -122,19 +122,25 @@ export function Table<TData extends RowData>({
     }
     return (
       <>
-        {tableInstance.getRowModel().rows.map((row, index) => (
+        {tableInstance.getRowModel().rows.map((row) => (
           <tr
             key={row.id}
             className={
-              index < tableInstance.getRowModel().rows.length - 1
+              row.index < tableInstance.getRowModel().rows.length - 1
                 ? 'table-divider-v2'
                 : 'table-divider-v1'
             }
           >
-            {row.getVisibleCells().map((cell) => (
+            {row.getVisibleCells().map((cell, cellIndex, cells) => (
               <td
                 key={cell.id}
-                className={`py-4 px-7 md:px-0 overflow-hidden text-ellipsis whitespace-nowrap truncate ${cellClassName}`}
+                className={`py-4 px-7 md:px-2 overflow-hidden text-ellipsis whitespace-nowrap truncate ${cellClassName} ${
+                  cellIndex === 0
+                    ? 'text-left'
+                    : cellIndex === cells.length - 1
+                      ? 'text-right'
+                      : ''
+                }`}
                 style={{ width: cell.column.getSize() }}
               >
                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -154,10 +160,16 @@ export function Table<TData extends RowData>({
         <thead className="table-column-header">
           {tableInstance.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id} className="text-center">
-              {headerGroup.headers.map((header) => (
+              {headerGroup.headers.map((header, index, headers) => (
                 <th
                   key={header.id}
-                  className={`pb-3 px-7 md:px-2 ${headerClassName}`}
+                  className={`pb-3 px-7 md:px-2 ${headerClassName} ${
+                    index === 0
+                      ? 'text-left'
+                      : index === headers.length - 1
+                        ? 'text-right'
+                        : ''
+                  }`}
                 >
                   {flexRender(
                     header.column.columnDef.header,
