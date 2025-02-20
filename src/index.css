@@ -4,35 +4,35 @@
   font-family: grotesk;
   font-style: normal;
   font-weight: 300;
-  src: url('../assets/SpaceGrotesk-Light.ttf') format('truetype');
+  src: url('/assets/SpaceGrotesk-Light.ttf') format('truetype');
 }
 
 @font-face {
   font-family: grotesk;
   font-style: normal;
   font-weight: 400;
-  src: url('../assets/SpaceGrotesk-Regular.ttf') format('truetype');
+  src: url('/assets/SpaceGrotesk-Regular.ttf') format('truetype');
 }
 
 @font-face {
   font-family: grotesk;
   font-style: normal;
   font-weight: 500;
-  src: url('../assets/SpaceGrotesk-Medium.ttf') format('truetype');
+  src: url('/assets/SpaceGrotesk-Medium.ttf') format('truetype');
 }
 
 @font-face {
   font-family: grotesk;
   font-style: normal;
   font-weight: 600;
-  src: url('../assets/SpaceGrotesk-SemiBold.ttf') format('truetype');
+  src: url('/assets/SpaceGrotesk-SemiBold.ttf') format('truetype');
 }
 
 @font-face {
   font-family: grotesk;
   font-style: normal;
   font-weight: 700;
-  src: url('../assets/SpaceGrotesk-Bold.ttf') format('truetype');
+  src: url('/assets/SpaceGrotesk-Bold.ttf') format('truetype');
 }
 
 @theme {
