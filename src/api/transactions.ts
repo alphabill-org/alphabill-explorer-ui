@@ -25,6 +25,7 @@ export const fetchTransactions = async (
   if (!response.ok) {
     throw new Error('Error fetching transactions');
   }
+
   return response.json();
 };
 
@@ -40,6 +41,7 @@ const parseHeader = (header: string): string | null => {
       return null;
     }
   }
+
   return null;
 };
 
@@ -70,9 +72,22 @@ export const fetchTransactionByHash = async (
 ): Promise<ITxInfo> => {
   const url = new URL(`${API_URL}/txs/${txHash}`);
   const response = await fetch(url.toString());
-
   if (!response.ok) {
     throw new Error(`Error fetching transaction: ${response.statusText}`);
+  }
+
+  return response.json();
+};
+
+export const fetchTransactionsByUnit = async (
+  unitID: string,
+): Promise<ITxInfo[]> => {
+  const url = new URL(`${API_URL}/units/${unitID}/txs`);
+  const response = await fetch(url.toString());
+  if (!response.ok) {
+    throw new Error(
+      `Error fetching transactions for unit: ${response.statusText}`,
+    );
   }
 
   return response.json();

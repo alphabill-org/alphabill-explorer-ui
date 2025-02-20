@@ -27,7 +27,7 @@ export const CopyToClipboard: React.FC<ICopyToClipboardProps> = ({
 
   return (
     <>
-      <div className="inline-flex items-center cursor-pointer">
+      <div className="inline-flex items-center cursor-pointer hover:text-[var(--color-secondary)]">
         <span
           onClick={handleCopy}
           className="relative pr-2"
@@ -38,7 +38,7 @@ export const CopyToClipboard: React.FC<ICopyToClipboardProps> = ({
         </span>
         <CopyIcon className="w-5 h-5" onClick={handleCopy} />
       </div>
-      <Tooltip id={`tooltip-${text}`} place="top" />
+      <Tooltip id={`tooltip-${text}`} place="top" className="!text-xs" />
     </>
   );
 };

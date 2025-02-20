@@ -60,7 +60,13 @@ export const TxDetails: React.FC = () => {
     const unitID =
       ServerMetadata?.TargetUnits && ServerMetadata.TargetUnits.length > 0
         ? ServerMetadata.TargetUnits.map((id) => (
-            <CopyToClipboard key={id} text={id} displayText={id} />
+            <Link
+              key={id}
+              to={`/${partitionID}/units/${id}`}
+              className="text-[#08e8de] hover:underline"
+            >
+              {id}
+            </Link>
           ))
         : 'N/A';
 

@@ -9,6 +9,7 @@ import { Partition } from './routes/Partition';
 import { PartitionBlocks } from './routes/PartitionBlocks';
 import { PartitionTxs } from './routes/PartitionTxs';
 import { TxDetails } from './routes/TxDetails';
+import { UnitTxs } from './routes/UnitTxs';
 
 const App: React.FC = () => {
   return (
@@ -26,6 +27,7 @@ const App: React.FC = () => {
           element={<BlockDetails />}
         />
         <Route path=":partitionID/blocks" element={<PartitionBlocks />} />
+        <Route path=":partitionID/units/:unitID" element={<UnitTxs />} />
         <Route path="404" element={<Page404 />} />
         <Route path="*" element={<Page404 />} />
       </Route>
