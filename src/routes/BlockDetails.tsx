@@ -1,12 +1,14 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 
+import { CopyToClipboard } from '../components/Common/CopyToClipboard';
 import {
   DetailsContainer,
   IDetailRowDef,
 } from '../components/Details/DetailsContainer';
 import { useBlockDetailsQuery } from '../hooks/useBlockDetails';
 import { parseCertificateValues } from '../utils/certificateUtils';
+import { shortenHash } from '../utils/helpers';
 
 export const BlockDetails: React.FC = () => {
   const { partitionID, blockNumber } = useParams<{
@@ -66,9 +68,19 @@ export const BlockDetails: React.FC = () => {
     }
 
     const valuesLookup: Record<string, React.ReactNode> = {
-      'Block Hash:': blockHash,
+      'Block Hash:': (
+        <CopyToClipboard
+          text={blockHash}
+          displayText={shortenHash(blockHash)}
+        />
+      ),
       'Block:': BlockNumber,
-      'Previous Block Hash:': previousHash,
+      'Previous Block Hash:': (
+        <CopyToClipboard
+          text={previousHash}
+          displayText={shortenHash(previousHash)}
+        />
+      ),
       'Proposer ID:': ProposerID,
       'Shard:': ShardID,
       'Summary Value:': summaryValue,
@@ -100,6 +112,7 @@ export const BlockDetails: React.FC = () => {
   return (
     <DetailsContainer
       title={blockNumber}
+      label="Block"
       rowDefs={loadedRowDefs}
       isLoading={isLoading}
       error={error ? error.message : undefined}

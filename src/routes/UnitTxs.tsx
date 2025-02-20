@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { CopyToClipboard } from '../components/Common/CopyToClipboard';
 import { TxTable } from '../components/Table/TxTable/TxTable';
 import { useTxsByUnitQuery } from '../hooks/useTxByUnit';
+import { shortenHash } from '../utils/helpers';
 
 export const UnitTxs: React.FC = () => {
   const { unitID } = useParams<{ unitID: string }>();
@@ -19,11 +20,11 @@ export const UnitTxs: React.FC = () => {
   const { data, isLoading, error } = useTxsByUnitQuery(unitID);
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-4xl font-bold my-8">Transactions</h1>
-      <div>Unit ID: </div>
-      <div className="text-xl mb-8">
-        <CopyToClipboard text={unitID} displayText={unitID} />
+    <div className="container mx-auto p-4 mt-8">
+      <h1 className="text-4xl font-bold">Transactions for unit:</h1>
+      <div className="text-4xl font-bold mt-2 mb-8">
+        {' '}
+        <CopyToClipboard text={unitID} displayText={shortenHash(unitID)} />
       </div>
       <TxTable
         data={data || []}

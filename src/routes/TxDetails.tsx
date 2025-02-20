@@ -111,6 +111,7 @@ export const TxDetails: React.FC = () => {
 
   return (
     <DetailsContainer
+      label="Transaction"
       title={txHash}
       rowDefs={loadedRowDefs}
       isLoading={isLoading}

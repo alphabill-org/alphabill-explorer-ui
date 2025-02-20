@@ -8,10 +8,13 @@ function parseInputRecord(rawData: Uint8Array): InputRecord {
   const tag = CborDecoder.readTag(rawData);
   const data = CborDecoder.readArray(tag.data);
   const inputRecordCbor = data[1];
+
   return InputRecord.fromCbor(inputRecordCbor);
 }
+
 export function extractPreviousHash(rawData: Uint8Array): string {
   const inputRecord = parseInputRecord(rawData);
+
   return inputRecord.previousHash != null
     ? Base16Converter.encode(inputRecord.previousHash)
     : 'N/A';
@@ -19,13 +22,15 @@ export function extractPreviousHash(rawData: Uint8Array): string {
 
 export function extractBlockHash(rawData: Uint8Array): string {
   const inputRecord = parseInputRecord(rawData);
-  return inputRecord.blockHash != null
-    ? Base16Converter.encode(inputRecord.blockHash)
+
+  return inputRecord.hash != null
+    ? Base16Converter.encode(inputRecord.hash)
     : 'N/A';
 }
 
 export function extractSummaryValue(rawData: Uint8Array): string {
   const inputRecord = parseInputRecord(rawData);
+
   return Base16Converter.encode(inputRecord.summaryValue);
 }
 
@@ -34,9 +39,11 @@ export function getCertificateTimeAgo(cert: string): string {
     const certHex = cert.startsWith('0x') ? cert.slice(2) : cert;
     const rawCert = Base16Converter.decode(certHex);
     const timestamp = Number(parseInputRecord(rawCert).timestamp);
+
     return computeTimeAgo(timestamp);
   } catch (e) {
     console.error('Error decoding certificate', e);
+
     return 'N/A';
   }
 }
@@ -63,5 +70,6 @@ export function parseCertificateValues(cert: string): ICertificateValues {
   } catch (e) {
     console.error('Error decoding certificate in parseCertificateValues', e);
   }
+
   return { blockHash, previousHash, summaryValue, timeAgo };
 }

@@ -84,7 +84,7 @@ const getTxColumns = (isCompact: boolean): ColumnDef<ITableElementTx>[] =>
     ? [
         baseTxColumns.txRecordHash,
         baseTxColumns.transactionType,
-        baseTxColumns.unitID,
+        baseTxColumns.actualFee,
       ]
     : [
         baseTxColumns.txRecordHash,

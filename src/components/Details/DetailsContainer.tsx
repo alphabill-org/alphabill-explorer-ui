@@ -37,7 +37,7 @@ const DetailRow: React.FC<IDetailRowProps> = ({
   borderTop,
 }) => (
   <div
-    className={`flex flex-col md:flex-row mb-6 ${
+    className={`flex flex-col md:flex-row mb-6 break-all ${
       borderTop ? 'pt-8 border-t border-secondary/80' : ''
     }`}
   >
@@ -50,6 +50,7 @@ const DetailRow: React.FC<IDetailRowProps> = ({
 
 export interface IDetailsContainerProps {
   title: React.ReactNode;
+  label?: string;
   rowDefs: IDetailRowDef[];
   isLoading?: boolean;
   error?: string;
@@ -57,12 +58,14 @@ export interface IDetailsContainerProps {
 
 export const DetailsContainer: React.FC<IDetailsContainerProps> = ({
   title,
+  label,
   rowDefs,
   isLoading,
   error,
 }) => {
   return (
     <Container>
+      <div className="text-light-blue/80 mb-2">{label}</div>
       <h1 className="text-5xl font-bold break-all mb-8">{title}</h1>
       {error ? (
         <p className="text-center">Error loading details: {error}</p>
