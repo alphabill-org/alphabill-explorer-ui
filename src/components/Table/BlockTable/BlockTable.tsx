@@ -2,16 +2,10 @@ import type { ColumnDef } from '@tanstack/react-table';
 import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 
+import type { IBlockInfo } from '../../../api/blocks';
+import { parseCertificateValues } from '../../../utils/certificateUtils';
 import { shortenHash } from '../../../utils/helpers';
 import { Table } from '../Table';
-
-export interface IBlockInfo {
-  BlockNumber: number;
-  TxHashes: string[];
-  ShardID: string;
-  ProposerID: string;
-  PartitionID: number;
-}
 
 export interface ITableElementBlock {
   blockNumber: number;
@@ -22,20 +16,31 @@ export interface ITableElementBlock {
   partitionID: number;
 }
 
-const mapBlockInfoToTableElement = (block: IBlockInfo): ITableElementBlock => ({
-  blockNumber: block.BlockNumber,
-  partitionID: block.PartitionID,
-  proposerId: shortenHash(block.ProposerID),
-  shardId: block.ShardID,
-  timeAgo: 'N/A',
-  txCount: Array.isArray(block.TxHashes) ? block.TxHashes.length : 0,
-});
+const mapBlockInfoToTableElement = (block: IBlockInfo): ITableElementBlock => {
+  let timeAgo = 'N/A';
+
+  if (block.UnicityCertificate) {
+    const { timeAgo: parsedTime } = parseCertificateValues(
+      block.UnicityCertificate,
+    );
+    timeAgo = parsedTime;
+  }
+
+  return {
+    blockNumber: block.BlockNumber,
+    partitionID: block.PartitionID,
+    proposerId: shortenHash(block.ProposerID),
+    shardId: block.ShardID,
+    timeAgo,
+    txCount: Array.isArray(block.TxHashes) ? block.TxHashes.length : 0,
+  };
+};
 
 const baseBlockColumns: Record<string, ColumnDef<ITableElementBlock>> = {
   blockNumber: {
     accessorKey: 'blockNumber',
     cell: ({ getValue, row }) => {
-      const blockNumber = getValue() as number;
+      const blockNumber = getValue<number>();
       const partitionID = row.original.partitionID;
       return (
         <Link
@@ -80,6 +85,7 @@ const getBlockColumns = (
         baseBlockColumns.txCount,
         baseBlockColumns.shardId,
         baseBlockColumns.proposerId,
+        baseBlockColumns.timeAgo,
       ];
 
 interface IBlockTableProps {
