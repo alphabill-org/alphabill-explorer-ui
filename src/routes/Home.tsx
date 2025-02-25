@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { Search } from '../components/Search/Search';
 import { BlockTable } from '../components/Table/BlockTable/BlockTable';
 import { TxTable } from '../components/Table/TxTable/TxTable';
 import { useBlocksQuery } from '../hooks/useBlock';
@@ -11,6 +12,7 @@ export const Home: React.FC = () => {
     isLoading: blocksLoading,
     error: blocksError,
   } = useBlocksQuery('1');
+
   const {
     data: transactions,
     isLoading: transactionsLoading,
@@ -23,7 +25,9 @@ export const Home: React.FC = () => {
         Alphabill Block Explorer
       </h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+      <Search />
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
         <section>
           <h2 className="text-2xl font-semibold mb-4">LATEST BLOCKS</h2>
           <BlockTable
@@ -33,7 +37,6 @@ export const Home: React.FC = () => {
             compact
           />
         </section>
-
         <section>
           <h2 className="text-2xl font-semibold mb-4">LATEST TRANSACTIONS</h2>
           <TxTable
