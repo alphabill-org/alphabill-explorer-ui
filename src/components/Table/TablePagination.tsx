@@ -29,7 +29,7 @@ const PaginationItem: React.FC<IPaginationItemProps> = ({
         if (!isLoading) onPageChange(targetPage);
       }}
       className={`cursor-pointer px-3 py-1 rounded ${
-        isLoading ? disabledClass : 'hover:bg-header-bg'
+        isLoading ? disabledClass : 'hover:bg-accent'
       }`}
     >
       {label}
@@ -67,7 +67,7 @@ export const TablePagination: React.FC<ITablePaginationProps> = ({
           />
         </>
       )}
-      <span className="px-3 py-1 rounded bg-header-bg">{currentPage}</span>
+      <span className="px-3 py-1 rounded bg-accent">{currentPage}</span>
       {currentPage < totalPages && (
         <>
           <PaginationItem

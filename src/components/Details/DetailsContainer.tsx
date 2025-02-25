@@ -43,7 +43,7 @@ const DetailRow: React.FC<IDetailRowProps> = ({
   >
     <span className="md:basis-3/12 font-semibold">{label}</span>
     <div className="text-white md:basis-9/12 flex flex-col gap-2">
-      {loading ? <div className="h-6 bg-header-bg/50 animate-pulse" /> : value}
+      {loading ? <div className="h-6 bg-accent/50 animate-pulse" /> : value}
     </div>
   </div>
 );

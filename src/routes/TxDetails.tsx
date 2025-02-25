@@ -8,7 +8,8 @@ import {
 } from '../components/Details/DetailsContainer';
 import { useTxDetailsQuery } from '../hooks/useTxDetails';
 import { shortenHash } from '../utils/helpers';
-import { parseTransactionOrder } from '../utils/txUtils';
+import { mapSuccessIndicator } from '../utils/statusUtils';
+import { parseTransactionOrder, mapTransactionType } from '../utils/txUtils';
 
 export const TxDetails: React.FC = () => {
   const { partitionID, txHash } = useParams<{
@@ -40,7 +41,7 @@ export const TxDetails: React.FC = () => {
     { label: 'Unit ID:' },
     { label: 'Timeout:' },
     { label: 'Actual Fee:' },
-    { label: 'Success Indicator:' },
+    { label: 'Status:' },
   ];
 
   let loadedRowDefs: IDetailRowDef[] = baseRowDefs;
@@ -54,8 +55,11 @@ export const TxDetails: React.FC = () => {
       Transaction: { ServerMetadata, TransactionOrder },
     } = data;
 
-    const { transactionType, timeout } =
+    const { transactionType: rawType, timeout } =
       parseTransactionOrder(TransactionOrder);
+
+    const numericType = Number(rawType);
+    const txType = mapTransactionType(PartitionID, numericType);
 
     const unitID =
       ServerMetadata?.TargetUnits && ServerMetadata.TargetUnits.length > 0
@@ -69,6 +73,10 @@ export const TxDetails: React.FC = () => {
             </Link>
           ))
         : 'N/A';
+
+    const statusMapping = mapSuccessIndicator(
+      ServerMetadata?.SuccessIndicator ?? 0,
+    );
 
     const valuesLookup: Record<string, React.ReactNode> = {
       'Actual Fee:': ServerMetadata?.ActualFee ?? 'N/A',
@@ -85,7 +93,12 @@ export const TxDetails: React.FC = () => {
           {PartitionID}
         </Link>
       ),
-      'Success Indicator:': ServerMetadata?.SuccessIndicator ?? 'N/A',
+      'Status:': (
+        <div className="flex items-center space-x-2">
+          <statusMapping.Icon />
+          <span>{statusMapping.label}</span>
+        </div>
+      ),
       'Timeout:': timeout,
       'Transaction Hash:': (
         <CopyToClipboard
@@ -99,7 +112,7 @@ export const TxDetails: React.FC = () => {
           displayText={shortenHash(TxOrderHash) || 'N/A'}
         />
       ),
-      'Transaction Type:': transactionType,
+      'Transaction Type:': txType,
       'Unit ID:': unitID,
     };
 

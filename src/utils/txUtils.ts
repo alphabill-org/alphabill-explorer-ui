@@ -1,3 +1,7 @@
+import { FeeCreditTransactionType } from '@alphabill/alphabill-js-sdk/lib/fees/FeeCreditTransactionType';
+import { MoneyPartitionTransactionType } from '@alphabill/alphabill-js-sdk/lib/money/MoneyPartitionTransactionType';
+import { PartitionIdentifier } from '@alphabill/alphabill-js-sdk/lib/PartitionIdentifier';
+import { TokenPartitionTransactionType } from '@alphabill/alphabill-js-sdk/lib/tokens/TokenPartitionTransactionType';
 import { type ITransactionPayloadAttributes } from '@alphabill/alphabill-js-sdk/lib/transaction/ITransactionPayloadAttributes';
 import { type ITransactionOrderProof } from '@alphabill/alphabill-js-sdk/lib/transaction/proofs/ITransactionOrderProof';
 import { TransactionOrder } from '@alphabill/alphabill-js-sdk/lib/transaction/TransactionOrder';
@@ -86,3 +90,46 @@ export const parseTransactionOrder = (
     };
   }
 };
+
+function formatEnumKey(key: string): string {
+  const enumKey = key.replace(/([a-z])([A-Z])/g, '$1 $2');
+  return enumKey.charAt(0).toUpperCase() + enumKey.slice(1);
+}
+
+function tryEnumLookup(
+  txType: number,
+  enumList: Record<number, string>[],
+  fallback: string,
+): string {
+  for (const enumObj of enumList) {
+    const enumKey = enumObj[txType];
+    if (enumKey) {
+      return formatEnumKey(enumKey);
+    }
+  }
+  return fallback;
+}
+
+export function mapTransactionType(
+  partitionID: number,
+  txType: number,
+): string {
+  switch (partitionID) {
+    case PartitionIdentifier.MONEY:
+      return tryEnumLookup(
+        txType,
+        [MoneyPartitionTransactionType, FeeCreditTransactionType],
+        `Unknown Money TxType #${txType}`,
+      );
+    case PartitionIdentifier.TOKEN:
+      return tryEnumLookup(
+        txType,
+        [TokenPartitionTransactionType],
+        `Unknown Token TxType #${txType}`,
+      );
+    case PartitionIdentifier.EVM:
+      return `EVM TxType #${txType}`;
+    default:
+      return `Unknown Partition ${partitionID} TxType #${txType}`;
+  }
+}

@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { fetchLatestBlocks, ILatestBlocksResponse } from '../../api/partitions';
+import { getPartitionName } from '../../utils/partitionUtils';
 
 export const HeaderMenu: React.FC = () => {
   const { data, isLoading, error } = useQuery<ILatestBlocksResponse>({
@@ -17,15 +18,20 @@ export const HeaderMenu: React.FC = () => {
 
   return (
     <nav className="flex space-x-4">
-      {partitionIDs.map((id) => (
-        <Link
-          key={id}
-          to={`/${id}`}
-          className="text-white hover:text-[var(--color-secondary)]"
-        >
-          Partition {id}
-        </Link>
-      ))}
+      {partitionIDs.map((id) => {
+        const numericID = parseInt(id, 10);
+        const partitionName = getPartitionName(numericID);
+
+        return (
+          <Link
+            key={id}
+            to={`/${id}`}
+            className="text-white hover:text-[var(--color-secondary)]"
+          >
+            {partitionName}
+          </Link>
+        );
+      })}
     </nav>
   );
 };

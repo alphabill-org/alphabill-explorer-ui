@@ -6,9 +6,19 @@ import { TxTable } from '../components/Table/TxTable/TxTable';
 import { usePaginatedBlocksQuery } from '../hooks/usePaginatedBlock';
 import { usePaginatedTxsQuery } from '../hooks/usePaginatedTx';
 import { useLatestBlocksQuery } from '../hooks/usePartitions';
+import { getPartitionName } from '../utils/partitionUtils';
 
 export const Partition: React.FC = () => {
   const { partitionID } = useParams<{ partitionID?: string }>();
+
+  if (!partitionID) {
+    return <Navigate to="/404" replace />;
+  }
+
+  const numericID = parseInt(partitionID, 10);
+
+  const { data: partitionsData, isLoading: partitionsLoading } =
+    useLatestBlocksQuery();
 
   useEffect(() => {
     setBlocksCursor(undefined);
@@ -16,13 +26,6 @@ export const Partition: React.FC = () => {
     setTxCursor(undefined);
     setTxHistory([]);
   }, [partitionID]);
-
-  if (!partitionID) {
-    return <Navigate to="/404" replace />;
-  }
-
-  const { data: partitionsData, isLoading: partitionsLoading } =
-    useLatestBlocksQuery();
 
   if (
     !partitionsLoading &&
@@ -38,6 +41,7 @@ export const Partition: React.FC = () => {
     undefined,
   );
   const [blocksHistory, setBlocksHistory] = useState<number[]>([]);
+
   const {
     data: blocks,
     isLoading: blocksLoading,
@@ -69,6 +73,7 @@ export const Partition: React.FC = () => {
 
   const [txCursor, setTxCursor] = useState<string | undefined>(undefined);
   const [txHistory, setTxHistory] = useState<string[]>([]);
+
   const {
     data: txData,
     isLoading: txLoading,
@@ -101,10 +106,12 @@ export const Partition: React.FC = () => {
     }
   };
 
+  const partitionName = getPartitionName(numericID);
+
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-4xl font-bold text-center mt-8">
-        Partition {partitionID} Explorer
+        {partitionName} Explorer
       </h1>
 
       <section className="mt-8">

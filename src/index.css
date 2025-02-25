@@ -38,13 +38,11 @@
 @theme {
   --color-primary: #0c0a3e;
   --color-secondary: #08e8de;
+  --color-accent: #4e3fb6;
   --color-white: #ffffff;
-  --color-header-bg: #4e3fb6;
   --color-light-blue: #d8deff;
 
   --font-primary: 'grotesk', sans-serif;
-
-  --layout-circle-border-bg: #4e3fb6;
 
   --table-header-text: #ffffff;
   --table-bg: #00000083;
@@ -94,7 +92,7 @@ h1 {
 }
 
 .header-top {
-  background-color: var(--color-header-bg);
+  background-color: var(--color-accent);
 }
 .header-bottom {
   background-color: var(--color-primary);
@@ -153,12 +151,12 @@ h1 {
 
 .layout-circle {
   @apply border-2 rounded-full absolute;
-  border-color: var(--layout-circle-border-bg);
+  border-color: var(--color-accent);
 }
 
 .layout-circle-filled {
   @apply rounded-full opacity-50 -z-10 absolute;
-  background-color: var(--layout-circle-border-bg);
+  background-color: var(--color-accent);
 }
 
 .link {
@@ -177,4 +175,12 @@ h1 {
 
 .link-icon:hover {
   fill: var(--color-secondary);
+}
+
+.button {
+  @apply px-4 py-2 bg-accent text-white p-1 cursor-pointer focus:outline-none;
+}
+
+.button:hover {
+  @apply bg-secondary text-primary;
 }

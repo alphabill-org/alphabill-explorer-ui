@@ -41,7 +41,7 @@ const LoadingRows = <TData extends RowData>({
             colSpan={columns.length}
             className={`py-4 px-7 md:px-0 ${cellClassName}`}
           >
-            <div className="h-6 w-full bg-header-bg/50 animate-pulse" />
+            <div className="h-6 w-full bg-accent/50 animate-pulse" />
           </td>
         </tr>
       ))}

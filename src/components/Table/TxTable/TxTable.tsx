@@ -4,8 +4,12 @@ import { Link } from 'react-router-dom';
 
 import { ITxInfo } from '../../../api/transactions';
 import { shortenHash } from '../../../utils/helpers';
+import { mapSuccessIndicator } from '../../../utils/statusUtils';
 import { formatTimeout } from '../../../utils/timeUtils';
-import { parseTransactionOrder } from '../../../utils/txUtils';
+import {
+  parseTransactionOrder,
+  mapTransactionType,
+} from '../../../utils/txUtils';
 import { Table } from '../Table';
 
 export interface ITableElementTx {
@@ -21,17 +25,22 @@ export interface ITableElementTx {
 
 const mapTxInfoToTableElement = (tx: ITxInfo): ITableElementTx => {
   const parsedOrder = parseTransactionOrder(tx.Transaction?.TransactionOrder);
+  const partitionID = tx.PartitionID;
+
+  const typeName = mapTransactionType(
+    Number(partitionID),
+    Number(parsedOrder.transactionType),
+  );
+
   return {
     actualFee: tx.Transaction?.ServerMetadata?.ActualFee ?? 0,
     blockNumber: tx.BlockNumber,
     partitionID: tx.PartitionID,
     successIndicator: tx.Transaction?.ServerMetadata?.SuccessIndicator ?? 0,
     timeout: formatTimeout(parsedOrder.timeout),
-    transactionType: parsedOrder.transactionType.toString(),
+    transactionType: typeName,
     txRecordHash: tx.TxRecordHash,
-    unitID: tx.Transaction?.ServerMetadata?.TargetUnits
-      ? tx.Transaction.ServerMetadata.TargetUnits.join(', ')
-      : 'N/A',
+    unitID: tx.Transaction?.ServerMetadata?.TargetUnits?.join(', ') ?? 'N/A',
   };
 };
 
@@ -46,7 +55,16 @@ const baseTxColumns: Record<string, ColumnDef<ITableElementTx>> = {
   },
   successIndicator: {
     accessorKey: 'successIndicator',
-    header: 'Success Indicator',
+    cell: ({ getValue }) => {
+      const status = getValue<number>();
+      const { Icon } = mapSuccessIndicator(status);
+      return (
+        <div className="flex justify-end space-x-2">
+          <Icon />
+        </div>
+      );
+    },
+    header: 'Status',
   },
   timeout: {
     accessorKey: 'timeout',
@@ -54,7 +72,7 @@ const baseTxColumns: Record<string, ColumnDef<ITableElementTx>> = {
   },
   transactionType: {
     accessorKey: 'transactionType',
-    header: 'Tx Type',
+    header: 'Type',
   },
   txRecordHash: {
     accessorKey: 'txRecordHash',
