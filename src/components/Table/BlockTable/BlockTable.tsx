@@ -63,7 +63,7 @@ const baseBlockColumns: Record<string, ColumnDef<ITableElementBlock>> = {
   },
   timeAgo: {
     accessorKey: 'timeAgo',
-    header: 'Time Ago',
+    header: 'Time',
   },
   txCount: {
     accessorKey: 'txCount',

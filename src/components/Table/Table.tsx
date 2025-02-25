@@ -100,6 +100,11 @@ export function Table<TData extends RowData>({
   const tableInstance = useReactTable({
     columns,
     data: isLoading ? [] : data,
+    defaultColumn: {
+      maxSize: Number.MAX_SAFE_INTEGER,
+      minSize: 20,
+      size: 150,
+    },
     getCoreRowModel: getCoreRowModel(),
     manualPagination: manualPagination,
   });
@@ -141,7 +146,7 @@ export function Table<TData extends RowData>({
                       ? 'text-right'
                       : ''
                 }`}
-                style={{ width: cell.column.getSize() }}
+                style={{ width: `${cell.column.getSize()}px` }}
               >
                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
               </td>
@@ -170,6 +175,7 @@ export function Table<TData extends RowData>({
                         ? 'text-right'
                         : ''
                   }`}
+                  style={{ width: `${header.getSize()}px` }}
                 >
                   {flexRender(
                     header.column.columnDef.header,

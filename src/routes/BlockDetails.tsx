@@ -9,6 +9,7 @@ import {
 import { useBlockDetailsQuery } from '../hooks/useBlockDetails';
 import { parseCertificateValues } from '../utils/certificateUtils';
 import { shortenHash } from '../utils/helpers';
+import { getPartitionName } from '../utils/partitionUtils';
 
 export const BlockDetails: React.FC = () => {
   const { partitionID, blockNumber } = useParams<{
@@ -33,6 +34,7 @@ export const BlockDetails: React.FC = () => {
     { label: 'Block Hash:' },
     { label: 'Block:', value: blockNumber },
     { label: 'Previous Block Hash:' },
+    { label: 'Partition:' },
     { label: 'Proposer ID:' },
     { borderTop: true, label: 'Shard:' },
     { label: 'Summary Value:' },
@@ -47,6 +49,7 @@ export const BlockDetails: React.FC = () => {
     const blockDetails = data[blockKey];
     const {
       BlockNumber,
+      PartitionID,
       ProposerID,
       ShardID,
       PreviousBlockHash,
@@ -75,6 +78,11 @@ export const BlockDetails: React.FC = () => {
         />
       ),
       'Block:': BlockNumber,
+      'Partition:': (
+        <Link to={`/${partitionID}`} className="text-[#08e8de] hover:underline">
+          {getPartitionName(PartitionID)}
+        </Link>
+      ),
       'Previous Block Hash:': (
         <CopyToClipboard
           text={previousHash}

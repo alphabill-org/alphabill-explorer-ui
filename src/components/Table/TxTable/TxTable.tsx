@@ -65,6 +65,7 @@ const baseTxColumns: Record<string, ColumnDef<ITableElementTx>> = {
       );
     },
     header: 'Status',
+    size: 80,
   },
   timeout: {
     accessorKey: 'timeout',
@@ -79,7 +80,6 @@ const baseTxColumns: Record<string, ColumnDef<ITableElementTx>> = {
     cell: ({ getValue, row }) => {
       const txHash = getValue() as string;
       const partitionID = row.original.partitionID;
-
       return (
         <Link
           to={`/${partitionID}/transactions/${txHash}`}
