@@ -8,6 +8,7 @@ import {
 } from '../components/Details/DetailsContainer';
 import { useTxDetailsQuery } from '../hooks/useTxDetails';
 import { shortenHash } from '../utils/helpers';
+import { getPartitionName } from '../utils/partitionUtils';
 import { mapSuccessIndicator } from '../utils/statusUtils';
 import { parseTransactionOrder, mapTransactionType } from '../utils/txUtils';
 
@@ -36,11 +37,11 @@ export const TxDetails: React.FC = () => {
     },
     { label: 'Transaction Order:' },
     { label: 'Block Number:' },
-    { label: 'Partition ID:' },
+    { label: 'Partition:' },
     { label: 'Transaction Type:' },
     { label: 'Unit ID:' },
     { label: 'Timeout:' },
-    { label: 'Actual Fee:' },
+    { label: 'Fee:' },
     { label: 'Status:' },
   ];
 
@@ -79,7 +80,6 @@ export const TxDetails: React.FC = () => {
     );
 
     const valuesLookup: Record<string, React.ReactNode> = {
-      'Actual Fee:': ServerMetadata?.ActualFee ?? 'N/A',
       'Block Number:': (
         <Link
           to={`/${PartitionID}/blocks/${BlockNumber}`}
@@ -88,9 +88,10 @@ export const TxDetails: React.FC = () => {
           {BlockNumber}
         </Link>
       ),
-      'Partition ID:': (
+      'Fee:': ServerMetadata?.ActualFee ?? 'N/A',
+      'Partition:': (
         <Link to={`/${PartitionID}`} className="text-[#08e8de] hover:underline">
-          {PartitionID}
+          {getPartitionName(PartitionID)}
         </Link>
       ),
       'Status:': (

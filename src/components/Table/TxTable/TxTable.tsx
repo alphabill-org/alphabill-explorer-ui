@@ -47,7 +47,7 @@ const mapTxInfoToTableElement = (tx: ITxInfo): ITableElementTx => {
 const baseTxColumns: Record<string, ColumnDef<ITableElementTx>> = {
   actualFee: {
     accessorKey: 'actualFee',
-    header: 'Actual Fee',
+    header: 'Fee',
   },
   blockNumber: {
     accessorKey: 'blockNumber',

@@ -42,10 +42,8 @@ export const TablePagination: React.FC<ITablePaginationProps> = ({
   totalPages,
   onPageChange,
   isLoading,
-  dataLength,
-  pageSize,
 }): React.ReactElement | null => {
-  if (dataLength < pageSize) {
+  if (totalPages <= 1) {
     return null;
   }
 
