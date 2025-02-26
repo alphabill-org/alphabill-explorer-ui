@@ -69,7 +69,7 @@ const baseTxColumns: Record<string, ColumnDef<ITableElementTx>> = {
   },
   timeout: {
     accessorKey: 'timeout',
-    header: 'Timeout',
+    header: 'Time',
   },
   transactionType: {
     accessorKey: 'transactionType',

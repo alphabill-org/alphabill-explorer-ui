@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 
 import { CopyToClipboard } from '../components/Common/CopyToClipboard';
@@ -10,6 +10,7 @@ import { useTxDetailsQuery } from '../hooks/useTxDetails';
 import { shortenHash } from '../utils/helpers';
 import { getPartitionName } from '../utils/partitionUtils';
 import { mapSuccessIndicator } from '../utils/statusUtils';
+import { formatTimeout } from '../utils/timeUtils';
 import { parseTransactionOrder, mapTransactionType } from '../utils/txUtils';
 
 export const TxDetails: React.FC = () => {
@@ -28,26 +29,23 @@ export const TxDetails: React.FC = () => {
 
   const { data, isLoading, error } = useTxDetailsQuery(txHash);
 
-  const baseRowDefs: IDetailRowDef[] = [
-    {
-      label: 'Transaction Hash:',
-      value: (
-        <CopyToClipboard text={txHash} displayText={shortenHash(txHash)} />
-      ),
-    },
-    { label: 'Transaction Order:' },
-    { label: 'Block Number:' },
-    { label: 'Partition:' },
-    { label: 'Transaction Type:' },
-    { label: 'Unit ID:' },
-    { label: 'Timeout:' },
-    { label: 'Fee:' },
-    { label: 'Status:' },
-  ];
+  const rows = useMemo(() => {
+    const baseRows: IDetailRowDef[] = [
+      { key: 'txHash', label: 'Hash:' },
+      { key: 'txOrder', label: 'Order Hash:' },
+      { key: 'blockNumber', label: 'Block:' },
+      { key: 'partition', label: 'Partition:' },
+      { key: 'txType', label: 'Type:' },
+      { key: 'unitID', label: 'Units:' },
+      { key: 'timeout', label: 'Age:' },
+      { key: 'fee', label: 'Fee:' },
+      { key: 'status', label: 'Status:' },
+    ];
 
-  let loadedRowDefs: IDetailRowDef[] = baseRowDefs;
+    if (!data) {
+      return baseRows;
+    }
 
-  if (!isLoading && !error && data) {
     const {
       TxRecordHash,
       TxOrderHash,
@@ -80,7 +78,7 @@ export const TxDetails: React.FC = () => {
     );
 
     const valuesLookup: Record<string, React.ReactNode> = {
-      'Block Number:': (
+      blockNumber: (
         <Link
           to={`/${PartitionID}/blocks/${BlockNumber}`}
           className="text-[#08e8de] hover:underline"
@@ -88,50 +86,48 @@ export const TxDetails: React.FC = () => {
           {BlockNumber}
         </Link>
       ),
-      'Fee:': ServerMetadata?.ActualFee ?? 'N/A',
-      'Partition:': (
+      fee: ServerMetadata?.ActualFee ?? 'N/A',
+      partition: (
         <Link to={`/${PartitionID}`} className="text-[#08e8de] hover:underline">
           {getPartitionName(PartitionID)}
         </Link>
       ),
-      'Status:': (
+      status: (
         <div className="flex items-center space-x-2">
           <statusMapping.Icon />
           <span>{statusMapping.label}</span>
         </div>
       ),
-      'Timeout:': timeout,
-      'Transaction Hash:': (
+      timeout: formatTimeout(timeout),
+      txHash: (
         <CopyToClipboard
           text={TxRecordHash}
           displayText={shortenHash(TxRecordHash)}
         />
       ),
-      'Transaction Order:': (
+      txOrder: (
         <CopyToClipboard
           text={TxOrderHash}
           displayText={shortenHash(TxOrderHash) || 'N/A'}
         />
       ),
-      'Transaction Type:': txType,
-      'Unit ID:': unitID,
+      txType: txType,
+      unitID: unitID,
     };
 
-    loadedRowDefs = baseRowDefs.map((row) => ({
+    return baseRows.map((row) => ({
       ...row,
-      value: valuesLookup[row.label],
+      value: valuesLookup[row.key],
     }));
-  }
+  }, [data, partitionID]);
 
   return (
     <DetailsContainer
       label="Transaction"
       title={txHash}
-      rowDefs={loadedRowDefs}
+      rowDefs={rows}
       isLoading={isLoading}
       error={error ? error.message : undefined}
     />
   );
 };
-
-export default TxDetails;

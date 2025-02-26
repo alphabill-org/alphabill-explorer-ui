@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 
 import { CopyToClipboard } from '../components/Common/CopyToClipboard';
@@ -30,25 +30,25 @@ export const BlockDetails: React.FC = () => {
     partitionID,
   );
 
-  const baseRowDefs: IDetailRowDef[] = [
-    { label: 'Block Hash:' },
-    { label: 'Block:', value: blockNumber },
-    { label: 'Previous Block Hash:' },
-    { label: 'Partition:' },
-    { label: 'Proposer ID:' },
-    { borderTop: true, label: 'Shard:' },
-    { label: 'Summary Value:' },
-    { borderTop: true, label: 'Timestamp:' },
-    { label: 'Transactions:' },
-  ];
+  const rows = useMemo(() => {
+    const baseRows: IDetailRowDef[] = [
+      { key: 'blockHash', label: 'Block Hash:' },
+      { key: 'previousBlockHash', label: 'Previous Block Hash:' },
+      { key: 'partition', label: 'Partition:' },
+      { key: 'proposerID', label: 'Proposer ID:' },
+      { borderTop: true, key: 'shard', label: 'Shard:' },
+      { key: 'summaryValue', label: 'Summary Value:' },
+      { borderTop: true, key: 'time', label: 'Time:' },
+      { key: 'transactions', label: 'Transactions:' },
+    ];
 
-  let loadedRowDefs: IDetailRowDef[] = baseRowDefs;
+    if (!data || Object.keys(data).length === 0) {
+      return baseRows;
+    }
 
-  if (!isLoading && !error && data && Object.keys(data).length > 0) {
     const blockKey = Object.keys(data)[0];
     const blockDetails = data[blockKey];
     const {
-      BlockNumber,
       PartitionID,
       ProposerID,
       ShardID,
@@ -71,29 +71,30 @@ export const BlockDetails: React.FC = () => {
     }
 
     const valuesLookup: Record<string, React.ReactNode> = {
-      'Block Hash:': (
+      blockHash: (
         <CopyToClipboard
           text={blockHash}
           displayText={shortenHash(blockHash)}
         />
       ),
-      'Block:': BlockNumber,
-      'Partition:': (
+      partition: (
         <Link to={`/${partitionID}`} className="text-[#08e8de] hover:underline">
           {getPartitionName(PartitionID)}
         </Link>
       ),
-      'Previous Block Hash:': (
+      previousBlockHash: (
         <CopyToClipboard
           text={previousHash}
           displayText={shortenHash(previousHash)}
         />
       ),
-      'Proposer ID:': ProposerID,
-      'Shard:': ShardID,
-      'Summary Value:': summaryValue,
-      'Timestamp:': timeAgo,
-      'Transactions:':
+      proposerID: (
+        <CopyToClipboard text={ProposerID} displayText={ProposerID} />
+      ),
+      shard: ShardID,
+      summaryValue,
+      time: timeAgo,
+      transactions:
         TxHashes && TxHashes.length > 0 ? (
           <div className="flex flex-col space-y-1">
             {TxHashes.map((txHash) => (
@@ -111,21 +112,19 @@ export const BlockDetails: React.FC = () => {
         ),
     };
 
-    loadedRowDefs = baseRowDefs.map((row) => ({
+    return baseRows.map((row) => ({
       ...row,
-      value: valuesLookup[row.label],
+      value: valuesLookup[row.key],
     }));
-  }
+  }, [data, partitionID]);
 
   return (
     <DetailsContainer
       title={blockNumber}
       label="Block"
-      rowDefs={loadedRowDefs}
+      rowDefs={rows}
       isLoading={isLoading}
       error={error ? error.message : undefined}
     />
   );
 };
-
-export default BlockDetails;

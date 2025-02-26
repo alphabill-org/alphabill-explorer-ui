@@ -73,7 +73,7 @@ export const fetchTransactionByHash = async (
   const url = new URL(`${API_URL}/txs/${txHash}`);
   const response = await fetch(url.toString());
   if (!response.ok) {
-    throw new Error(`Error fetching transaction: ${response.statusText}`);
+    throw new Error(`Error fetching transaction ${response.statusText}`);
   }
 
   return response.json();
@@ -86,7 +86,7 @@ export const fetchTransactionsByUnit = async (
   const response = await fetch(url.toString());
   if (!response.ok) {
     throw new Error(
-      `Error fetching transactions for unit: ${response.statusText}`,
+      `Error fetching transactions for unit ${response.statusText}`,
     );
   }
 

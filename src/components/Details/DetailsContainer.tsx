@@ -1,6 +1,7 @@
 import React from 'react';
 
 export interface IDetailRowDef {
+  key: string;
   label: string;
   value?: React.ReactNode;
   borderTop?: boolean;
@@ -63,34 +64,39 @@ export const DetailsContainer: React.FC<IDetailsContainerProps> = ({
   isLoading,
   error,
 }) => {
+  const renderContent = (): React.ReactNode => {
+    if (error) {
+      return <p className="text-center">{error}</p>;
+    }
+
+    if (isLoading) {
+      return rowDefs.map((row) => (
+        <DetailRow
+          key={row.key}
+          label={row.label}
+          loading={true}
+          borderTop={row.borderTop}
+        />
+      ));
+    }
+    if (rowDefs.length === 0) {
+      return <p className="text-center">No details available.</p>;
+    }
+    return rowDefs.map((row) => (
+      <DetailRow
+        key={row.key}
+        label={row.label}
+        value={row.value}
+        borderTop={row.borderTop}
+      />
+    ));
+  };
+
   return (
     <Container>
       <div className="text-light-blue/80 mb-2">{label}</div>
       <h1 className="text-5xl font-bold break-all mb-8">{title}</h1>
-      {error ? (
-        <p className="text-center">Error loading details: {error}</p>
-      ) : isLoading ? (
-        rowDefs.map((row, idx) => (
-          <DetailRow
-            key={idx}
-            label={row.label}
-            value={row.value}
-            loading={row.value === undefined}
-            borderTop={row.borderTop}
-          />
-        ))
-      ) : rowDefs.length === 0 ? (
-        <p className="text-center">No details available.</p>
-      ) : (
-        rowDefs.map((row, idx) => (
-          <DetailRow
-            key={idx}
-            label={row.label}
-            value={row.value}
-            borderTop={row.borderTop}
-          />
-        ))
-      )}
+      {renderContent()}
     </Container>
   );
 };
