@@ -63,7 +63,7 @@ const baseBlockColumns: Record<string, ColumnDef<ITableElementBlock>> = {
         </Link>
       );
     },
-    header: 'Block Number',
+    header: 'Block',
   },
   proposerId: {
     accessorKey: 'proposerId',
@@ -79,7 +79,7 @@ const baseBlockColumns: Record<string, ColumnDef<ITableElementBlock>> = {
   },
   txCount: {
     accessorKey: 'txCount',
-    header: 'Transactions Count',
+    header: 'Transactions',
   },
 };
 
