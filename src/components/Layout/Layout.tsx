@@ -9,8 +9,8 @@ const Layout: React.FC = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      <main className="flex-grow relative overflow-hidden py-10">
-        <div className="container max-w-6xl mx-auto px-4">
+      <main className="flex-grow relative overflow-hidden py-4 md:py-10">
+        <div className="container max-w-6xl mx-auto px-4 md:px-8">
           <Outlet />
         </div>
         <AnimatedBackground />

@@ -21,7 +21,7 @@ export const TxDetails: React.FC = () => {
 
   if (!partitionID || !txHash) {
     return (
-      <div className="container mx-auto p-4">
+      <div className="container mx-auto">
         <p className="text-center">Missing partition ID or transaction hash</p>
       </div>
     );

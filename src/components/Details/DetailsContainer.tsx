@@ -7,15 +7,29 @@ export interface IDetailRowDef {
   borderTop?: boolean;
 }
 
+export interface IDetailsContainerProps {
+  title: React.ReactNode;
+  label?: string;
+  rowDefs: IDetailRowDef[];
+  isLoading?: boolean;
+  error?: string;
+}
+
 interface IContainerProps {
   children: React.ReactNode;
 }
+interface IDetailRowProps {
+  label: string;
+  value?: React.ReactNode;
+  loading?: boolean;
+  borderTop?: boolean;
+}
 
 const Container: React.FC<IContainerProps> = ({ children }) => (
-  <div className="container mx-auto p-4">
+  <div className="container mx-auto ">
     <section className="bg-black/50">
       <div
-        className="px-10 py-10 space-y-8 mx-auto"
+        className="p-4 md:p-10 space-y-8 mx-auto"
         style={{ minHeight: '400px' }}
       >
         {children}
@@ -23,13 +37,6 @@ const Container: React.FC<IContainerProps> = ({ children }) => (
     </section>
   </div>
 );
-
-interface IDetailRowProps {
-  label: string;
-  value?: React.ReactNode;
-  loading?: boolean;
-  borderTop?: boolean;
-}
 
 const DetailRow: React.FC<IDetailRowProps> = ({
   label,
@@ -48,14 +55,6 @@ const DetailRow: React.FC<IDetailRowProps> = ({
     </div>
   </div>
 );
-
-export interface IDetailsContainerProps {
-  title: React.ReactNode;
-  label?: string;
-  rowDefs: IDetailRowDef[];
-  isLoading?: boolean;
-  error?: string;
-}
 
 export const DetailsContainer: React.FC<IDetailsContainerProps> = ({
   title,

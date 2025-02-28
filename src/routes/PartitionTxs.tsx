@@ -10,7 +10,7 @@ export const PartitionTxs: React.FC = () => {
   const { data: transactions, isLoading, error } = useTxsQuery(partitionID!);
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto">
       <h1 className="text-3xl font-bold my-8">
         Transactions for Partition {partitionID}
       </h1>

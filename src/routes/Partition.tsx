@@ -109,7 +109,7 @@ export const Partition: React.FC = () => {
   const partitionName = getPartitionName(numericID);
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto">
       <h1 className="text-4xl font-bold text-center mt-8">
         {partitionName} Explorer
       </h1>

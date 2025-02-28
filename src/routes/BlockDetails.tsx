@@ -19,7 +19,7 @@ export const BlockDetails: React.FC = () => {
 
   if (!partitionID || !blockNumber) {
     return (
-      <div className="container mx-auto p-4">
+      <div className="container mx-auto">
         <p className="text-center">Missing partitionID or blockNumber</p>
       </div>
     );

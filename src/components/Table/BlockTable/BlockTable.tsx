@@ -16,6 +16,18 @@ export interface ITableElementBlock {
   partitionID: number;
 }
 
+interface IBlockTableProps {
+  data: IBlockInfo[];
+  compact?: boolean;
+  isLoading?: boolean;
+  error?: string;
+  manualPagination?: boolean;
+  pageSize?: number;
+  currentPage?: number;
+  totalPages?: number;
+  onPageChange?: (page: number) => void;
+}
+
 const mapBlockInfoToTableElement = (block: IBlockInfo): ITableElementBlock => {
   let timeAgo = 'N/A';
 
@@ -87,18 +99,6 @@ const getBlockColumns = (
         baseBlockColumns.proposerId,
         baseBlockColumns.timeAgo,
       ];
-
-interface IBlockTableProps {
-  data: IBlockInfo[];
-  compact?: boolean;
-  isLoading?: boolean;
-  error?: string;
-  manualPagination?: boolean;
-  pageSize?: number;
-  currentPage?: number;
-  totalPages?: number;
-  onPageChange?: (page: number) => void;
-}
 
 export const BlockTable: React.FC<IBlockTableProps> = ({
   data,

@@ -11,7 +11,7 @@ export const UnitTxs: React.FC = () => {
 
   if (!unitID) {
     return (
-      <div className="container mx-auto p-4">
+      <div className="container mx-auto">
         <p className="text-center">Missing Unit ID</p>
       </div>
     );
@@ -20,7 +20,7 @@ export const UnitTxs: React.FC = () => {
   const { data, isLoading, error } = useTxsByUnitQuery(unitID);
 
   return (
-    <div className="container mx-auto p-4 mt-8">
+    <div className="container mx-auto mt-8">
       <h1 className="text-4xl font-bold">Transactions for unit:</h1>
       <div className="text-4xl font-bold mt-2 mb-8">
         {' '}

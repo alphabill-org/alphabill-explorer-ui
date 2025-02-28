@@ -23,6 +23,18 @@ export interface ITableElementTx {
   partitionID: number;
 }
 
+interface ITxTableProps {
+  data: ITxInfo[];
+  compact?: boolean;
+  isLoading?: boolean;
+  error?: string;
+  pageSize?: number;
+  manualPagination?: boolean;
+  currentPage?: number;
+  totalPages?: number;
+  onPageChange?: (page: number) => void;
+}
+
 const mapTxInfoToTableElement = (tx: ITxInfo): ITableElementTx => {
   const parsedOrder = parseTransactionOrder(tx.Transaction?.TransactionOrder);
   const partitionID = tx.PartitionID;
@@ -112,18 +124,6 @@ const getTxColumns = (isCompact: boolean): ColumnDef<ITableElementTx>[] =>
         baseTxColumns.actualFee,
         baseTxColumns.successIndicator,
       ];
-
-interface ITxTableProps {
-  data: ITxInfo[];
-  compact?: boolean;
-  isLoading?: boolean;
-  error?: string;
-  pageSize?: number;
-  manualPagination?: boolean;
-  currentPage?: number;
-  totalPages?: number;
-  onPageChange?: (page: number) => void;
-}
 
 export const TxTable: React.FC<ITxTableProps> = ({
   data,
