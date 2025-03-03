@@ -3,7 +3,7 @@ import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { IBlockInfo } from '../api/blocks';
 import { ITxInfo } from '../api/transactions';
 
-const API_URL = import.meta.env.VITE_MONEY_BACKEND_URL;
+const API_URL = import.meta.env.VITE_BACKEND_URL;
 
 export interface ISearchResponse {
   blocks: Record<string, IBlockInfo>;

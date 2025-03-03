@@ -1,6 +1,6 @@
 import { type IBlockInfo } from './blocks';
 import { type ITxInfo } from './transactions';
-const API_URL = import.meta.env.VITE_MONEY_BACKEND_URL;
+const API_URL = import.meta.env.VITE_BACKEND_URL;
 
 export interface ISearchResponse {
   blocks: Record<string, IBlockInfo>;
