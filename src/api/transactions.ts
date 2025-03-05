@@ -1,4 +1,4 @@
-const API_URL = import.meta.env.VITE_BACKEND_URL;
+const API_URL = import.meta.env.BACKEND_URL;
 
 export interface ITxInfo {
   TxRecordHash: string;
