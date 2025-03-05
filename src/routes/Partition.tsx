@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Navigate } from 'react-router-dom';
+import { useParams, Navigate, Link } from 'react-router-dom';
 
 import { BlockTable } from '../components/Table/BlockTable/BlockTable';
 import { TxTable } from '../components/Table/TxTable/TxTable';
@@ -115,7 +115,14 @@ export const Partition: React.FC = () => {
       </h1>
 
       <section className="mt-8">
-        <h2 className="text-2xl font-semibold mb-4">Blocks</h2>
+        <h2 className="text-2xl font-semibold mb-4">
+          <Link
+            to={`/${partitionID}/blocks`}
+            className="text-[#08e8de] hover:underline"
+          >
+            Blocks
+          </Link>
+        </h2>
         <BlockTable
           data={blocks || []}
           isLoading={blocksLoading}
@@ -129,7 +136,14 @@ export const Partition: React.FC = () => {
       </section>
 
       <section className="mt-8">
-        <h2 className="text-2xl font-semibold mb-4">Transactions</h2>
+        <h2 className="text-2xl font-semibold mb-4">
+          <Link
+            to={`/${partitionID}/transactions`}
+            className="text-[#08e8de] hover:underline"
+          >
+            Transactions
+          </Link>
+        </h2>
         <TxTable
           data={txData?.data || []}
           isLoading={txLoading}
