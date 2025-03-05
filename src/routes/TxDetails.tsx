@@ -10,7 +10,6 @@ import { useTxDetailsQuery } from '../hooks/useTxDetails';
 import { shortenHash } from '../utils/helpers';
 import { getPartitionName } from '../utils/partitionUtils';
 import { mapSuccessIndicator } from '../utils/statusUtils';
-import { formatTimeout } from '../utils/timeUtils';
 import { parseTransactionOrder, mapTransactionType } from '../utils/txUtils';
 
 export const TxDetails: React.FC = () => {
@@ -37,7 +36,7 @@ export const TxDetails: React.FC = () => {
       { key: 'partition', label: 'Partition:' },
       { key: 'txType', label: 'Type:' },
       { key: 'unitID', label: 'Units:' },
-      { key: 'timeout', label: 'Age:' },
+      { key: 'timeout', label: 'Timeout:' },
       { key: 'fee', label: 'Fee:' },
       { key: 'status', label: 'Status:' },
     ];
@@ -98,7 +97,7 @@ export const TxDetails: React.FC = () => {
           <span>{statusMapping.label}</span>
         </div>
       ),
-      timeout: formatTimeout(timeout),
+      timeout: timeout,
       txHash: (
         <CopyToClipboard
           text={TxRecordHash}

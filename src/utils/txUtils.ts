@@ -16,7 +16,7 @@ export const parseTransactionOrder = (
   networkID: string | number;
   partitionID: string | number;
   stateLock: string;
-  timeout: string | number;
+  timeout: number;
   transactionType: string | number;
   unitID: string;
   version: string;
@@ -29,7 +29,7 @@ export const parseTransactionOrder = (
       networkID: 'N/A',
       partitionID: 'N/A',
       stateLock: 'N/A',
-      timeout: 'N/A',
+      timeout: 0,
       transactionType: 'N/A',
       unitID: 'N/A',
       version: 'N/A',
@@ -68,8 +68,7 @@ export const parseTransactionOrder = (
       networkID: transactionOrder.payload.networkIdentifier,
       partitionID: transactionOrder.payload.partitionIdentifier,
       stateLock: transactionOrder.payload.stateLock?.toString() ?? 'N/A',
-      timeout:
-        transactionOrder.payload.clientMetadata.timeout.toString() ?? 'N/A',
+      timeout: Number(transactionOrder.payload.clientMetadata.timeout) || 0,
       transactionType: transactionOrder.payload.type,
       unitID: transactionOrder.payload.unitId.toString(),
       version: transactionOrder.version.toString(),
@@ -83,7 +82,7 @@ export const parseTransactionOrder = (
       networkID: 'Error',
       partitionID: 'Error',
       stateLock: 'Error',
-      timeout: 'Error',
+      timeout: 0,
       transactionType: 'Error',
       unitID: 'Error',
       version: 'Error',

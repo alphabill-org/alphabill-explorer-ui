@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import { ITxInfo } from '../../../api/transactions';
 import { shortenHash } from '../../../utils/helpers';
 import { mapSuccessIndicator } from '../../../utils/statusUtils';
-import { formatTimeout } from '../../../utils/timeUtils';
 import {
   parseTransactionOrder,
   mapTransactionType,
@@ -16,7 +15,7 @@ export interface ITableElementTx {
   txRecordHash: string;
   transactionType: string;
   blockNumber: number;
-  timeout: string;
+  timeout: number;
   actualFee: number;
   successIndicator: number;
   unitID: string;
@@ -49,7 +48,7 @@ const mapTxInfoToTableElement = (tx: ITxInfo): ITableElementTx => {
     blockNumber: tx.BlockNumber,
     partitionID: tx.PartitionID,
     successIndicator: tx.Transaction?.ServerMetadata?.SuccessIndicator ?? 0,
-    timeout: formatTimeout(parsedOrder.timeout),
+    timeout: parsedOrder.timeout,
     transactionType: typeName,
     txRecordHash: tx.TxRecordHash,
     unitID: tx.Transaction?.ServerMetadata?.TargetUnits?.join(', ') ?? 'N/A',
@@ -81,7 +80,7 @@ const baseTxColumns: Record<string, ColumnDef<ITableElementTx>> = {
   },
   timeout: {
     accessorKey: 'timeout',
-    header: 'Time',
+    header: 'Timeout',
   },
   transactionType: {
     accessorKey: 'transactionType',
