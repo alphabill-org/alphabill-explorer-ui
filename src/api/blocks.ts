@@ -1,4 +1,4 @@
-const API_URL = import.meta.env.BACKEND_URL;
+const BACKEND_URL = import.meta.env.BACKEND_URL;
 
 export interface IBlockInfo {
   BlockNumber: number;
@@ -15,7 +15,9 @@ export const fetchBlocks = async (
   partitionID?: string,
 ): Promise<IBlockInfo[]> => {
   const pid = partitionID || '1';
-  const response = await fetch(`${API_URL}/partitions/${pid}/blocks?limit=10`);
+  const response = await fetch(
+    `${BACKEND_URL}/partitions/${pid}/blocks?limit=10`,
+  );
   if (!response.ok) {
     throw new Error('Error fetching blocks');
   }
@@ -28,7 +30,7 @@ export const fetchPaginatedBlocks = async (
   limit: number,
 ): Promise<IBlockInfo[]> => {
   const pid = partitionID;
-  const url = new URL(`${API_URL}/partitions/${pid}/blocks`);
+  const url = new URL(`${BACKEND_URL}/partitions/${pid}/blocks`);
   url.searchParams.set('limit', String(limit));
   if (startBlock !== undefined) {
     url.searchParams.set('startBlock', String(startBlock));
@@ -46,7 +48,7 @@ export const fetchBlockDetails = async (
   blockNumber: string,
   partitionID: string,
 ): Promise<IBlockDetailsResponse> => {
-  const url = new URL(`${API_URL}/blocks/${blockNumber}`);
+  const url = new URL(`${BACKEND_URL}/blocks/${blockNumber}`);
   url.searchParams.set('partitionID', partitionID);
   const response = await fetch(url.toString());
   if (!response.ok) {

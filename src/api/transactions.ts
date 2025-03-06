@@ -1,4 +1,4 @@
-const API_URL = import.meta.env.BACKEND_URL;
+const BACKEND_URL = import.meta.env.BACKEND_URL;
 
 export interface ITxInfo {
   TxRecordHash: string;
@@ -21,7 +21,7 @@ export const fetchTransactions = async (
   partitionID?: string,
 ): Promise<ITxInfo[]> => {
   const pid = partitionID || '1';
-  const response = await fetch(`${API_URL}/partitions/${pid}/txs?limit=10`);
+  const response = await fetch(`${BACKEND_URL}/partitions/${pid}/txs?limit=10`);
   if (!response.ok) {
     throw new Error('Error fetching transactions');
   }
@@ -34,7 +34,7 @@ const parseHeader = (header: string): string | null => {
   if (match) {
     const urlStr = match[1];
     try {
-      const url = new URL(urlStr, API_URL);
+      const url = new URL(urlStr, BACKEND_URL);
       return url.searchParams.get('offsetKey');
     } catch (e) {
       console.error('Error constructing URL from Link header', e);
@@ -51,7 +51,7 @@ export const fetchPaginatedTransactions = async (
   limit: number,
 ): Promise<{ data: ITxInfo[]; previousID: string | null }> => {
   const pid = partitionID;
-  const url = new URL(`${API_URL}/partitions/${pid}/txs`);
+  const url = new URL(`${BACKEND_URL}/partitions/${pid}/txs`);
   url.searchParams.set('limit', String(limit));
   if (startID) {
     url.searchParams.set('startID', startID);
@@ -70,7 +70,7 @@ export const fetchPaginatedTransactions = async (
 export const fetchTransactionByHash = async (
   txHash: string,
 ): Promise<ITxInfo> => {
-  const url = new URL(`${API_URL}/txs/${txHash}`);
+  const url = new URL(`${BACKEND_URL}/txs/${txHash}`);
   const response = await fetch(url.toString());
   if (!response.ok) {
     throw new Error(`Error fetching transaction ${response.statusText}`);
@@ -82,7 +82,7 @@ export const fetchTransactionByHash = async (
 export const fetchTransactionsByUnit = async (
   unitID: string,
 ): Promise<ITxInfo[]> => {
-  const url = new URL(`${API_URL}/units/${unitID}/txs`);
+  const url = new URL(`${BACKEND_URL}/units/${unitID}/txs`);
   const response = await fetch(url.toString());
   if (!response.ok) {
     throw new Error(

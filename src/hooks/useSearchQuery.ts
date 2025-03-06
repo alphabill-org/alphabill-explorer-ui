@@ -3,7 +3,7 @@ import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { IBlockInfo } from '../api/blocks';
 import { ITxInfo } from '../api/transactions';
 
-const API_URL = import.meta.env.BACKEND_URL;
+const BACKEND_URL = import.meta.env.BACKEND_URL;
 
 export interface ISearchResponse {
   blocks: Record<string, IBlockInfo>;
@@ -16,7 +16,7 @@ interface IServerSearchResponse {
 }
 
 async function fetchSearchResults(q: string): Promise<ISearchResponse> {
-  const url = new URL(`${API_URL}/search`);
+  const url = new URL(`${BACKEND_URL}/search`);
   url.searchParams.set('q', q);
 
   const response = await fetch(url.toString());
