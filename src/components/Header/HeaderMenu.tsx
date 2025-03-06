@@ -18,6 +18,14 @@ export const HeaderMenu: React.FC = () => {
 
   return (
     <nav className="flex space-x-4">
+      <Link
+        key="home"
+        to="/"
+        className="text-white hover:text-[var(--color-secondary)]"
+      >
+        Home
+      </Link>
+
       {partitionIDs.map((id) => {
         const numericID = parseInt(id, 10);
         const partitionName = getPartitionName(numericID);
