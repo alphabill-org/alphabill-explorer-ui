@@ -1,3 +1,4 @@
+import importMetaEnv from '@import-meta-env/unplugin';
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
@@ -12,7 +13,12 @@ export default defineConfig({
   define: {
     global: 'globalThis',
   },
-  plugins: [react(), svgr(), tailwindcss()],
+  plugins: [
+    react(),
+    svgr(),
+    tailwindcss(),
+    importMetaEnv.vite({ example: '.env.example.public' }),
+  ],
   preview: {
     port: 3001,
   },

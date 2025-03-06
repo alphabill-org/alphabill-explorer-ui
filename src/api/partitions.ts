@@ -1,4 +1,4 @@
-const API_URL = import.meta.env.VITE_BACKEND_URL;
+const BACKEND_URL = import.meta.env.BACKEND_URL;
 
 export interface ILatestBlock {
   PartitionID: number;
@@ -15,7 +15,7 @@ export interface ILatestBlocksResponse {
 }
 
 export const fetchLatestBlocks = async (): Promise<ILatestBlocksResponse> => {
-  const response = await fetch(`${API_URL}/blocks/latest`);
+  const response = await fetch(`${BACKEND_URL}/blocks/latest`);
   if (!response.ok) {
     throw new Error('Error fetching latest blocks');
   }
