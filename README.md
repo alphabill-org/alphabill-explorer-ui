@@ -44,6 +44,22 @@ npm run build
 npm run preview
 ```
 
+## Deployment
+
+1. **Build the Docker image using the provided Dockerfile**
+
+```sh
+docker build -t alphabill-explorer-ui .
+```
+
+2. **Run the Docker container exposing port 80 to access the application**
+
+```sh
+docker run -p 8080:80 -e BACKEND_URL="<backend-api-url>" alphabill-explorer-ui
+```
+
+`BACKEND_URL` environment variable is injected into the container at runtime, allowing dynamic configuration of the backend API endpoint without needing to rebuild the Docker image.
+
 ## Linting
 
 This project uses **ESLint** for code quality and formatting. Run the following commands to lint the code:
