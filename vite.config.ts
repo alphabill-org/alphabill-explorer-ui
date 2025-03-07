@@ -5,7 +5,7 @@ import { defineConfig } from 'vite';
 import svgr from 'vite-plugin-svgr';
 
 // https://vitejs.dev/config/
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   build: {
     chunkSizeWarningLimit: 2000,
     outDir: 'build',
@@ -13,11 +13,14 @@ export default defineConfig({
   define: {
     global: 'globalThis',
   },
+  envPrefix: 'BACKEND_',
   plugins: [
     react(),
     svgr(),
     tailwindcss(),
-    importMetaEnv.vite({ example: '.env.example.public' }),
+    ...(mode === 'production'
+      ? [importMetaEnv.vite({ example: '.env.example.public' })]
+      : []),
   ],
   preview: {
     port: 3001,
@@ -26,4 +29,4 @@ export default defineConfig({
     open: true,
     port: 3000,
   },
-});
+}));

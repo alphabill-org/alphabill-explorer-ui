@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --mode devnet",
+    "dev:localhost": "vite --mode localhost",
     "build": "tsc -b && vite build",
     "lint": "eslint \"src/**/*.{ts,tsx}\"",
     "lint:fix": "eslint \"src/**/*.{ts,tsx}\" --fix",
