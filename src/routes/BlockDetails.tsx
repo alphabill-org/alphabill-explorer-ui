@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 
 import { CopyToClipboard } from '../components/Common/CopyToClipboard';
@@ -16,6 +16,8 @@ export const BlockDetails: React.FC = () => {
     partitionID: string;
     blockNumber: string;
   }>();
+
+  const [showAllTransactions, setShowAllTransactions] = useState(false);
 
   if (!partitionID || !blockNumber) {
     return (
@@ -96,16 +98,29 @@ export const BlockDetails: React.FC = () => {
       time: timeAgo,
       transactions:
         TxHashes && TxHashes.length > 0 ? (
-          <div className="flex flex-col space-y-1">
-            {TxHashes.map((txHash) => (
-              <Link
-                key={txHash}
-                to={`/${partitionID}/transactions/${txHash}`}
-                className="text-[#08e8de] hover:underline"
+          <div className="flex flex-col">
+            {(showAllTransactions ? TxHashes : TxHashes.slice(0, 3)).map(
+              (txHash) => (
+                <Link
+                  key={txHash}
+                  to={`/${partitionID}/transactions/${txHash}`}
+                  className="text-[#08e8de] hover:underline"
+                >
+                  {txHash}
+                </Link>
+              ),
+            )}
+
+            {TxHashes.length > 3 && (
+              <button
+                onClick={() => setShowAllTransactions(!showAllTransactions)}
+                className="mt-4 text-sm button w-fit"
               >
-                {txHash}
-              </Link>
-            ))}
+                {showAllTransactions
+                  ? 'See less'
+                  : `See all (${TxHashes.length})`}
+              </button>
+            )}
           </div>
         ) : (
           'N/A'
@@ -116,7 +131,7 @@ export const BlockDetails: React.FC = () => {
       ...row,
       value: valuesLookup[row.key],
     }));
-  }, [data, partitionID]);
+  }, [data, partitionID, showAllTransactions]);
 
   return (
     <DetailsContainer
