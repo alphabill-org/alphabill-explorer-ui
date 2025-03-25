@@ -3,12 +3,13 @@ import { useParams } from 'react-router-dom';
 
 import { TxTable } from '../components/Table/TxTable/TxTable';
 import { usePaginatedTxsQuery } from '../hooks/usePaginatedTx';
-import { getPartitionName } from '../utils/partitionUtils';
+import { usePartitionName } from '../hooks/usePartitionName';
 
 export const PartitionTxs: React.FC = () => {
   const { partitionID } = useParams<{ partitionID: string }>();
-
   const pageSize = 10;
+
+  const { partitionName } = usePartitionName(partitionID);
 
   const [txCursor, setTxCursor] = useState<string | undefined>(undefined);
   const [txHistory, setTxHistory] = useState<string[]>([]);
@@ -43,16 +44,12 @@ export const PartitionTxs: React.FC = () => {
     setTxHistory([]);
   }, [partitionID]);
 
-  const partitionName = partitionID
-    ? getPartitionName(parseInt(partitionID, 10))
-    : 'Unknown Partition';
-
   return (
     <div className="container mx-auto">
       <h1 className="text-3xl font-bold mb-8">
         {partitionName} Partition Transactions
       </h1>
-      {txError && <p className="text-red-500">Error loading transactions</p>}
+
       <TxTable
         data={txData?.data || []}
         isLoading={txLoading}

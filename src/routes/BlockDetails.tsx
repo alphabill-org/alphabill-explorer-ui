@@ -52,6 +52,7 @@ export const BlockDetails: React.FC = () => {
     const blockDetails = data[blockKey];
     const {
       PartitionID,
+      PartitionTypeID,
       ProposerID,
       ShardID,
       PreviousBlockHash,
@@ -80,8 +81,8 @@ export const BlockDetails: React.FC = () => {
         />
       ),
       partition: (
-        <Link to={`/${partitionID}`} className="text-[#08e8de] hover:underline">
-          {getPartitionName(PartitionID)}
+        <Link to={`/${PartitionID}`} className="text-[#08e8de] hover:underline">
+          {getPartitionName(PartitionTypeID)}{' '}
         </Link>
       ),
       previousBlockHash: (

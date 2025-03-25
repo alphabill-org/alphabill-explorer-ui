@@ -1,25 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
+import { Switch } from '../components/Switch/Switch';
 import { BlockTable } from '../components/Table/BlockTable/BlockTable';
 import { usePaginatedBlocksQuery } from '../hooks/usePaginatedBlock';
-import { getPartitionName } from '../utils/partitionUtils';
+import { usePartitionName } from '../hooks/usePartitionName';
 
 export const PartitionBlocks: React.FC = () => {
   const { partitionID } = useParams<{ partitionID: string }>();
-
   const pageSize = 10;
 
   const [blocksCursor, setBlocksCursor] = useState<number | undefined>(
     undefined,
   );
   const [blocksHistory, setBlocksHistory] = useState<number[]>([]);
+  const [includeEmpty, setIncludeEmpty] = useState(true);
+
+  const { partitionName } = usePartitionName(partitionID);
 
   const {
     data: blocks,
     isLoading: blocksLoading,
     error: blocksError,
-  } = usePaginatedBlocksQuery(partitionID || '', blocksCursor, pageSize);
+  } = usePaginatedBlocksQuery(
+    partitionID ?? '',
+    blocksCursor,
+    pageSize,
+    includeEmpty,
+  );
 
   const currentBlocksPage = blocksHistory.length + 1;
   const totalBlocksPages =
@@ -49,15 +57,18 @@ export const PartitionBlocks: React.FC = () => {
     setBlocksHistory([]);
   }, [partitionID]);
 
-  const partitionName = partitionID
-    ? getPartitionName(parseInt(partitionID, 10))
-    : 'Unknown Partition';
-
   return (
     <div className="container mx-auto">
-      <h1 className="text-3xl font-bold mb-8">
+      <h1 className="text-3xl font-bold mb-4">
         {partitionName} Partition Blocks
       </h1>
+
+      <Switch
+        label="Include Empty Blocks"
+        checked={includeEmpty}
+        onChange={setIncludeEmpty}
+      />
+
       <BlockTable
         data={blocks || []}
         isLoading={blocksLoading}

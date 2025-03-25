@@ -28,6 +28,7 @@ export const fetchPaginatedBlocks = async (
   partitionID: string,
   startBlock: number | undefined,
   limit: number,
+  includeEmpty: boolean = true,
 ): Promise<IBlockInfo[]> => {
   const pid = partitionID;
   const url = new URL(`${BACKEND_URL}/partitions/${pid}/blocks`);
@@ -35,6 +36,8 @@ export const fetchPaginatedBlocks = async (
   if (startBlock !== undefined) {
     url.searchParams.set('startBlock', String(startBlock));
   }
+  url.searchParams.set('includeEmpty', String(includeEmpty));
+
   const response = await fetch(url.toString());
   if (!response.ok) {
     throw new Error('Error fetching blocks');
