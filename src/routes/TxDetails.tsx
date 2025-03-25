@@ -6,6 +6,7 @@ import {
   DetailsContainer,
   IDetailRowDef,
 } from '../components/Details/DetailsContainer';
+import { useBlockDetailsQuery } from '../hooks/useBlockDetails';
 import { useTxDetailsQuery } from '../hooks/useTxDetails';
 import { shortenHash } from '../utils/helpers';
 import { getPartitionName } from '../utils/partitionUtils';
@@ -26,7 +27,28 @@ export const TxDetails: React.FC = () => {
     );
   }
 
-  const { data, isLoading, error } = useTxDetailsQuery(txHash);
+  const {
+    data: txData,
+    isLoading: txLoading,
+    error: txError,
+  } = useTxDetailsQuery(txHash);
+
+  const blockNumber = txData?.BlockNumber?.toString();
+
+  const {
+    data: blockData,
+    isLoading: blockLoading,
+    error: blockError,
+  } = useBlockDetailsQuery(blockNumber || '', partitionID, {
+    enabled: Boolean(blockNumber),
+  });
+
+  const blockInfoArray = blockData ? Object.values(blockData) : [];
+  const blockInfo = blockInfoArray[0];
+  const partitionTypeID = blockInfo?.PartitionTypeID;
+  const partitionFriendlyName = partitionTypeID
+    ? getPartitionName(partitionTypeID)
+    : 'Unknown Partition';
 
   const rows = useMemo(() => {
     const baseRows: IDetailRowDef[] = [
@@ -41,7 +63,7 @@ export const TxDetails: React.FC = () => {
       { key: 'status', label: 'Status:' },
     ];
 
-    if (!data) {
+    if (!txData) {
       return baseRows;
     }
 
@@ -51,11 +73,10 @@ export const TxDetails: React.FC = () => {
       BlockNumber,
       PartitionID,
       Transaction: { ServerMetadata, TransactionOrder },
-    } = data;
+    } = txData;
 
     const { transactionType: rawType, timeout } =
       parseTransactionOrder(TransactionOrder);
-
     const numericType = Number(rawType);
     const txType = mapTransactionType(PartitionID, numericType);
 
@@ -88,7 +109,7 @@ export const TxDetails: React.FC = () => {
       fee: ServerMetadata?.ActualFee ?? 'N/A',
       partition: (
         <Link to={`/${PartitionID}`} className="text-[#08e8de] hover:underline">
-          {getPartitionName(PartitionID)}
+          {partitionFriendlyName}
         </Link>
       ),
       status: (
@@ -118,15 +139,18 @@ export const TxDetails: React.FC = () => {
       ...row,
       value: valuesLookup[row.key],
     }));
-  }, [data, partitionID]);
+  }, [txData, partitionFriendlyName, partitionID]);
+
+  const loading = txLoading || blockLoading;
+  const combinedError = txError || blockError;
 
   return (
     <DetailsContainer
       label="Transaction"
       title={txHash}
       rowDefs={rows}
-      isLoading={isLoading}
-      error={error ? error.message : undefined}
+      isLoading={loading}
+      error={combinedError ? combinedError.message : undefined}
     />
   );
 };

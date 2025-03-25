@@ -14,7 +14,7 @@ export const HeaderMenu: React.FC = () => {
   if (isLoading) return <div>Loading partitions...</div>;
   if (error) return <div>Error loading partitions</div>;
 
-  const partitionIDs = data ? Object.keys(data) : [];
+  const partitions = data ? Object.values(data) : [];
 
   return (
     <nav className="flex space-x-4">
@@ -26,14 +26,15 @@ export const HeaderMenu: React.FC = () => {
         Home
       </Link>
 
-      {partitionIDs.map((id) => {
-        const numericID = parseInt(id, 10);
-        const partitionName = getPartitionName(numericID);
+      {partitions.map((partition, index) => {
+        const numericPartitionID = partition.PartitionID;
+        const numericPartitionTypeID = partition.PartitionTypeID;
+        const partitionName = getPartitionName(numericPartitionTypeID);
 
         return (
           <Link
-            key={id}
-            to={`/${id}`}
+            key={index}
+            to={`/${numericPartitionID}`}
             className="text-white hover:text-[var(--color-secondary)]"
           >
             {partitionName}

@@ -76,7 +76,7 @@ export const Search: React.FC = () => {
                       Block #{block.BlockNumber} (
                       {((): string => {
                         const partitionName = getPartitionName(
-                          block.PartitionID,
+                          block.PartitionTypeID,
                         );
 
                         return partitionName.startsWith('Partition')
