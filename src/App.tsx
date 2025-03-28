@@ -2,6 +2,7 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 import Layout from './components/Layout/Layout';
+import { PartitionProvider } from './contexts/PartitionContext';
 import { BlockDetails } from './routes/BlockDetails';
 import { Home } from './routes/Home';
 import { Page404 } from './routes/Page404';
@@ -13,26 +14,28 @@ import { UnitTxs } from './routes/UnitTxs';
 
 const App: React.FC = () => {
   return (
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<Home />} />
-        <Route path=":partitionID" element={<Partition />} />
-        <Route path=":partitionID/transactions" element={<PartitionTxs />} />
-        <Route
-          path=":partitionID/transactions/:txHash"
-          element={<TxDetails />}
-        />
-        <Route
-          path=":partitionID/blocks/:blockNumber"
-          element={<BlockDetails />}
-        />
-        <Route path=":partitionID/blocks" element={<PartitionBlocks />} />
-        <Route path=":partitionID/units/:unitID" element={<UnitTxs />} />
-        <Route path="404" element={<Page404 />} />
+    <PartitionProvider>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path=":partitionID" element={<Partition />} />
+          <Route path=":partitionID/transactions" element={<PartitionTxs />} />
+          <Route
+            path=":partitionID/transactions/:txHash"
+            element={<TxDetails />}
+          />
+          <Route
+            path=":partitionID/blocks/:blockNumber"
+            element={<BlockDetails />}
+          />
+          <Route path=":partitionID/blocks" element={<PartitionBlocks />} />
+          <Route path=":partitionID/units/:unitID" element={<UnitTxs />} />
+          <Route path="404" element={<Page404 />} />
+          <Route path="*" element={<Page404 />} />
+        </Route>
         <Route path="*" element={<Page404 />} />
-      </Route>
-      <Route path="*" element={<Page404 />} />
-    </Routes>
+      </Routes>
+    </PartitionProvider>
   );
 };
 
