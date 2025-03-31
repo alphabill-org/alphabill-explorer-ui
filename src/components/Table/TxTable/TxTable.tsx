@@ -3,6 +3,10 @@ import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 
 import { ITxInfo } from '../../../api/transactions';
+import {
+  usePartitionData,
+  getPartitionTypeId,
+} from '../../../contexts/PartitionContext';
 import { shortenHash } from '../../../utils/helpers';
 import { mapSuccessIndicator } from '../../../utils/statusUtils';
 import {
@@ -33,27 +37,6 @@ interface ITxTableProps {
   totalPages?: number;
   onPageChange?: (page: number) => void;
 }
-
-const mapTxInfoToTableElement = (tx: ITxInfo): ITableElementTx => {
-  const parsedOrder = parseTransactionOrder(tx.Transaction?.TransactionOrder);
-  const partitionID = tx.PartitionID;
-
-  const typeName = mapTransactionType(
-    Number(partitionID),
-    Number(parsedOrder.transactionType),
-  );
-
-  return {
-    actualFee: tx.Transaction?.ServerMetadata?.ActualFee ?? 0,
-    blockNumber: tx.BlockNumber,
-    partitionID: tx.PartitionID,
-    successIndicator: tx.Transaction?.ServerMetadata?.SuccessIndicator ?? 0,
-    timeout: parsedOrder.timeout,
-    transactionType: typeName,
-    txRecordHash: tx.TxRecordHash,
-    unitID: tx.Transaction?.ServerMetadata?.TargetUnits?.join(', ') ?? 'N/A',
-  };
-};
 
 const baseTxColumns: Record<string, ColumnDef<ITableElementTx>> = {
   actualFee: {
@@ -127,16 +110,47 @@ const getTxColumns = (isCompact: boolean): ColumnDef<ITableElementTx>[] =>
 export const TxTable: React.FC<ITxTableProps> = ({
   data,
   compact = false,
-  isLoading,
+  isLoading: isLoadingProp,
   error,
   pageSize,
   manualPagination,
   currentPage,
   totalPages,
   onPageChange,
-}) => {
-  const tableData = useMemo(() => data.map(mapTxInfoToTableElement), [data]);
+}): React.ReactElement => {
+  const { partitionsData, isLoading: isPartitionsLoading } = usePartitionData();
+
+  const mapTxInfoToTableElement = (tx: ITxInfo): ITableElementTx => {
+    const parsedOrder = parseTransactionOrder(tx.Transaction?.TransactionOrder);
+    const partitionID = tx.PartitionID;
+
+    const partitionTypeID = getPartitionTypeId(partitionsData, partitionID);
+
+    const typeName = mapTransactionType(
+      partitionTypeID,
+      Number(parsedOrder.transactionType),
+    );
+
+    return {
+      actualFee: tx.Transaction?.ServerMetadata?.ActualFee ?? 0,
+      blockNumber: tx.BlockNumber,
+      partitionID: tx.PartitionID,
+      successIndicator: tx.Transaction?.ServerMetadata?.SuccessIndicator ?? 0,
+      timeout: parsedOrder.timeout,
+      transactionType: typeName,
+      txRecordHash: tx.TxRecordHash,
+      unitID: tx.Transaction?.ServerMetadata?.TargetUnits?.join(', ') ?? 'N/A',
+    };
+  };
+
+  const tableData = useMemo(
+    () => data.map(mapTxInfoToTableElement),
+    [data, partitionsData],
+  );
+
   const columns = useMemo(() => getTxColumns(compact), [compact]);
+
+  const isLoading = isLoadingProp || isPartitionsLoading;
 
   return (
     <Table<ITableElementTx>

@@ -110,10 +110,10 @@ function tryEnumLookup(
 }
 
 export function mapTransactionType(
-  partitionID: number,
+  partitionTypeID: number | undefined,
   txType: number,
 ): string {
-  switch (partitionID) {
+  switch (partitionTypeID) {
     case PartitionIdentifier.MONEY:
       return tryEnumLookup(
         txType,
@@ -123,12 +123,12 @@ export function mapTransactionType(
     case PartitionIdentifier.TOKEN:
       return tryEnumLookup(
         txType,
-        [TokenPartitionTransactionType],
+        [TokenPartitionTransactionType, FeeCreditTransactionType],
         `Unknown Token TxType #${txType}`,
       );
     case PartitionIdentifier.EVM:
       return `EVM TxType #${txType}`;
     default:
-      return `Unknown Partition ${partitionID} TxType #${txType}`;
+      return `Unknown Partition ${partitionTypeID} TxType #${txType}`;
   }
 }

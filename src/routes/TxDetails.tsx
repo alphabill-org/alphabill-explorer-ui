@@ -78,7 +78,11 @@ export const TxDetails: React.FC = () => {
     const { transactionType: rawType, timeout } =
       parseTransactionOrder(TransactionOrder);
     const numericType = Number(rawType);
-    const txType = mapTransactionType(PartitionID, numericType);
+
+    const txType =
+      partitionTypeID !== undefined
+        ? mapTransactionType(partitionTypeID, numericType)
+        : mapTransactionType(PartitionID, numericType);
 
     const unitID =
       ServerMetadata?.TargetUnits && ServerMetadata.TargetUnits.length > 0
@@ -139,7 +143,7 @@ export const TxDetails: React.FC = () => {
       ...row,
       value: valuesLookup[row.key],
     }));
-  }, [txData, partitionFriendlyName, partitionID]);
+  }, [txData, partitionFriendlyName, partitionID, partitionTypeID]);
 
   const loading = txLoading || blockLoading;
   const combinedError = txError || blockError;
@@ -154,3 +158,5 @@ export const TxDetails: React.FC = () => {
     />
   );
 };
+
+export default TxDetails;
