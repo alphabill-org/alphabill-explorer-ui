@@ -1,12 +1,12 @@
-import { PartitionIdentifier } from '@alphabill/alphabill-js-sdk/lib/PartitionIdentifier';
+import { PartitionTypeIdentifier } from '@alphabill/alphabill-js-sdk/lib/PartitionTypeIdentifier';
 
 export function getPartitionName(partitionTypeID: number): string {
   switch (partitionTypeID) {
-    case PartitionIdentifier.MONEY:
+    case PartitionTypeIdentifier.MONEY:
       return 'Money';
-    case PartitionIdentifier.TOKEN:
+    case PartitionTypeIdentifier.TOKEN:
       return 'Token';
-    case PartitionIdentifier.EVM:
+    case PartitionTypeIdentifier.EVM:
       return 'EVM';
     default:
       return `Partition ${partitionTypeID}`;
