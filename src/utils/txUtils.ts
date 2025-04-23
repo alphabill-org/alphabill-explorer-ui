@@ -1,6 +1,6 @@
 import { FeeCreditTransactionType } from '@alphabill/alphabill-js-sdk/lib/fees/FeeCreditTransactionType';
 import { MoneyPartitionTransactionType } from '@alphabill/alphabill-js-sdk/lib/money/MoneyPartitionTransactionType';
-import { PartitionIdentifier } from '@alphabill/alphabill-js-sdk/lib/PartitionIdentifier';
+import { PartitionTypeIdentifier } from '@alphabill/alphabill-js-sdk/lib/PartitionTypeIdentifier';
 import { TokenPartitionTransactionType } from '@alphabill/alphabill-js-sdk/lib/tokens/TokenPartitionTransactionType';
 import { type ITransactionPayloadAttributes } from '@alphabill/alphabill-js-sdk/lib/transaction/ITransactionPayloadAttributes';
 import { type ITransactionOrderProof } from '@alphabill/alphabill-js-sdk/lib/transaction/proofs/ITransactionOrderProof';
@@ -114,19 +114,19 @@ export function mapTransactionType(
   txType: number,
 ): string {
   switch (partitionTypeID) {
-    case PartitionIdentifier.MONEY:
+    case PartitionTypeIdentifier.MONEY:
       return tryEnumLookup(
         txType,
         [MoneyPartitionTransactionType, FeeCreditTransactionType],
         `Unknown Money TxType #${txType}`,
       );
-    case PartitionIdentifier.TOKEN:
+    case PartitionTypeIdentifier.TOKEN:
       return tryEnumLookup(
         txType,
         [TokenPartitionTransactionType, FeeCreditTransactionType],
         `Unknown Token TxType #${txType}`,
       );
-    case PartitionIdentifier.EVM:
+    case PartitionTypeIdentifier.EVM:
       return `EVM TxType #${txType}`;
     default:
       return `Unknown Partition ${partitionTypeID} TxType #${txType}`;
